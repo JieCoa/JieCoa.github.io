@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Jie Cao">
+    
+    <title>
+        
+            Research Notes(1) - CrystalDiT |
+        
+        Jie Cao
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/github.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"jiecoa.github.io","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Jie Cao","author":"Jie Cao","avatar":"/images/portrait.jpg","logo":null,"favicon":"/images/github.svg","mode":"light"},"menu":{"home":"/","archives":"/archives","Publications & Related Work":"/publications-related-work","Me":{"children":[{"about":"/about || fa-solid fa-user-graduate"}]}},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"人生如戏，学会享受！","hitokoto":true},"social_contact":{"enable":true,"links":{"github":"https://github.com/JieCoa","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"email":"13989569616@163.com","google":"https://scholar.google.com/citations?user=-2f5dJoAAAAJ&hl=zh-CN","orcid":"https://orcid.org/0009-0006-3169-9768"}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":"My first academic paper has been accepted by npj Computational Materials!","category":false,"tag":true,"post_datetime":"updated","post_datetime_format":"YYYY-MM-DD HH:mm:ss"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":"炼丹师"},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":true,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2026,"word_count":false,"site_deploy":{"enable":true,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+            <a class="site-name border-box" href="/">
+               Jie Cao
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/publications-related-work">
+                                
+                                PUBLICATIONS &amp; RELATED WORK
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box has-sub-menu">
+                            <a class="menu-text-color border-box" href="javascript:void(0);">
+                                
+                                ME
+                                
+                                    <i class="menu-text-color collapse-icon fa-solid fa-angle-down"></i>
+                                
+                            </a>
+                            
+                                <ul class="sub-menu-list border-box">
+                                    
+                                        
+                                        <li class="sub-menu-item border-box ">
+                                            <a class="menu-text-color border-box flex-start" href="/about">
+                                                
+                                                    <i class="menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                                
+                                                ABOUT
+                                            </a>
+                                        </li>
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/publications-related-work">
+                            
+                            PUBLICATIONS &amp; RELATED WORK
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box has-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="javascript:void(0);">
+                            
+                            ME
+                        </a>
+                        
+                            <i class="right-side collapse-icon fa-solid fa-angle-left"></i>
+                        
+                    </label>
+                    
+                        <ul class="drawer-sub-menu-list border-box">
+                            
+                                
+                                <li class="sub-menu-item border-box">
+                                    <a class="drawer-menu-text-color border-box flex-start" href="/about">
+                                        
+                                            <span class="sub-menu-icon-wrap border-box flex-center">
+                                                <i class="drawer-menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                            </span>
+                                        
+                                        ABOUT
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Research Notes(1) - CrystalDiT
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/portrait.jpg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Jie Cao</span>
+                                
+                                    <span class="author-badge">炼丹师</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-06-17 15:33:58</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Thu Jun 18 2026 16:06:40 GMT+0800">2026-06-18 16:06:40</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Diffusion-Transformer/">Diffusion, Transformer</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>14.4k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>54 Mins</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="CrystalDiT-A-Diffusion-Transformer-for-Crystal-Generation"><a href="#CrystalDiT-A-Diffusion-Transformer-for-Crystal-Generation" class="headerlink" title="CrystalDiT: A Diffusion Transformer for Crystal Generation"></a>CrystalDiT: A Diffusion Transformer for Crystal Generation</h1><h1 id="CrystalDiT：一种用于晶体生成的扩散-Transformer"><a href="#CrystalDiT：一种用于晶体生成的扩散-Transformer" class="headerlink" title="CrystalDiT：一种用于晶体生成的扩散 Transformer"></a>CrystalDiT：一种用于晶体生成的扩散 Transformer</h1><p>Authors: Xiaohan Yi, Guikun Xu, Zhong Zhang, Liu Liu, Yatao Bian, Xi Xiao, Peilin Zhao</p>
+<p><a class="link" target="_blank" rel="noopener" href="https://doi.org/10.1609/aaai.v40i2.37121">Paper<i class="fas fa-external-link-alt"></i></a>  <a class="link" target="_blank" rel="noopener" href="https://github.com/hanyi2021/CrystalDiT">Code<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了 CrystalDiT，这是一种用于晶体结构生成的扩散 Transformer。它通过挑战架构复杂化的趋势，实现了最先进的性能。CrystalDiT 没有采用复杂的多流设计，而是使用统一的 Transformer，并施加了一种强大的归纳偏置：将晶格和原子性质视为一个单一的、相互依赖的系统。结合基于元素周期表的原子表示以及均衡训练策略，我们的方法在 MP-20 上达到了 8.78% 的 SUN（Stable, Unique, Novel；稳定、唯一、新颖）率，显著优于包括 FlowMM（4.21%）和 MatterGen（3.66%）在内的近期方法。值得注意的是，CrystalDiT 生成了 63.28% 的唯一且新颖结构，同时保持了可比的稳定性比例，这表明对于材料发现而言，架构简单性可能比复杂性更有效。我们的结果表明，在数据受限的科学领域中，经过精心设计的简单架构优于容易过拟合的复杂替代方案。</p>
+<p>代码 — <a class="link" target="_blank" rel="noopener" href="https://github.com/hanyi2021/CrystalDiT.git">https://github.com/hanyi2021/CrystalDiT.git<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h2><p>材料发现限制了能源与可持续发展领域的技术进步（Jain et al. 2013; Merchant et al. 2023）。传统筛选方法将探索限制在已知结构范围内（Curtarolo et al. 2012）。</p>
+<p>生成模型通过直接提出新颖晶体结构，提供了一种具有变革性的替代方案。近期方法已经通过各种复杂途径取得了有前景的结果：ADiT 采用具有独立 VAE 和 DiT 组件的两阶段潜空间扩散（Joshi et al. 2025），FlowMM 使用黎曼流匹配来处理晶体对称性（Miller et al. 2024），MatterGen 则引入了带有等变评分网络和适配器模块的联合扩散过程（Zeni et al. 2025）。尽管这些方法展示了生成建模的潜力，但它们的架构复杂性也引发了关于其必要性与有效性的问题。</p>
+<p>尽管 Transformer 架构已在多个不同领域取得成功（Feng et al. 2024; Yi et al. 2023; Gong et al. 2024; Chen et al. 2024; Wu et al. 2020; Fang et al. 2024; Chen et al. 2025; Shibo et al. 2025; Wang et al. 2025; Xu et al. 2021），但用于数据受限科学应用的设计原则仍然缺乏充分探索。</p>
+<p>我们识别出当前方法中的两个关键问题。首先，评估指标强调与训练数据的结构相似性，从而无意中惩罚了发现所必需的新颖性（Xie et al. 2021）。针对传统有效性指标进行优化的模型擅长复现已知模式，但在探索方面表现不足。其次，在材料科学中，走向架构复杂化的趋势可能适得其反，因为该领域的数据集较小，并且偏向于已知稳定结构。不同于拥有大规模数据集的视觉或语言任务，复杂模型更可能产生过拟合，而不是实现泛化。</p>
+<p>我们提出 CrystalDiT，用于探索简化架构是否能够在晶体生成中优于复杂替代方案。为了严格检验这一假设，我们同时开发了一种<strong>简单的统一架构</strong>和一种<strong>复杂的双流变体</strong>，以便进行直接比较。我们的主要贡献如下：</p>
+<p><strong>简化架构：</strong> 一个统一的扩散 Transformer 通过联合注意力机制处理所有晶体信息，这与我们采用独立处理路径并配备交叉注意力机制的双流方案形成对比。</p>
+<p><strong>化学表示：</strong> 一种使用**元素周期表位置（周期、族）**的二维原子编码，在不增加架构复杂性的情况下自然捕获化学关系。</p>
+<p><strong>均衡评估：</strong> 一种复合分数，明确优化了<u>生成质量</u>与<u>发现潜力</u>之间的权衡关系，解决了评估目标与实际需求之间的不匹配问题。</p>
+<p>我们的发现表明，在数据受限的科学领域中，<u>具有领域特定表示的、经过精心设计的简单架构优于复杂替代方案，这挑战了关于架构复杂性必要性的假设</u>。</p>
+<h2 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2 相关工作"></a>2 相关工作</h2><p>晶体生成已经成为材料信息学领域的核心关注点。为了解决传统计算材料发现方法的局限性，例如其有效性不足和高计算成本（Pickard and Needs 2011; Curtarolo et al. 2012; Yamashita et al. 2018; Wang, Botti, and Marques 2021），近期方法越来越多地利用基于深度学习的生成模型。</p>
+<p>CDVAE（Xie et al. 2021）是最早预测三个关键组成部分（原子的数量和类型以及晶格结构）的方法之一，作为材料结构的初始近似，随后使用基于扩散的方法进行细化（Song and Ermon 2019; Ho, Jain, and Abbeel 2020）。DiffCSP（Jiao et al. 2023）是第一个采用联合等变扩散范式（即联合扩散晶格和分数坐标）进行晶体结构预测（CSP）的方法。通过在原子类型上引入额外的离散扩散（Austin et al. 2021），该方法可以进一步扩展到处理从头晶体生成，而 MatterGen（Zeni et al. 2025）进一步改进了这种联合扩散范式。</p>
+<p>扩散 Transformer（<code>DiT</code>）（Peebles and Xie 2023）通过其强大的注意力机制和自适应条件化，在学习稳定晶体结构方面表现出显著能力。然而，<u>这种表达能力也在数据受限的科学领域中引入了显著的过拟合风险</u>，在这些领域中，模型可能会记忆训练模式，而不是学习可泛化的材料发现原则。<code>ADiT</code>（Joshi et al. 2025）引入了一种两阶段方法：首先使用自编码器生成晶体结构的潜在表示，然后在潜空间中应用 DiT 架构进行结构生成。</p>
+<p>流匹配技术（Lipman et al. 2022, 2024）近来作为扩散模型的一种高度有效的替代方案出现，这主要归因于其增强的推理效率以及在定义先验分布方面的灵活性。在这一背景下，FlowMM（Miller et al. 2024）在黎曼流形中利用联合黎曼流匹配（Chen and Lipman 2023），从而更好地处理晶体周期性。随后，FlowLLM（Sriram et al. 2024）将这一框架扩展到大型语言模型（LLMs），利用它们作为采样亚稳态材料化学式的先验分布，并通过黎曼流匹配生成其对应的结构构型。</p>
+<p>在另一条研究线上，材料对称性在晶体结构生成中受到了显著关注。近期，DiffCSP++（Jiao et al. 2024）、SymmCD（Levy et al. 2025）和 WyFormer（Kazeev et al. 2025）通过将 Wyckoff 位置（Wyckoff 1922）纳入晶体生成任务取得了显著进展，使得能够生成具有确定对称性的晶体结构。尽管这些技术取得了进步，现有方法仍表现出不断增加的架构复杂性，并采用专门化的多组件设计。这促使我们研究统一的、简化的架构是否能够通过更有效地学习晶格—原子关系来实现更优性能。</p>
+<h2 id="3-方法"><a href="#3-方法" class="headerlink" title="3 方法"></a>3 方法</h2><p>我们提出 CrystalDiT，这是一种简单而有效的用于晶体结构生成的扩散 Transformer 架构。我们的方法由四个关键组成部分构成：（1）一种新颖的二维原子表示，通过元素周期表定位捕获化学关系；（2）一种精简的扩散 Transformer 架构，通过统一注意力机制处理晶体结构；（3）<strong><u>一种替代传统验证的均衡模型选择策略</u></strong>；以及（4）<u>一种用于推理的概率式原子解码过程</u>。本节详细介绍我们方法中的每个组成部分。</p>
+<h3 id="3-1-晶体表示"><a href="#3-1-晶体表示" class="headerlink" title="3.1 晶体表示"></a>3.1 晶体表示</h3><p><strong>有效的晶体结构表示对于训练能够生成稳定且新颖材料的扩散模型至关重要</strong>。传统方法要么使用基于图的表示，其复杂度随原子数量呈二次增长；要么<u>依赖于忽略化学关系的原子序数编码</u>。尽管近期工作如 <code>UniMat</code>（Yang et al. 2023）提出了基于元素周期表的表示，但其 4D 张量方法需要为元素周期表中每一种可能元素预先分配空间，导致稀疏表示，其中大多数位置仍未被占用。此外，它们的方法还需要定义每种元素类型的最大原子数量，并在化学维度上使用专门的张量操作。相比之下，我们的方法**<u>提供了一种更紧凑的表示，只编码 20 个原子，并且能够通过标准 Transformer 操作进行统一处理</u>**。</p>
+<p>我们引入了一种简化但化学意义更强的晶体表示，该表示建立在元素周期表结构之上，同时纳入来自材料科学的领域特定洞见。</p>
+<h4 id="二维原子表示"><a href="#二维原子表示" class="headerlink" title="二维原子表示"></a>二维原子表示</h4><p>我们不使用原子序数来表示原子，而是使用其在元素周期表中的位置来编码每个原子：周期（行）和族（列）。这种编码的动机来自一个基本原则：同一周期中的元素具有相似的电子壳层构型，而同一族中的元素表现出相似的化学性质。</p>
+<p>具体而言，对于原子序数为 $Z$ 的原子，我们将其映射到一个元组 $(r, c)$，其中 $r \in [0, 7]$ 表示周期，$c \in [0, 18]$ 表示族。这里，$r &#x3D; 0$ 且 $c &#x3D; 0$ 对应一个特殊的“空原子”，用于表示少于 20 个原子的晶体中的空位置。对于有效元素，$r \in [1, 7]$ 且 $c \in [1, 18]$，镧系元素和锕系元素 <code>对应元素周期表最下面2行</code> 使用<strong>分数族号</strong>来保留它们的独特位置。然后，我们将这些值归一化到 $[-1, 1]$：</p>
+<p>$r_{\mathrm{norm}} &#x3D; \frac{2r}{7} - 1$</p>
+<p>$c_{\mathrm{norm}} &#x3D; \frac{2c}{18} - 1$</p>
+<p>这种表示具有若干优势：（1）它通过元素周期表中的空间邻近性自然捕获化学相似性；（2）<u>它提供了一个连续嵌入空间，有利于扩散建模</u>；（3）它在保留化学意义的同时降低了维度；（4）它通过位于原点 $(0, 0)$ 的空原子表示无缝处理可变大小的晶体结构。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260614204356488.png" style="zoom:40%;">
+
+<h4 id="归一化晶格参数化"><a href="#归一化晶格参数化" class="headerlink" title="归一化晶格参数化"></a>归一化晶格参数化</h4><p>对于晶格向量，我们采用一种归一化策略，以应对真实材料中晶格参数取值范围很宽的问题。给定晶格矩阵 $L \in \mathbb{R}^{3 \times 3}$，我们使用 MP-20 数据集中观察到的最大长度尺度进行归一化：</p>
+<p>$L_{\mathrm{norm}} &#x3D; \frac{L}{L_{\max}}$</p>
+<p>其中，$L_{\max} &#x3D; 46.7425 \ \mathrm{\AA}$，这是我们对 MP-20 数据集（Xie et al. 2021）分析得到的结果。该数据集包含 45,231 个亚稳态晶体结构，最多含 20 个原子，覆盖 89 种元素类型。</p>
+<h4 id="完整结构表示"><a href="#完整结构表示" class="headerlink" title="完整结构表示"></a>完整结构表示</h4><p>我们的完整晶体表示结合了归一化晶格向量和原子特征。对于具有 $N$ 个原子的晶体（对于 MP-20，$N \leq 20$）：</p>
+<p>$L_{\mathrm{norm}} \in \mathbb{R}^{3 \times 3}$（归一化晶格）</p>
+<p>$A \in \mathbb{R}^{20 \times 5}$（原子特征）</p>
+<p>其中，$A$ 的每一行包含 $[r_{\mathrm{norm}}, c_{\mathrm{norm}}, x, y, z]$，分别表示<strong>归一化周期</strong>、<strong>归一化族</strong>以及<strong>分数坐标</strong>。<u>对于少于 20 个原子的晶体，我们使用 $[-1, -1, -1, -1, -1]$ 的“空”原子进行填充</u>。</p>
+<h3 id="3-2-架构设计"><a href="#3-2-架构设计" class="headerlink" title="3.2 架构设计"></a>3.2 架构设计</h3><p>我们的 CrystalDiT 架构围绕这样一个原则进行设计：在晶体生成任务中，<u>简单性</u>能够带来更好的泛化。不同于复杂的多流架构，我们采用一种统一方法，通过单一、精简的 Transformer 路径处理所有晶体信息。</p>
+<h4 id="统一-DiT-架构"><a href="#统一-DiT-架构" class="headerlink" title="统一 DiT 架构"></a>统一 DiT 架构</h4><p>该模型由三个主要组件组成：（1）晶体结构嵌入<code>Embedding</code>，将晶格向量和原子特征映射到共享隐藏空间；（2）由18个DiT模块组成的序列，通过统一自注意力机制处理组合表征；以及（3）专用输出头可分别对原子组分和晶格组分生成噪声预测值。</p>
+<p>核心启示在于，通过在单一注意力路径中<strong>共同处理原子和晶格特征</strong>，<u>模型可以自然学习原子位置与晶格参数之间复杂的相互依赖关系，而不需要显式交叉注意力机制</u>。这种统一方法施加了一种强归纳偏置：将晶格和原子性质视为一个单一的、相互依赖的系统，这与晶体性质源于原子组成和晶格几何之间相互作用的物理现实相一致。</p>
+<blockquote>
+<p>核心启示在于：通过在单一注意力机制中同时处理原子特征与晶格特征，该模型能够自然地学习原子位置与晶格参数之间的复杂相互依赖关系，而无需依赖显式的交叉注意力机制。这种统一方法强化了强烈的归纳偏置——将晶格特性与原子特性视为一个相互依存的整体系统，这与晶体性质源于原子组成与晶格几何结构相互作用的物理现实完全吻合。</p>
+</blockquote>
+<p>晶体结构被嵌入到维度为 $d &#x3D; 512$ 的隐藏空间中。晶格向量和原子特征通过独立的线性嵌入层进行处理，并结合<strong>位置编码</strong>和<strong>类型编码</strong>。嵌入后的特征被拼接形成组合表示 $H_{\mathrm{combined}} \in \mathbb{R}^{23 \times d}$（20 个原子 + 3 个晶格向量）。</p>
+<p>该组合表示通过 $L &#x3D; 18$ 个相同的 DiT 块进行处理，每个块均采用时间条件自适应层归一化（AdaLN）技术，根据扩散时间步长对特征进行调节。最后，专用输出头分别生成原子特征（5维）和晶格向量（每向量3维）的噪声预测结果。</p>
+<h4 id="架构比较"><a href="#架构比较" class="headerlink" title="架构比较"></a>架构比较</h4><p>与 <code>Figure 1</code> 所示的统一方法相比，我们还实现了一种复杂的双流变体以进行直接比较。该架构采用级联处理方式：先由12个纯<u>原子级</u> DiT 模块独立处理原子特征，随后是2个纯<u>晶格</u>模块处理晶格向量，最后是2个配备<u>双向交叉注意力机制的联合模块</u>用于<strong>融合不同数据流之间的信息</strong>。与我们从一开始就统一处理所有特征的简单方法不同，这种级联设计通过专用模块将原子级处理路径与晶格级处理路径分离。然而，这种架构复杂性在数据有限的晶体生成领域会导致过拟合现象——尽管个体有效性指标有所提升，但独特的新型晶体生成率却显著降低。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260618152545343.png" style="zoom:50%;">
+
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260614222635426.png" style="zoom:50%;">
+
+
+
+<h3 id="3-3-训练目标与模型选择"><a href="#3-3-训练目标与模型选择" class="headerlink" title="3.3 训练目标与模型选择"></a>3.3 训练目标与模型选择</h3><p>我们的训练方法结合了标准扩散目标与一种新颖的模型选择策略，该策略解决了晶体生成中的独特挑战。</p>
+<h4 id="扩散损失函数"><a href="#扩散损失函数" class="headerlink" title="扩散损失函数"></a>扩散损失函数</h4><p>我们采用具有 $T &#x3D; 1000$ 个时间步和线性噪声调度的高斯扩散过程。我们的模型学习预测在每个时间步 $t$ 添加的噪声 $\epsilon$，使用如下加权损失函数：</p>
+<p>$\mathcal{L} &#x3D; \mathcal{L}<em>{\mathrm{lattice}} + \lambda \cdot \mathcal{L}</em>{\mathrm{atoms}}$</p>
+<p>其中：</p>
+<p>$\mathcal{L}<em>{\mathrm{lattice}} &#x3D; \mathbb{E}</em>{t,\epsilon}\left[|\epsilon_{\mathrm{lattice}} - \epsilon_{\theta}^{\mathrm{lattice}}(L_t, A_t, t)|^2\right]$</p>
+<p>$\mathcal{L}<em>{\mathrm{atoms}} &#x3D; \mathbb{E}</em>{t,\epsilon}\left[w^T \odot |\epsilon_{\mathrm{atoms}} - \epsilon_{\theta}^{\mathrm{atoms}}(L_t, A_t, t)|^2\right]$</p>
+<p>我们设置 $\lambda &#x3D; 100$ 以平衡不同尺度，并使用 feature-specific 权重 $w &#x3D; [1.5, 2.0, 1.0, 1.0, 1.0]$ 来强调周期和族的预测。</p>
+<h4 id="均衡模型选择策略"><a href="#均衡模型选择策略" class="headerlink" title="均衡模型选择策略"></a>均衡模型选择策略</h4><p>传统检查点选择方法在晶体生成中面临根本性局限。验证损失虽然是机器学习中的标准做法，但无法捕获生成晶体的真实稳定性和发现潜力，因为它只度量重构保真度，而不是物理合理性。近期方法如 ADiT（Joshi et al. 2025）采用的替代方法是在每个检查点生成 1000 个结构，并选择具有最高有效性比例的模型。然而，这种策略会无意中促进对训练数据中已知稳定模式的过拟合，导致高有效性分数但低新颖性比例——这与材料发现的需求恰好相反。</p>
+<p>我们的 <code>Balance Score</code> 提供了一种有原则的替代方案，在检查点选择过程中<u>显式优化生成质量与发现潜力之间的权衡</u>：</p>
+<p>$$<br>\mathrm{Balance \ Score} &#x3D; \mathrm{UN \ Rate} \times (\mathrm{Quality \ Composite})^{\alpha}<br>$$<br>其中，$\alpha$ 是控制生成质量与发现潜力之间权衡的超参数。更高的 $\alpha$ 值强调质量，以获得更可靠的结构；更低的 $\alpha$ 值则偏向于发现唯一且新颖的晶体。</p>
+<p>UN Rate 度量生成结构中<strong>既唯一又新颖的比例</strong>：</p>
+<p>$$<br>\mathrm{UN \ Rate} &#x3D; \frac{N_{\mathrm{unique}} \cap N_{\mathrm{novel}}}{N_{\mathrm{total}}}<br>$$<br>Quality Composite 是四个归一化质量指标的几何平均：</p>
+<p>$$<br>\mathrm{Quality \ Composite} &#x3D; (S_{\mathrm{struct}} \times S_{\mathrm{chem}} \times S_{\mathrm{density}} \times S_{\mathrm{elements}})^{1&#x2F;4}<br>$$<br>每个组成评分根据经验观察到的范围归一化到 $[0, 1]$：</p>
+<p>$S_{\mathrm{struct}} &#x3D; \max\left(0, \min\left(1, \frac{V_{\mathrm{struct}} - 0.95}{0.05}\right)\right)$</p>
+<p>$S_{\mathrm{chem}} &#x3D; \max\left(0, \min\left(1, \frac{V_{\mathrm{chem}} - 0.8}{0.2}\right)\right)$</p>
+<p>$S_{\mathrm{density}} &#x3D; \max\left(0, \min\left(1, 1.0 - \frac{D_{\mathrm{density}}}{0.9}\right)\right)$</p>
+<p>$S_{\mathrm{elements}} &#x3D; \max\left(0, \min\left(1, 1.0 - \frac{D_{\mathrm{elements}}}{0.9}\right)\right)$</p>
+<p>我们在训练过程中实现了一种多阶段检查点选择策略。我们从三个不同训练阶段中识别具有最高 Balance Score 的模型：早期（0–30%）、中期（31–60%）和后期（61–100%）阶段。这种方法认识到，质量与发现潜力之间的最优权衡可能在不同训练阶段出现，其中早期模型可能偏向探索，而后期模型更强调质量。详细训练协议见 <code>Appendix C</code>。</p>
+<h3 id="3-4-推理过程"><a href="#3-4-推理过程" class="headerlink" title="3.4 推理过程"></a>3.4 推理过程</h3><p>在推理过程中，我们的模型通过标准 DDPM 采样过程生成晶体结构，随后使用<strong>概率式原子解码过程</strong><u>将连续预测转换为离散原子类型</u>。</p>
+<h4 id="概率式原子解码"><a href="#概率式原子解码" class="headerlink" title="概率式原子解码"></a>概率式原子解码</h4><p>我们的模型<u>预测原子周期和族的连续值，这些值必须映射到离散原子序数</u>。我们将候选原子类型定义为所有有效元素加上位于 $(0,0)$ 位置的空原子（$z&#x3D;0$）。遵循 DDPM（Ho, Jain, and Abbeel 2020）中的离散解码器方法，我们采用基于高斯分布的概率映射。</p>
+<p>对于预测的连续值 $(r_{\mathrm{pred}}, c_{\mathrm{pred}})$ 以及位于位置 $(r_z, c_z)$ 的元素 $z$，映射概率为：</p>
+<h4 id="概率式原子解码-1"><a href="#概率式原子解码-1" class="headerlink" title="概率式原子解码"></a><del>概率式原子解码</del></h4><p><del>我们的模型预测原子周期和族的连续值，这些值必须映射到离散原子序数。我们为每个候选元素分配一个责任区域，并使用高斯积分计算概率。</del></p>
+<p><del>对于预测的连续值 $(r_{\mathrm{pred}}, c_{\mathrm{pred}})$ 以及位于归一化位置 $(r_z, c_z)$ 的候选元素 $z$，映射概率为：</del></p>
+<p>$P(z|r_{\mathrm{pred}}, c_{\mathrm{pred}}) &#x3D; P_r(r_{\mathrm{pred}}|r_z) \times P_c(c_{\mathrm{pred}}|c_z)$</p>
+<p>$P_r(r_{\mathrm{pred}}|r_z) &#x3D; \int_{r_{\mathrm{lower}}}^{r_{\mathrm{upper}}} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-r_{\mathrm{pred}})^2}{2\sigma^2}\right) dx$</p>
+<p>$P_c(c_{\mathrm{pred}}|c_z) &#x3D; \int_{c_{\mathrm{lower}}}^{c_{\mathrm{upper}}} \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-c_{\mathrm{pred}})^2}{2\sigma^2}\right) dx$</p>
+<p>其中，$\sigma &#x3D; 0.1$ 控制映射的尖锐程度。积分边界定义每个元素的责任区域：</p>
+<p>$r_{\mathrm{upper}} &#x3D;<br>\begin{cases}<br>r_z + \Delta r &amp; \text{if } r_z &lt; 1 \<br>+\infty &amp; \text{if } r_z &#x3D; 1<br>\end{cases}$</p>
+<p>$r_{\mathrm{lower}} &#x3D;<br>\begin{cases}<br>-\infty &amp; \text{if } r_z &#x3D; -1 \<br>r_z - \Delta r &amp; \text{if } r_z &gt; -1<br>\end{cases}$</p>
+<p>族也采用类似边界，其中 $\Delta r &#x3D; 1&#x2F;7$ 和 $\Delta c &#x3D; 1&#x2F;18$ 是离散化间隔。最终原子序数选择为：</p>
+<p>$z^* &#x3D; \arg\max_z P(z|r_{\mathrm{pred}}, c_{\mathrm{pred}})$</p>
+<p>对于位于 $(-1, -1)$ 的空原子，其区域扩展到 $(-\infty, -1+\Delta r] \times (-\infty, -1+\Delta c]$，从而能够自然处理空位置。</p>
+<p><strong>算法 1：带有概率式原子解码的 CrystalDiT 生成</strong></p>
+<p>输入：时间步 $T$，批大小 $B$，模型 $\theta$<br>输出：晶体结构 ${\mathrm{Structure}<em>i}</em>{i&#x3D;1}^{B}$</p>
+<ol>
+<li>采样初始噪声：$Z^{(0)} \sim \mathcal{N}(0, I)$</li>
+<li>对 $t &#x3D; T, T-1, \ldots, 1$：</li>
+<li>$\epsilon &#x3D; \mathrm{CrystalDiT}_{\theta}(Z^{(t)}, t)$</li>
+<li>$Z^{(t-1)} &#x3D; \mathrm{DDPM \ step}(Z^{(t)}, \epsilon, t)$</li>
+<li>结束循环</li>
+<li>提取晶格：$L &#x3D; Z^{(0)}<em>{[:, :3, :]} \times L</em>{\max}$</li>
+<li>提取原子：$A &#x3D; Z^{(0)}_{[:, 3:, :]}$</li>
+<li>对每个样本 $i &#x3D; 1, \ldots, B$：</li>
+<li>初始化：$\mathrm{atomic \ numbers}_i &#x3D; [\ ]$，$\mathrm{coords}_i &#x3D; [\ ]$</li>
+<li>对每个原子 $j &#x3D; 1, \ldots, 20$：</li>
+<li>$(r, c, x, y, z) &#x3D; A_{i,j,:5}$</li>
+<li>使用式（16）–（20）计算 $z^* &#x3D; \arg\max_z P(z|r,c)$</li>
+<li>如果 $z^* &gt; 0$：</li>
+<li>$\mathrm{atomic \ numbers}_i.\mathrm{append}(z^*)$</li>
+<li>$\mathrm{coords}_i.\mathrm{append}([x,y,z] \bmod 1)$</li>
+<li>结束条件判断；如果 $z^* &#x3D; 0$，则跳过（空原子）</li>
+<li>结束原子循环</li>
+<li>根据 $\mathrm{atomic \ numbers}_i$ 和 $\mathrm{coords}_i$ 构造 $\mathrm{Structure}_i$</li>
+<li>结束样本循环</li>
+</ol>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260614221252000.png" style="zoom:45%;">
+
+
+
+<h2 id="4-实验与结果"><a href="#4-实验与结果" class="headerlink" title="4 实验与结果"></a>4 实验与结果</h2><p>我们通过全面实验，将我们的CrystalDiT方法与最先进的晶体生成方法进行对比评估。评估过程中采用成熟的跨方法比较指标；同时特别使用平衡得分（Balance Score）在模型训练阶段筛选验证点，以优化生成质量与发现潜力之间的平衡关系。</p>
+<h3 id="4-1-实验设置"><a href="#4-1-实验设置" class="headerlink" title="4.1 实验设置"></a>4.1 实验设置</h3><h4 id="统一评估协议"><a href="#统一评估协议" class="headerlink" title="统一评估协议"></a>统一评估协议</h4><p>为确保公平比较，我们采用统一的测试方案对所有基线方法进行重新评估，该方案使用<u>完全相同的<strong>评估指标</strong>、<strong>DFT计算参数</strong>及<strong>统计抽样流程</strong></u>。此方法可消除因原始文献中不同评估实现方式可能导致的差异。</p>
+<h4 id="数据集与预处理"><a href="#数据集与预处理" class="headerlink" title="数据集与预处理"></a>数据集与预处理</h4><p>我们使用 MP-20 数据集（Xie et al. 2021），该数据集包含来自 Materials Project 的 45,231 个亚稳态晶体结构，最多含 20 个原子，覆盖 89 种元素类型。按照标准实践，我们使用既定的训练&#x2F;测试划分，并使用我们的二维原子表示和晶格归一化对结构进行预处理。</p>
+<h4 id="模型配置"><a href="#模型配置" class="headerlink" title="模型配置"></a>模型配置</h4><p>我们评估三种模型变体：</p>
+<p><strong>CrystalDiT（Simple）：</strong> 我们的主模型，采用统一注意力处理。架构：$d &#x3D; 512$，$L &#x3D; 18$ 层，8 个注意力头。模型大小：330MB。</p>
+<p><strong>CrystalDiT（Complex）：</strong> 用于比较的双流架构，具有独立的原子和晶格处理流，并带有交叉注意力机制。该架构使用级联处理：12 个仅处理原子的 DiT 块 → 2 个仅处理晶格的 DiT 块 → 2 个带有双向交叉注意力的联合 DiT 块。模型大小：370MB（参数数量控制为与简单版本相近）。</p>
+<p>两个模型均训练 50,000 个 epoch，批大小为 256，学习率为 $1 \times 10^{-4}$，使用 8 块 V100 GPU 训练 4 天。</p>
+<h4 id="基线方法"><a href="#基线方法" class="headerlink" title="基线方法"></a>基线方法</h4><p>我们与五种最先进方法进行比较：DiffCSP（Jiao et al. 2023）、FlowMM（Miller et al. 2024）、DiffCSP++（Jiao et al. 2024）和 MatterGen（Zeni et al. 2025），使用预训练检查点或官方实现；ADiT（Joshi et al. 2025）使用其官方仓库中预生成的 10,000 个结构。</p>
+<h4 id="评估协议"><a href="#评估协议" class="headerlink" title="评估协议"></a>评估协议</h4><p>遵循 FlowMM（Miller et al. 2024）建立的评估框架，我们从每种方法生成 <code>10,000</code> 个结构，并计算全面指标：</p>
+<p><strong>有效性指标：</strong></p>
+<ul>
+<li>结构有效性：所有成对原子距离 $\geq 0.5 \ \mathrm{\AA}$ 且晶体体积 $\geq 0.1 \ \mathrm{\AA}^3$ 的晶体百分比。</li>
+<li>组成有效性：通过 SMACT（Davies et al. 2019）满足电荷中性和电负性平衡的百分比，使用氧化态枚举和 Pauling 电负性规则。</li>
+</ul>
+<p><strong>分布指标：</strong></p>
+<ul>
+<li>密度距离（$d_{\rho}$）：生成集合与测试集密度分布之间的 Wasserstein 距离。</li>
+<li>元素距离（$d_{\mathrm{elem}}$）：生成集合与测试集元素出现频率分布之间的 Wasserstein 距离。</li>
+</ul>
+<p><strong>发现指标：</strong></p>
+<ul>
+<li>唯一性：由 PyMatGen 的 StructureMatcher（Ong et al. 2013）判定为彼此不同的结构。</li>
+<li>新颖性：通过 StructureMatcher 与 MP-20 训练集中任何晶体都不匹配的结构。</li>
+<li>UN Rate：同时唯一且新颖的结构所占比例。</li>
+</ul>
+<p><strong>稳定性评估：</strong> 我们采用 FlowMM（Miller et al. 2024）建立的协议进行 DFT 评估。由于计算资源限制，我们<u>随机抽取 500 个 UN 结构用于稳定性评估</u>（相比之下，FlowMM 评估所有结构）。<u>为量化采样不确定性，我们对 CrystalDiT、FlowMM 和 MatterGen 独立重复该采样三次</u>，并报告样本间的均值 ± 标准差。每个采样结构经历：</p>
+<ol>
+<li>使用 CHGNet（Deng et al. 2023）机器学习势进行预弛豫；</li>
+<li>使用 VASP 和 MPRelaxSet 参数进行 DFT 弛豫（Jain et al. 2013）；</li>
+<li>相对于 Matbench Discovery 凸包计算凸包上方能量（Riebesell et al. 2023）；</li>
+<li>分类：稳定（$E_{\mathrm{hull}} &lt; 0.0 \ \mathrm{eV&#x2F;atom}$），亚稳态（$E_{\mathrm{hull}} &lt; 0.1 \ \mathrm{eV&#x2F;atom}$）。</li>
+</ol>
+<p><strong>最终发现指标：</strong></p>
+<ul>
+<li>SUN Rate：UN Rate × UN 结构中的 Stable Rate。</li>
+<li>MSUN Rate：UN Rate × UN 结构中的 Metastable Rate。</li>
+</ul>
+<p>详细评估参数和实现细节见 <code>Appendix A</code>。</p>
+<h3 id="4-2-主要结果"><a href="#4-2-主要结果" class="headerlink" title="4.2 主要结果"></a>4.2 主要结果</h3><p><code>Table 1</code> 展示了我们与最先进方法的全面比较。结果揭示了关于不同方法在晶体生成中有效性的若干关键洞见。关于基线结果的说明：我们使用统一协议重新评估得到的结果与文献中一些原始报告值不同。关于这些差异的详细分析见 <code>Appendix A</code>。</p>
+<p>我们的简单 CrystalDiT 达到了最高的 SUN rate（8.78%）和 MSUN rate（25.94%），显著优于包括 FlowMM（4.21%）和 MatterGen（3.66%）在内的近期方法。值得注意的是，CrystalDiT 生成了 63.28% 的唯一且新颖结构，同时保持了可比的稳定性比例，这表明对于材料发现而言，架构简单性可能比复杂性更有效。不同方法表现出不同的权衡：ADiT 达到了较高的有效性分数，但由于过拟合而新颖性较差（37.08% UN rate）；而 FlowMM 和 MatterGen 能生成新颖结构，但稳定性比例较低。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260614222732181.png" style="zoom:45%;">
+
+
+
+<h3 id="4-3-架构比较分析"><a href="#4-3-架构比较分析" class="headerlink" title="4.3 架构比较分析"></a>4.3 架构比较分析</h3><p>我们的简单架构与复杂架构之间的比较揭示了关于科学应用中生成建模的基本洞见。尽管复杂双流架构具有复杂的交叉注意力机制，但其在发现指标上表现低于简单版本（6.36% vs 8.78% SUN rate）。双流架构的实现与分析见 <code>Appendix B</code>。</p>
+<p>这一结果挑战了机器学习中关于架构复杂性的流行假设。复杂模型在单独质量指标上取得了更好的表现，但 UN rate 显著更低，这表明架构复杂性会促进晶体生成任务中的过拟合。简单的统一注意力机制似乎更有效地学习了可泛化模式，而不是记忆训练数据分布。</p>
+<p>类似地，ADiT 的两阶段方法（自编码器 + 潜空间 DiT）达到了优异的有效性分数，但新颖性较差（37.08% UN rate），这表明如果不仔细考虑发现目标，架构复杂化在材料科学应用中可能会适得其反。</p>
+<h3 id="4-4-训练动态与模型选择"><a href="#4-4-训练动态与模型选择" class="headerlink" title="4.4 训练动态与模型选择"></a>4.4 训练动态与模型选择</h3><p><code>Table 2</code> 展示了我们的简单 CrystalDiT 模型在不同训练 epoch 下的演化，说明了在训练过程中使用 Balance Score 进行检查点选择的重要性。注意，我们的 Balance Score 仅用于选择 CrystalDiT 模型训练中的最佳检查点，而不用于比较不同方法。所有跨方法比较均使用标准 SUN&#x2F;MSUN 发现指标。</p>
+<p>简单模型显示出清晰模式：随着训练进行，有效性指标提高，但 UN rate 从 80.72% 稳定下降到 57.37%。关注有效性的传统验证方法会选择最终检查点，但我们的 Balance Score 正确识别出具有更好发现潜力的较早检查点。这说明均衡评估对于材料发现应用具有关键重要性。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615105339225.png" style="zoom:48%;">
+
+
+
+<h3 id="4-5-组成部分分析"><a href="#4-5-组成部分分析" class="headerlink" title="4.5 组成部分分析"></a>4.5 组成部分分析</h3><p>我们通过在简单 CrystalDiT 架构上与传统的一维原子序数编码进行比较，评估了二维原子表示的贡献。一维原子表示的详细实现见 <code>Appendix B</code>。</p>
+<p>如 <code>Table 1</code> 所示，我们基于二维元素周期表的表示（CrystalDiT Simple：8.78% SUN rate）显著优于一维编码（CrystalDiT 1D atomic：6.28% SUN rate）。虽然一维方法达到了更高的 UN rate（78.47% vs 63.28%），但生成结构表现出较低的稳定性比例（8.00% vs 13.87% stable rate），从而导致最终发现性能较差。这表明嵌入在元素周期表结构中的化学知识提升了生成晶体在材料发现中的质量。</p>
+<p>我们还对架构深度进行了消融研究，发现 18 层在模型容量与泛化之间提供了最优平衡。详细结果见 <code>Appendix C</code>。</p>
+<h3 id="4-6-能量分布分析"><a href="#4-6-能量分布分析" class="headerlink" title="4.6 能量分布分析"></a>4.6 能量分布分析</h3><p><code>Figure 2</code> 展示了 CrystalDiT 与代表性基线方法 FlowMM 之间的能量分布比较。我们的分析显示，相比 FlowMM，CrystalDiT 在生成热力学有利结构方面表现出更强能力。CrystalDiT 在稳定区域（$E_{\mathrm{hull}} &lt; 0$）显示出明显峰值，表明我们的简化架构能够有效学习生成能量上有利的晶体结构。能量分布提供了关键验证：CrystalDiT 不仅生成了更多唯一且新颖结构，而且还确保这些结构更可能在实际材料应用中具有热力学可行性。</p>
+<p>在与其他基线方法（ADiT、MatterGen、DiffCSP++）比较时，也观察到了类似模式，CrystalDiT 始终生成更多稳定和亚稳态结构。这些全面的能量分布分析见 <code>Appendix C</code>，进一步强化了我们的主要发现：在晶体生成任务中，具有适当领域知识的简单且设计良好的架构能够优于复杂替代方案。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615135431178.png" style="zoom:45%;">
+
+
+
+<h3 id="4-7-扩展到更大结构"><a href="#4-7-扩展到更大结构" class="headerlink" title="4.7 扩展到更大结构"></a>4.7 扩展到更大结构</h3><p>CrystalDiT 在 MPTS-52（最多 52 个原子）上达到了 6.73% 的 SUN rate，相比 MP-20 仅下降 2%，显示出有效的泛化能力。详细结果见 <code>Appendix C</code>。</p>
+<h2 id="5-结论"><a href="#5-结论" class="headerlink" title="5 结论"></a>5 结论</h2><p>我们提出了 CrystalDiT，证明简化架构能够在晶体生成中显著优于复杂替代方案。我们的统一扩散 Transformer 在 MP-20 上实现了 8.78% 的 SUN rate，并通过三项关键贡献优于现有方法：（1）一种使用统一注意力机制的简化架构；（2）一种使用元素周期表位置的二维原子表示；以及（3）一种优化生成质量和发现潜力的均衡模型选择策略 <code>Balance Score</code>。</p>
+<p>除生成孤立结构之外，未来研究的重要方向包括将我们的框架扩展到材料—分子相互作用系统（Bian, Wu, and Yan 2026; Bian et al. 2026），这可能促进用于催化、药物递送和能源应用的功能材料发现。此外，将目标性质约束纳入生成过程，将允许直接设计具有期望特性的材料，从而进一步推动 AI 驱动的材料发现。</p>
+<h2 id="6-致谢"><a href="#6-致谢" class="headerlink" title="6 致谢"></a>6 致谢</h2><p>本工作得到了广东省自然科学基金（资助号 2025A1515011946）和新加坡国立大学计算机学院（YB 的资助号 A-0010308-00-00）的支持。部分工作是在 Xiaohan Yi 和 Guikun Xu 任职于腾讯 AI Lab 期间完成的。我们感谢腾讯提供的计算资源，感谢 Tao Chen 富有洞见的讨论，并感谢匿名审稿人提出的建设性反馈。</p>
+<h2 id="A-评估指标"><a href="#A-评估指标" class="headerlink" title="A 评估指标"></a>A 评估指标</h2><h3 id="A-1-评估指标说明"><a href="#A-1-评估指标说明" class="headerlink" title="A.1 评估指标说明"></a>A.1 评估指标说明</h3><p>我们的综合评估框架为每种方法生成 10,000 个晶体结构，并由两个主要阶段组成：（1）结构与成分评估，以及（2）热力学稳定性评估。本节提供详细的实现规范，以便复现。</p>
+<h4 id="阶段-1：结构与成分评估"><a href="#阶段-1：结构与成分评估" class="headerlink" title="阶段 1：结构与成分评估"></a>阶段 1：结构与成分评估</h4><h5 id="初始结构解析与预过滤"><a href="#初始结构解析与预过滤" class="headerlink" title="初始结构解析与预过滤"></a>初始结构解析与预过滤</h5><p>所有 10,000 个生成的 CIF 文件都会先经过初始解析和系统性预过滤，并采用特定的有效性标准。预过滤过程按如下顺序进行检查：</p>
+<ol>
+<li>使用 PyMatGen 的 <code>CifParser</code> 解析每个 CIF 文件，以提取结构信息</li>
+<li>提取晶格参数（长度和角度）以及原子信息</li>
+<li>按如下顺序应用预过滤标准：<ul>
+<li>原子序数范围检查：所有原子序数必须位于 <code>[1, 104]</code></li>
+<li>正晶格参数：所有晶格长度必须为正（<code>&gt; 0</code>）</li>
+<li>NaN&#x2F;Inf 值检查：晶格参数、角度或原子坐标中不能有 NaN 或无穷值</li>
+<li>PyMatGen <code>Structure</code> 构造：必须成功构造有效的 <code>Structure</code> 对象</li>
+<li>最小体积检查：晶体体积必须 <code>≥ 0.1 Å^3</code></li>
+</ul>
+</li>
+<li>任何一项预过滤标准不满足的结构都会被标记为无效，并给出具体错误原因</li>
+<li>所有百分比计算都以 10,000 为分母，将预过滤掉的结构视为无效</li>
+</ol>
+<p>预过滤作为一个全面的质量门控，确保只有具有物理意义的晶体结构进入后续的详细评估。具有无效原子组成、退化晶格参数、数值错误或不现实的小体积的结构都会被系统性排除。</p>
+<h5 id="结构有效性评估-stru-val"><a href="#结构有效性评估-stru-val" class="headerlink" title="结构有效性评估 stru_val"></a>结构有效性评估 <code>stru_val</code></h5><p>结构有效性使用基于距离的几何约束，遵循 FlowMM 协议（Miller et al. 2024）：</p>
+<p>$$<br>\mathrm{Structural\ Validity} &#x3D;<br>\begin{cases}<br>\mathrm{True} &amp; \text{if } \min(\mathrm{distance\ matrix}) \ge 0.5 \ \mathrm{\AA} \text{ and } V_{\mathrm{cell}} \ge 0.1 \ \mathrm{\AA}^3 \<br>\mathrm{False} &amp; \text{otherwise}<br>\end{cases}<br>$$</p>
+<p>其中，距离矩阵不包括自相互作用（对角线元素设为无穷大）。</p>
+<h5 id="成分有效性评估-comp-val"><a href="#成分有效性评估-comp-val" class="headerlink" title="成分有效性评估 comp_val"></a>成分有效性评估 <code>comp_val</code></h5><p>化学有效性使用 SMACT 框架，并带有超时保护：</p>
+<ol>
+<li>从 <code>Structure</code> 对象中提取元素组成</li>
+<li>枚举所有元素的氧化态组合</li>
+<li>应用电荷中性条件：$\sum_i n_i \cdot z_i &#x3D; 0$</li>
+<li>应用 Pauling 电负性检验</li>
+<li>金属合金例外：所有金属结构都视为有效</li>
+<li>每个结构设置 30 秒超时，以防止无限枚举</li>
+</ol>
+<h5 id="分布距离指标"><a href="#分布距离指标" class="headerlink" title="分布距离指标"></a>分布距离指标</h5><p>性质分布保真度通过 Wasserstein 距离量化。对于同时通过结构和化学有效性测试的结构，我们随机采样 1000 个结构（若少于 1000 个则使用全部），并与 MP-20 测试集进行比较：</p>
+<p>$$<br>d_\rho &#x3D; W_1(\rho_{\mathrm{gen,sample}}, \rho_{\mathrm{test}})<br>$$</p>
+<p>$$<br>d_{\mathrm{elem}} &#x3D; W_1(E_{\mathrm{gen,sample}}, E_{\mathrm{test}})<br>$$</p>
+<p>其中，$\rho$ 表示密度分布，$E$ 表示元素出现频率分布。</p>
+<h5 id="唯一性与新颖性评估"><a href="#唯一性与新颖性评估" class="headerlink" title="唯一性与新颖性评估"></a>唯一性与新颖性评估</h5><p>这两个指标都使用 PyMatGen 的 <code>StructureMatcher</code> 默认参数：</p>
+<ul>
+<li><code>ltol</code>: 0.2（晶格参数容差）</li>
+<li><code>stol</code>: 0.3（位点位置容差）</li>
+<li><code>angle tol</code>: 5°（晶格角度容差）</li>
+<li><code>primitive cell</code>: <code>True</code>, <code>scale</code>: <code>True</code>, <code>attempt supercell</code>: <code>False</code></li>
+</ul>
+<p><strong>化学系统分组优化：</strong> 结构首先按化学系统（按元素类型排序）分组，再进行两两比较。该优化将计算复杂度从 $O(n^2)$ 降低到 $O(\sum_i n_i^2)$，且经测试不影响结果。</p>
+<p><strong>单元素过滤：</strong> 在 UN 评估阶段，仅包含一种元素类型的结构会被排除，不参与唯一性和新颖性计算。该过滤仅用于 UN rate 计算，而不用于初始预处理阶段。</p>
+<p><strong>唯一性：</strong> 将结构与同一化学系统中所有其他生成结构进行比较。若某结构与任何其他结构都不匹配，则该结构是唯一的。</p>
+<p><strong>新颖性：</strong> 将生成结构与 MP-20 训练集在同一化学系统内进行比较，遵循 FlowMM 的化学系统优化方法。<br>$$<br>\mathrm{UN\ Rate} &#x3D; \frac{\mathrm{Structures\ that\ are\ both\ unique\ and\ novel}}{10,000}<br>$$</p>
+<h4 id="阶段-2：热力学稳定性评估"><a href="#阶段-2：热力学稳定性评估" class="headerlink" title="阶段 2：热力学稳定性评估"></a>阶段 2：热力学稳定性评估</h4><h5 id="候选结构选择与-CHGNet-预弛豫"><a href="#候选结构选择与-CHGNet-预弛豫" class="headerlink" title="候选结构选择与 CHGNet 预弛豫"></a>候选结构选择与 CHGNet 预弛豫</h5><p>从阶段 1 识别出的 UN 结构中，我们随机抽取 500 个结构进行稳定性评估。每个结构都使用增强参数进行 CHGNet 预弛豫：</p>
+<ul>
+<li>最大弛豫步数：2,500（相比 FlowMM（Miller et al. 2024）中的 1,000）</li>
+<li>结构优化：同时优化原子位置和晶格参数</li>
+</ul>
+<h5 id="DFT-候选过滤"><a href="#DFT-候选过滤" class="headerlink" title="DFT 候选过滤"></a>DFT 候选过滤</h5><p><u>根据 CHGNet 预测的凸包上方能量选择进行 DFT 计算的结构</u>：<br>$$<br>E^{\mathrm{CHGNet}}_{\mathrm{hull}} &lt; 0.5 \ \mathrm{eV&#x2F;atom}<br>$$</p>
+<p><u>这一扩大阈值（相比 FlowMM 的 0.1 eV&#x2F;atom）能够实现更全面的稳定性评估</u>，约可从 500 个 UN 结构中选出 490 个进行 DFT 计算，而 FlowMM 仅评估 261 个结构。</p>
+<h5 id="DFT-弛豫协议"><a href="#DFT-弛豫协议" class="headerlink" title="DFT 弛豫协议"></a>DFT 弛豫协议</h5><p>DFT 计算采用 VASP（Kresse and Furthmüller 1996），并使用 Materials Project Relaxation Set（MPRelaxSet）参数（Jain et al. 2013），包括 PBE-GGA 交换关联泛函、PAW 赝势，以及合适的 k 点采样和收敛判据。</p>
+<h5 id="凸包上方能量计算"><a href="#凸包上方能量计算" class="headerlink" title="凸包上方能量计算"></a>凸包上方能量计算</h5><p>最终稳定性评估使用最新的 Materials Project 凸包（2024 年 12 月版本），并采用 Materials Project 2020 兼容性修正：</p>
+<p>$$<br>E_{\mathrm{hull}} &#x3D; E^{\mathrm{corrected}}<em>{\mathrm{DFT}} - E^{\mathrm{MP}}</em>{\mathrm{hull}}<br>$$</p>
+<p>$$<br>\mathrm{Stable}: \quad E_{\mathrm{hull}} &lt; 0.0 \ \mathrm{eV&#x2F;atom}<br>$$</p>
+<p>$$<br>\mathrm{Metastable}: \quad E_{\mathrm{hull}} &lt; 0.1 \ \mathrm{eV&#x2F;atom}<br>$$</p>
+<h5 id="最终发现指标"><a href="#最终发现指标" class="headerlink" title="最终发现指标"></a>最终发现指标</h5><p>$$<br>\mathrm{SUN\ Rate} &#x3D; \mathrm{UN\ Rate} \times \frac{\mathrm{Stable\ UN\ structures}}{500}<br>$$</p>
+<p>$$<br>\mathrm{MSUN\ Rate} &#x3D; \mathrm{UN\ Rate} \times \frac{\mathrm{Metastable\ UN\ structures}}{500}<br>$$</p>
+<h3 id="A-2-结果分析"><a href="#A-2-结果分析" class="headerlink" title="A.2 结果分析"></a>A.2 结果分析</h3><h4 id="MatterGen-评估差异分析"><a href="#MatterGen-评估差异分析" class="headerlink" title="MatterGen 评估差异分析"></a>MatterGen 评估差异分析</h4><p>由于数据集特定的评估协议，我们对 MatterGen 的评估结果与原论文不同。<code>Table 3</code> 比较了使用不同参考数据集时的新颖性评估。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615155148516.png" style="zoom:50%;">
+
+<p>这种差异的产生是因为 MatterGen 原始评估使用了更大的 Alexandria-MP-20 数据集作为新颖性参考。Alexandria-MP-20 包含 607,683 个训练结构，而 MP-20 仅包含 27,136 个训练结构，因此新颖性评估更严格。由于我们评估的是在 MP-20 上训练的 MatterGen 模型，因此与 MP-20 训练集比较才是合适的新颖性评估。我们的结果（89.89% UN rate）代表了基于 MP-20 的模型性能的正确评估。</p>
+<h4 id="FlowMM-评估协议差异"><a href="#FlowMM-评估协议差异" class="headerlink" title="FlowMM 评估协议差异"></a>FlowMM 评估协议差异</h4><p>由于两个方法学改进，我们对 FlowMM 的重新评估得到了比原论文更高的稳定性比例：</p>
+<p><strong>更新的凸包数据库：</strong> 我们使用最新的 Materials Project 凸包（2024 年 12 月版本），与原始 FlowMM 评估中使用的早期版本相比，它提供了更准确的热力学参考数据。</p>
+<p><strong>扩展的 DFT 候选选择：</strong> 我们的协议评估更多结构，以进行更全面的稳定性分析：</p>
+<ul>
+<li>FlowMM 协议：CHGNet $E_{\mathrm{hull}} &lt; 0.1$ eV&#x2F;atom → 评估 261&#x2F;500 个结构；</li>
+<li>我们的协议：CHGNet $E_{\mathrm{hull}} &lt; 0.5$ eV&#x2F;atom → 评估 490&#x2F;500 个结构。（由于）</li>
+</ul>
+<p>这一扩展评估更能代表 UN 结构总体中的稳定性比例，减少了因过于严格的预筛选而可能产生的采样偏差。我们观察到的更高稳定性比例，既反映了更好的热力学参考数据，也反映了更全面的总体采样。</p>
+<h2 id="B-消融研究"><a href="#B-消融研究" class="headerlink" title="B 消融研究"></a>B 消融研究</h2><h3 id="B-1-双流架构"><a href="#B-1-双流架构" class="headerlink" title="B.1 双流架构"></a>B.1 双流架构</h3><p>为验证“在晶体生成中，架构简单性优于复杂性”这一假设，我们实现了一个带有交叉注意力机制、级联处理的复杂双流变体。该复杂架构作为与我们统一方法的直接比较对象。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260614222635426.png" style="zoom:50%;">
+
+<h4 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h4><p>双流架构实现了一个复杂的三阶段级联处理范式，如 <code>Figure 3</code> 所示。经过晶体嵌入后，架构先将 20 个原子 token 和 3 个晶格向量 token 分别通过独立路径处理，然后再进行复杂的联合处理。</p>
+<h5 id="阶段-1：独立原子处理"><a href="#阶段-1：独立原子处理" class="headerlink" title="阶段 1：独立原子处理"></a>阶段 1：独立原子处理</h5><p><u>原子路径</u>通过 12 个专门的 DiT 块，使用纯自注意力机制处理 20 个原子 token。这使模型能够学习原子集合内部复杂的原子间关系和化学模式，而不受晶格几何约束的干扰。</p>
+<h5 id="阶段-2：独立晶格处理"><a href="#阶段-2：独立晶格处理" class="headerlink" title="阶段 2：独立晶格处理"></a>阶段 2：独立晶格处理</h5><p>并行地，3 个晶格向量 token 通过 2 个专门的 DiT 块进行自注意力处理。该独立路径使模型能够独立于原子组成信息，学习晶格特有的几何和晶体学模式。</p>
+<h5 id="阶段-3：复杂联合处理"><a href="#阶段-3：复杂联合处理" class="headerlink" title="阶段 3：复杂联合处理"></a>阶段 3：复杂联合处理</h5><p>最后阶段使用 2 个联合 DiT 块，在每个块内实现一个复杂的四步注意力机制：</p>
+<ol>
+<li>初始自注意力：分别对原子和晶格特征进行自注意力</li>
+<li>双向交叉注意力：同时进行晶格→原子和原子→晶格的信息交换</li>
+<li>交叉后的自注意力：在跨模态信息融合后再进行额外自注意力</li>
+<li>独立 MLP 处理：两个流分别通过独立前馈网络处理</li>
+</ol>
+<p>每个联合块中的注意力流如下：</p>
+<p>$$<br>\mathrm{Atom}’ &#x3D; \mathrm{Atom} + \mathrm{SelfAttn}(\mathrm{Atom}) \tag{31}<br>$$</p>
+<p>$$<br>\mathrm{Lattice}’ &#x3D; \mathrm{Lattice} + \mathrm{SelfAttn}(\mathrm{Lattice}) \tag{32}<br>$$</p>
+<p>$$<br>\mathrm{Atom}’’ &#x3D; \mathrm{Atom}’ + \mathrm{CrossAttn}(\mathrm{Atom}’, \mathrm{Lattice}’) \tag{33}<br>$$</p>
+<p>$$<br>\mathrm{Lattice}’’ &#x3D; \mathrm{Lattice}’ + \mathrm{CrossAttn}(\mathrm{Lattice}’, \mathrm{Atom}’) \tag{34}<br>$$</p>
+<p>$$<br>\mathrm{Atom}_{\mathrm{out}} &#x3D; \mathrm{Atom}’’ + \mathrm{SelfAttn}(\mathrm{Atom}’’) + \mathrm{MLP}(\mathrm{Atom}’’) \tag{35}<br>$$</p>
+<p>$$<br>\mathrm{Lattice}_{\mathrm{out}} &#x3D; \mathrm{Lattice}’’ + \mathrm{SelfAttn}(\mathrm{Lattice}’’) + \mathrm{MLP}(\mathrm{Lattice}’’) \tag{36}<br>$$</p>
+<p>这种带有复杂交叉注意力机制的级联设计，相比我们的统一方法具有显著的架构复杂性，需要在多个处理流和注意力机制之间进行精细协调。</p>
+<h4 id="计算复杂度分析"><a href="#计算复杂度分析" class="headerlink" title="计算复杂度分析"></a>计算复杂度分析</h4><p>我们在相同训练条件下，使用 8×V100 GPU、批大小 256，测量了两种架构的实际计算开销。</p>
+<p>该复杂架构引入了 7.98% 的训练时间开销，主要来自联合块中的双向交叉注意力计算。虽然这一开销看起来可控，但性能下降却很显著：复杂模型的 SUN rate 为 6.36%，而简单架构为 9.62%，发现性能相对下降了 34%。</p>
+<p>这一实证分析揭示了一个关键洞见：架构复杂性的计算开销相对较小，但对泛化能力的影响却很严重。交叉注意力机制虽然在计算上可处理，但会从根本上改变模型的学习动态，促使其过拟合训练数据模式。<strong>这表明，对于科学生成建模任务而言，瓶颈不在计算资源，而在于引导模型学习的架构归纳偏置。</strong></p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615135126949.png" style="zoom:45%;">
+
+<h4 id="交叉注意力机制分析"><a href="#交叉注意力机制分析" class="headerlink" title="交叉注意力机制分析"></a>交叉注意力机制分析</h4><p>联合块中的双向交叉注意力机制旨在捕获原子位置与晶格参数之间错综复杂的关系。然而，我们的分析表明，这种复杂的交互建模会导致过拟合行为。复杂模型取得了更高的单项有效性分数（结构有效性 98.39%，成分有效性 89.44%），但新颖性比例显著更低，这表明交叉注意力机制可能促进对训练模式的记忆，而非对新晶体结构的泛化。</p>
+<h3 id="B-2-一维原子表示"><a href="#B-2-一维原子表示" class="headerlink" title="B.2 一维原子表示"></a>B.2 一维原子表示</h3><p>为评估我们基于二维元素周期表编码的贡献，我们实现了一个使用传统一维原子序数表示的基线。</p>
+<h4 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h4><p>一维表示直接使用原子序数对原子进行编码，并归一化到 <code>[-1, 1]</code>：</p>
+<p>$$<br>z_{\mathrm{norm}} &#x3D; \frac{2z}{Z_{\max}} - 1<br>$$</p>
+<p>其中，$z$ 是原子序数，$Z_{\max} &#x3D; 94$ 表示 MP-20 数据集中的最大原子序数。无效原子（空位置）表示为 $z_{\mathrm{norm}} &#x3D; -1$。</p>
+<p>因此，原子特征向量变为 4 维：<code>[z_norm, x, y, z]</code>，而不是我们 5 维的周期表示 <code>[r_norm, c_norm, x, y, z]</code>。这种编码保留了原子身份，但丢失了元素周期表结构中蕴含的内在化学关系。</p>
+<h4 id="化学知识整合"><a href="#化学知识整合" class="headerlink" title="化学知识整合"></a>化学知识整合</h4><p>这两种表示的关键区别在于化学知识的整合方式：</p>
+<p><strong>一维原子序数：</strong> 由原子序数直接映射提供了精确的元素识别，但将每个元素视为彼此独立。元素之间的化学相似性（例如碱金属、过渡金属）没有在表示空间中被显式编码。</p>
+<p><strong>二维元素周期表：</strong> 我们的方法通过在归一化的（周期，族）空间中的空间邻近性来嵌入化学关系。具有相似性质的元素会自然聚集在嵌入空间中，为化学推理提供归纳偏置。</p>
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><p>一维表示的 UN rate 更高（78.47% vs 63.28%），但稳定性比例显著更低（UN 结构中的稳定率为 8.0% vs 15.2%）。这一权衡导致最终发现指标更差（SUN rate 为 6.2% vs 9.62%），表明嵌入在元素周期表结构中的化学知识增强了生成晶体的实际效用。</p>
+<h3 id="B-3-架构深度消融"><a href="#B-3-架构深度消融" class="headerlink" title="B.3 架构深度消融"></a>B.3 架构深度消融</h3><p>为验证我们选择 18 个 DiT 块的合理性，我们针对不同模型深度进行了系统消融研究。<code>Table 5</code> 给出了综合结果。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615140026523.png" style="zoom:45%;">
+
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>结果揭示了模型容量与泛化之间的清晰权衡：</p>
+<p><strong>浅层模型（6 层）：</strong> 具有最高的 UN rate（82.4%），但 SUN rate 较低（5.78%），表明其探索过度而质量控制不足。有限容量无法捕获复杂的稳定性模式。</p>
+<p><strong>最优深度（18 层）：</strong> 提供了最佳发现性能，SUN rate 为 8.78%。该深度在生成新颖结构与确保热力学稳定性之间实现了最优平衡。</p>
+<p><strong>深层模型（24 层）：</strong> 与 18 层相比，表现出过拟合行为，UN rate 降低至 56.8%，SUN rate 也略降至 7.10%。过大的容量导致对训练模式的记忆，削弱了探索能力。</p>
+<p>这一系统分析验证了我们的架构选择，并表明模型深度是晶体生成任务中的关键超参数。</p>
+<h3 id="B-4-归一化消融"><a href="#B-4-归一化消融" class="headerlink" title="B.4 归一化消融"></a>B.4 归一化消融</h3><p>为验证我们<strong>晶格归一化策略</strong>的重要性，我们在不使用 <code>Sec 3.1.2</code> 所述归一化的情况下训练 CrystalDiT。</p>
+<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p>未归一化模型达到 49.4% 的 UN rate、4.70% 的 SUN rate 和 18.04% 的 MSUN rate，明显低于我们的归一化方法（63.3% UN、8.78% SUN、25.90% MSUN）。</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>如果没有归一化，晶格参数值的宽范围（MP-20 中约从 3 Å 到 46 Å）会造成训练不稳定，并阻碍晶格—原子相关性的有效学习。这验证了在材料科学应用中的扩散模型里，适当的特征缩放至关重要。</p>
+<h3 id="B-5-元素分布分析"><a href="#B-5-元素分布分析" class="headerlink" title="B.5 元素分布分析"></a>B.5 元素分布分析</h3><p><code>Figure 4</code> 展示了我们三种模型变体的元素数量分布，揭示了关于化学多样性和复杂性处理的重要洞见。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615140852183.png" style="zoom:35%;">
+
+<h4 id="分布特征"><a href="#分布特征" class="headerlink" title="分布特征"></a>分布特征</h4><p>三种变体在整体上都呈现出相似模式，在 3 元组成附近达到峰值，这与 MP-20 训练数据分布一致。然而，仍存在细微但重要的差异：</p>
+<p><strong>CrystalDiT（Complex）：</strong> 显示出最受约束的分布（均值：3.016 个元素，标准差：0.851），其中 50.38% 的结构恰好包含 3 种元素。较窄的分布表明复杂架构倾向于保守、类似训练数据的组成。</p>
+<p><strong>CrystalDiT（Simple）：</strong> 表现出稍高的多样性（均值：3.199 个元素，标准差：0.925），包含 4 种及以上元素的结构更多（31.76%，而复杂模型为 24.62%）。更宽的分布表明在保持稳定性的同时，对化学空间有更好的探索。</p>
+<p><strong>CrystalDiT（1D atomic）：</strong> 展现出最高的变异性（标准差：1.016），但这种多样性提升是以稳定性为代价的，这一点已在我们的主要结果中通过更低的稳定率体现出来。</p>
+<h4 id="化学复杂性与稳定性的权衡"><a href="#化学复杂性与稳定性的权衡" class="headerlink" title="化学复杂性与稳定性的权衡"></a>化学复杂性与稳定性的权衡</h4><p>元素分布分析揭示了晶体生成中的一个基本权衡：更高的化学多样性可以带来更多新颖发现，但必须与热力学稳定性保持平衡。我们的简单架构与二维元素周期表示实现了最优平衡，生成了适度多样、同时保持较高稳定率的化学组成。</p>
+<p>复杂架构受限的分布与其过拟合行为一致——它生成的是更安全、更像训练数据的组成，但错失了新颖发现的机会。相反，一维表示在缺乏化学指导的情况下表现出过度多样性，导致不稳定且不切实际的结构。</p>
+<p>这一分析进一步强化了我们的主要发现：架构简单性结合适当的化学知识（二维周期表示）是材料发现应用中最有效的方法。</p>
+<h2 id="C-额外结果"><a href="#C-额外结果" class="headerlink" title="C 额外结果"></a>C 额外结果</h2><h3 id="C-1-Balance-Score-分析与训练动态"><a href="#C-1-Balance-Score-分析与训练动态" class="headerlink" title="C.1 Balance Score 分析与训练动态"></a>C.1 Balance Score 分析与训练动态</h3><p>为了全面验证我们的 Balance Score 方法和训练策略，我们针对不同超参数设置下的训练动态和检查点选择进行了详细分析。</p>
+<h4 id="评估协议-1"><a href="#评估协议-1" class="headerlink" title="评估协议"></a>评估协议</h4><p>我们的训练评估遵循系统化方案：每训练250个周期即保存一次检查点，并从每个检查点生成 1,000 个晶体结构以进行全面评估。<u><strong>所有训练动态图均采用10点移动平均值，以降低随机生成过程中固有的波动性</strong></u>（对应 <code>Figure 5 &amp; 6 中的 Smoothed line</code>）。需注意，本分析中观察到的较高UN率（相较于主论文中的 10,000 种结构评估结果）是由于样本量较小所致，因为唯一性与新颖性指标会随着生成结构数量的减少而自然提升。</p>
+<h4 id="不同-alpha-值下的-Balance-Score-验证"><a href="#不同-alpha-值下的-Balance-Score-验证" class="headerlink" title="不同 alpha 值下的 Balance Score 验证"></a>不同 alpha 值下的 Balance Score 验证</h4><p><code>Figure 5</code> 展示了 $\alpha &#x3D; 1.0$ 和 $\alpha &#x3D; 2.0$ 下 Balance Score 的演化，说明了质量—发现权衡参数的影响。两条曲线整体趋势相似，但在检查点选择偏好上有所不同。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615145752408.png" style="zoom:46%;">
+
+<p>$\mathrm{Balance \ Score} &#x3D; \mathrm{UN \ Rate} \times (\mathrm{Quality \ Composite})^{\alpha}$</p>
+<p>关键差异出现在训练中期（30–60%）的选择：$\alpha &#x3D; 1.0$ 选择 epoch 16,250，而 $\alpha &#x3D; 2.0$ 选择 epoch 24,750。这表明更高的 $\alpha$ 值会更强地强调质量分量，从而选择结构和成分有效性更好的较晚检查点。早期和后期阶段的选择在两种取值下保持一致，说明训练极端阶段的表现具有鲁棒性。</p>
+<blockquote>
+<ul>
+<li>$\mathrm{Quality \ Composite}$ 取值范围 $[0, 1]$，若 $\alpha$ 更大，则 $(\mathrm{Quality \ Composite})^{\alpha}$ 对 Balance Score 的结果影响更大。</li>
+</ul>
+</blockquote>
+<h4 id="训练动态与质量—发现权衡"><a href="#训练动态与质量—发现权衡" class="headerlink" title="训练动态与质量—发现权衡"></a>训练动态与质量—发现权衡</h4><p><code>Figure 6</code> 展示了推动我们提出 Balance Score 方法的基本权衡。随着训练推进，我们观察到关键指标出现分化趋势，而传统验证方法无法捕捉这一点。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615150455315.png" style="zoom:50%;">
+
+<p>结构有效性从 95% 稳步提高到 98%，化学有效性从 80% 提升到 88%。然而，UN rate 呈现相反趋势，从约 99.5% 下降到 62%。这种分化凸显了传统基于有效性的模型选择方法的关键局限：<strong>擅长复现训练数据模式（高有效性）的模型，可能牺牲材料发现所需的探索能力（低 UN rate）</strong>。</p>
+<p>所有指标中观察到的显著波动反映了扩散模型生成的内在随机性。这些波动使得我们的 10 点平滑窗口成为必要，并进一步强调了系统性检查点评估的重要性，而非依赖单点评估。</p>
+<h4 id="三阶段检查点选择的理由"><a href="#三阶段检查点选择的理由" class="headerlink" title="三阶段检查点选择的理由"></a>三阶段检查点选择的理由</h4><p>我们的三阶段选择策略旨在应对质量—发现权衡的时间演化。早期阶段模型（epoch ≤ 15,000）具有较强的探索能力，UN rate 超过 80%，但有效性分数中等。后期阶段模型（epoch &gt; 30,000）则获得了出色的有效性指标，但新颖生成能力下降。中期模型代表了最佳折中点，在质量和发现潜力之间保持平衡。</p>
+<p>这一时间分析验证了我们的多阶段选择方法：没有任何单一训练阶段能持续产出材料发现的最优模型。相反，最佳检查点需要借助我们的 Balance Score 框架，在所有训练阶段进行系统评估后才能确定。</p>
+<h3 id="C-2-完整能量分布比较"><a href="#C-2-完整能量分布比较" class="headerlink" title="C.2 完整能量分布比较"></a>C.2 完整能量分布比较</h3><h4 id="热力学有利性分析"><a href="#热力学有利性分析" class="headerlink" title="热力学有利性分析"></a>热力学有利性分析</h4><p>为了补充主文中与 FlowMM 的比较，<code>Figure 7</code> 提供了所有基线方法的完整能量分布分析。这些分布揭示了 CrystalDiT 在生成热力学有利晶体结构方面的优越能力。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615153300184.png" style="zoom:33%;">
+
+<p>在所有比较中，CrystalDiT 都展现出在热力学有利性方面的一致优势：</p>
+<p><strong>增强的稳定结构生成：</strong> 在热力学稳定区域（$E_{\mathrm{hull}} &lt; 0$），CrystalDiT 的密度峰值显著高于所有基线方法。这表明其生成能量有利晶体结构的能力更强。</p>
+<p><strong>集中的能量分布：</strong> CrystalDiT 在 0 eV&#x2F;atom 附近产生更尖锐的峰，说明与基线方法更宽、更分散的分布相比，其生成结构更接近热力学平衡。</p>
+<p><strong>减少高能结构：</strong> 在高能区域（$E_{\mathrm{hull}} &gt; 0.1$ eV&#x2F;atom），CrystalDiT 生成的结构显著更少，说明它更能避免热力学不利的构型。</p>
+<p>这些能量分布模式提供了关键验证：CrystalDiT 的简化架构不仅能生成更多唯一且新颖的结构，还能确保这些结构具有更优的热力学可行性，适用于实际材料应用。与所有基线方法比较时的稳定表现进一步强化了我们的结论：统一注意力机制在学习具有物理意义的晶体生成模式方面非常有效。</p>
+<h3 id="C-3-扩展到更大晶体结构"><a href="#C-3-扩展到更大晶体结构" class="headerlink" title="C.3 扩展到更大晶体结构"></a>C.3 扩展到更大晶体结构</h3><p>为评估 CrystalDiT 在超出 MP-20 20 原子限制之外的泛化能力，我们在 MPTS-52 上进行了实验。MPTS-52 是一个更具挑战性的数据集，包含最多 52 个原子的晶体结构。我们使用相同超参数训练 CrystalDiT（Simple），仅将最大原子数从 20 增加到 52。</p>
+<h4 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h4><p>CrystalDiT 在 MPTS-52 上达到了 6.73% 的 SUN rate，尽管最大结构尺寸增加了 2.6 倍，相比 MP-20 性能仅下降 2.05 个绝对百分点。这一温和退化表明，我们的简化架构与元素周期表示有效捕获了可跨越不同结构复杂度迁移的基本化学原理，验证了该方法在发现更大、更复杂材料方面的实际价值。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260615153537742.png" style="zoom:50%;">
+
+
+
+<h2 id="D-可视化"><a href="#D-可视化" class="headerlink" title="D 可视化"></a>D 可视化</h2><h3 id="D-1-生成的晶体结构"><a href="#D-1-生成的晶体结构" class="headerlink" title="D.1 生成的晶体结构"></a>D.1 生成的晶体结构</h3><p><code>Figure 8</code> 展示了由 CrystalDiT 生成的代表性晶体结构，这些结构同时满足高唯一性&#x2F;新颖性和热力学稳定性。这些结构证明了模型能够在保持真实原子排列和空间群对称性的同时，发现多样的晶体化学。每个结构都代表了我们 SUN（Stable, Unique, Novel）评估中的一个成功示例，确认 CrystalDiT 能够生成具有真实发现潜力的材料。</p>
+<p>这些可视化揭示了几个关键洞见：（1）CrystalDiT 可以跨越多样化的化学系统生成结构，从稀土化合物到过渡金属合金；（2）生成的结构具有正确的配位环境和真实的键长；（3）模型成功捕捉了多种空间群对称性，从高对称性的四方体系到低对称性的三斜结构；以及（4）化学组成遵循与材料科学原理一致的合理化学计量比。</p>
+<p>这些示例所展示的结构多样性验证了我们方法在材料发现中的有效性。<code>La2CeSn7</code> 结构代表一种具有复杂层状排列的稀土锡化物，这种结构特征典型地存在于 <code>RE2TSn7</code> 系列化合物中；<code>PmGa3Cu</code> 呈现出稀土—镓—铜体系中常见的四方晶系结构；<code>TbDy2In3Cu3</code> 展示了 CrystalDiT 生成含有多种过渡金属的混合稀土化合物的能力；<code>Tb3Dy3Pd8</code> 则证明其能够成功生成复杂的铂族金属合金。</p>
+<p>这些可视化结果确认，CrystalDiT 不仅在定量上实现了较高的 SUN rate，而且生成了化学上有意义且结构上真实的结构，使其成为实验合成和进一步材料性质探索的可行候选。</p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Diffusion-Transformer/">Diffusion, Transformer</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/06/09/JPX%20Tokyo%20Stock%20Exchange%20Prediction(2)/"
+                                   title="JPX Tokyo Stock Exchange Prediction (2) - Time Series Engineering"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">JPX Tokyo Stock Exchange Prediction (2) - Time Series Engineering</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CrystalDiT-A-Diffusion-Transformer-for-Crystal-Generation"><span class="nav-text">CrystalDiT: A Diffusion Transformer for Crystal Generation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CrystalDiT%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E6%99%B6%E4%BD%93%E7%94%9F%E6%88%90%E7%9A%84%E6%89%A9%E6%95%A3-Transformer"><span class="nav-text">CrystalDiT：一种用于晶体生成的扩散 Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">2 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%96%B9%E6%B3%95"><span class="nav-text">3 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%99%B6%E4%BD%93%E8%A1%A8%E7%A4%BA"><span class="nav-text">3.1 晶体表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E5%8E%9F%E5%AD%90%E8%A1%A8%E7%A4%BA"><span class="nav-text">二维原子表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E6%99%B6%E6%A0%BC%E5%8F%82%E6%95%B0%E5%8C%96"><span class="nav-text">归一化晶格参数化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%BB%93%E6%9E%84%E8%A1%A8%E7%A4%BA"><span class="nav-text">完整结构表示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">3.2 架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80-DiT-%E6%9E%B6%E6%9E%84"><span class="nav-text">统一 DiT 架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%AF%94%E8%BE%83"><span class="nav-text">架构比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">3.3 训练目标与模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E6%95%A3%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">扩散损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%87%E8%A1%A1%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5"><span class="nav-text">均衡模型选择策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B"><span class="nav-text">3.4 推理过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%BC%8F%E5%8E%9F%E5%AD%90%E8%A7%A3%E7%A0%81"><span class="nav-text">概率式原子解码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%BC%8F%E5%8E%9F%E5%AD%90%E8%A7%A3%E7%A0%81-1"><span class="nav-text">概率式原子解码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%9E%E9%AA%8C%E4%B8%8E%E7%BB%93%E6%9E%9C"><span class="nav-text">4 实验与结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-text">4.1 实验设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE"><span class="nav-text">统一评估协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">数据集与预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="nav-text">模型配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%BA%BF%E6%96%B9%E6%B3%95"><span class="nav-text">基线方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE"><span class="nav-text">评估协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C"><span class="nav-text">4.2 主要结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%9E%B6%E6%9E%84%E6%AF%94%E8%BE%83%E5%88%86%E6%9E%90"><span class="nav-text">4.3 架构比较分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">4.4 训练动态与模型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-text">4.5 组成部分分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E8%83%BD%E9%87%8F%E5%88%86%E5%B8%83%E5%88%86%E6%9E%90"><span class="nav-text">4.6 能量分布分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E6%89%A9%E5%B1%95%E5%88%B0%E6%9B%B4%E5%A4%A7%E7%BB%93%E6%9E%84"><span class="nav-text">4.7 扩展到更大结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%93%E8%AE%BA"><span class="nav-text">5 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%87%B4%E8%B0%A2"><span class="nav-text">6 致谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-text">A 评估指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-1-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E8%AF%B4%E6%98%8E"><span class="nav-text">A.1 评估指标说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-1%EF%BC%9A%E7%BB%93%E6%9E%84%E4%B8%8E%E6%88%90%E5%88%86%E8%AF%84%E4%BC%B0"><span class="nav-text">阶段 1：结构与成分评估</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%A2%84%E8%BF%87%E6%BB%A4"><span class="nav-text">初始结构解析与预过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0-stru-val"><span class="nav-text">结构有效性评估 stru_val</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%88%90%E5%88%86%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0-comp-val"><span class="nav-text">成分有效性评估 comp_val</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E8%B7%9D%E7%A6%BB%E6%8C%87%E6%A0%87"><span class="nav-text">分布距离指标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E6%80%A7%E4%B8%8E%E6%96%B0%E9%A2%96%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="nav-text">唯一性与新颖性评估</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-2%EF%BC%9A%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%A8%B3%E5%AE%9A%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="nav-text">阶段 2：热力学稳定性评估</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%80%99%E9%80%89%E7%BB%93%E6%9E%84%E9%80%89%E6%8B%A9%E4%B8%8E-CHGNet-%E9%A2%84%E5%BC%9B%E8%B1%AB"><span class="nav-text">候选结构选择与 CHGNet 预弛豫</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DFT-%E5%80%99%E9%80%89%E8%BF%87%E6%BB%A4"><span class="nav-text">DFT 候选过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DFT-%E5%BC%9B%E8%B1%AB%E5%8D%8F%E8%AE%AE"><span class="nav-text">DFT 弛豫协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%B8%E5%8C%85%E4%B8%8A%E6%96%B9%E8%83%BD%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="nav-text">凸包上方能量计算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E5%8F%91%E7%8E%B0%E6%8C%87%E6%A0%87"><span class="nav-text">最终发现指标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-2-%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">A.2 结果分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MatterGen-%E8%AF%84%E4%BC%B0%E5%B7%AE%E5%BC%82%E5%88%86%E6%9E%90"><span class="nav-text">MatterGen 评估差异分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FlowMM-%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE%E5%B7%AE%E5%BC%82"><span class="nav-text">FlowMM 评估协议差异</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%B6%88%E8%9E%8D%E7%A0%94%E7%A9%B6"><span class="nav-text">B 消融研究</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-1-%E5%8F%8C%E6%B5%81%E6%9E%B6%E6%9E%84"><span class="nav-text">B.1 双流架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-1%EF%BC%9A%E7%8B%AC%E7%AB%8B%E5%8E%9F%E5%AD%90%E5%A4%84%E7%90%86"><span class="nav-text">阶段 1：独立原子处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-2%EF%BC%9A%E7%8B%AC%E7%AB%8B%E6%99%B6%E6%A0%BC%E5%A4%84%E7%90%86"><span class="nav-text">阶段 2：独立晶格处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-3%EF%BC%9A%E5%A4%8D%E6%9D%82%E8%81%94%E5%90%88%E5%A4%84%E7%90%86"><span class="nav-text">阶段 3：复杂联合处理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">计算复杂度分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90"><span class="nav-text">交叉注意力机制分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-2-%E4%B8%80%E7%BB%B4%E5%8E%9F%E5%AD%90%E8%A1%A8%E7%A4%BA"><span class="nav-text">B.2 一维原子表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-text">实现细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E7%9F%A5%E8%AF%86%E6%95%B4%E5%90%88"><span class="nav-text">化学知识整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-3-%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%BA%A6%E6%B6%88%E8%9E%8D"><span class="nav-text">B.3 架构深度消融</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-4-%E5%BD%92%E4%B8%80%E5%8C%96%E6%B6%88%E8%9E%8D"><span class="nav-text">B.4 归一化消融</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-text">结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-5-%E5%85%83%E7%B4%A0%E5%88%86%E5%B8%83%E5%88%86%E6%9E%90"><span class="nav-text">B.5 元素分布分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E7%89%B9%E5%BE%81"><span class="nav-text">分布特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E5%A4%8D%E6%9D%82%E6%80%A7%E4%B8%8E%E7%A8%B3%E5%AE%9A%E6%80%A7%E7%9A%84%E6%9D%83%E8%A1%A1"><span class="nav-text">化学复杂性与稳定性的权衡</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E9%A2%9D%E5%A4%96%E7%BB%93%E6%9E%9C"><span class="nav-text">C 额外结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-1-Balance-Score-%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81"><span class="nav-text">C.1 Balance Score 分析与训练动态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE-1"><span class="nav-text">评估协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C-alpha-%E5%80%BC%E4%B8%8B%E7%9A%84-Balance-Score-%E9%AA%8C%E8%AF%81"><span class="nav-text">不同 alpha 值下的 Balance Score 验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81%E4%B8%8E%E8%B4%A8%E9%87%8F%E2%80%94%E5%8F%91%E7%8E%B0%E6%9D%83%E8%A1%A1"><span class="nav-text">训练动态与质量—发现权衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E9%98%B6%E6%AE%B5%E6%A3%80%E6%9F%A5%E7%82%B9%E9%80%89%E6%8B%A9%E7%9A%84%E7%90%86%E7%94%B1"><span class="nav-text">三阶段检查点选择的理由</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-2-%E5%AE%8C%E6%95%B4%E8%83%BD%E9%87%8F%E5%88%86%E5%B8%83%E6%AF%94%E8%BE%83"><span class="nav-text">C.2 完整能量分布比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%83%AD%E5%8A%9B%E5%AD%A6%E6%9C%89%E5%88%A9%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">热力学有利性分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-3-%E6%89%A9%E5%B1%95%E5%88%B0%E6%9B%B4%E5%A4%A7%E6%99%B6%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-text">C.3 扩展到更大晶体结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-text">D 可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#D-1-%E7%94%9F%E6%88%90%E7%9A%84%E6%99%B6%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-text">D.1 生成的晶体结构</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Jie Cao</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+        
+        <div class="deploy-info info-item">
+            
+            This site is deployed on <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/brands/github.png"></span>
+            
+        </div>
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CrystalDiT-A-Diffusion-Transformer-for-Crystal-Generation"><span class="nav-text">CrystalDiT: A Diffusion Transformer for Crystal Generation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CrystalDiT%EF%BC%9A%E4%B8%80%E7%A7%8D%E7%94%A8%E4%BA%8E%E6%99%B6%E4%BD%93%E7%94%9F%E6%88%90%E7%9A%84%E6%89%A9%E6%95%A3-Transformer"><span class="nav-text">CrystalDiT：一种用于晶体生成的扩散 Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%95%E8%A8%80"><span class="nav-text">1 引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-text">2 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%96%B9%E6%B3%95"><span class="nav-text">3 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%99%B6%E4%BD%93%E8%A1%A8%E7%A4%BA"><span class="nav-text">3.1 晶体表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E5%8E%9F%E5%AD%90%E8%A1%A8%E7%A4%BA"><span class="nav-text">二维原子表示</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%E6%99%B6%E6%A0%BC%E5%8F%82%E6%95%B0%E5%8C%96"><span class="nav-text">归一化晶格参数化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E7%BB%93%E6%9E%84%E8%A1%A8%E7%A4%BA"><span class="nav-text">完整结构表示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">3.2 架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80-DiT-%E6%9E%B6%E6%9E%84"><span class="nav-text">统一 DiT 架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%AF%94%E8%BE%83"><span class="nav-text">架构比较</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">3.3 训练目标与模型选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E6%95%A3%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-text">扩散损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9D%87%E8%A1%A1%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%E7%AD%96%E7%95%A5"><span class="nav-text">均衡模型选择策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B"><span class="nav-text">3.4 推理过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%BC%8F%E5%8E%9F%E5%AD%90%E8%A7%A3%E7%A0%81"><span class="nav-text">概率式原子解码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E7%8E%87%E5%BC%8F%E5%8E%9F%E5%AD%90%E8%A7%A3%E7%A0%81-1"><span class="nav-text">概率式原子解码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%9E%E9%AA%8C%E4%B8%8E%E7%BB%93%E6%9E%9C"><span class="nav-text">4 实验与结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%AE%9E%E9%AA%8C%E8%AE%BE%E7%BD%AE"><span class="nav-text">4.1 实验设置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE"><span class="nav-text">统一评估协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">数据集与预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="nav-text">模型配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%BA%BF%E6%96%B9%E6%B3%95"><span class="nav-text">基线方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE"><span class="nav-text">评估协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%B8%BB%E8%A6%81%E7%BB%93%E6%9E%9C"><span class="nav-text">4.2 主要结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%9E%B6%E6%9E%84%E6%AF%94%E8%BE%83%E5%88%86%E6%9E%90"><span class="nav-text">4.3 架构比较分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">4.4 训练动态与模型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86%E5%88%86%E6%9E%90"><span class="nav-text">4.5 组成部分分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E8%83%BD%E9%87%8F%E5%88%86%E5%B8%83%E5%88%86%E6%9E%90"><span class="nav-text">4.6 能量分布分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E6%89%A9%E5%B1%95%E5%88%B0%E6%9B%B4%E5%A4%A7%E7%BB%93%E6%9E%84"><span class="nav-text">4.7 扩展到更大结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%93%E8%AE%BA"><span class="nav-text">5 结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%87%B4%E8%B0%A2"><span class="nav-text">6 致谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-text">A 评估指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#A-1-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E8%AF%B4%E6%98%8E"><span class="nav-text">A.1 评估指标说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-1%EF%BC%9A%E7%BB%93%E6%9E%84%E4%B8%8E%E6%88%90%E5%88%86%E8%AF%84%E4%BC%B0"><span class="nav-text">阶段 1：结构与成分评估</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90%E4%B8%8E%E9%A2%84%E8%BF%87%E6%BB%A4"><span class="nav-text">初始结构解析与预过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0-stru-val"><span class="nav-text">结构有效性评估 stru_val</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%88%90%E5%88%86%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%84%E4%BC%B0-comp-val"><span class="nav-text">成分有效性评估 comp_val</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E8%B7%9D%E7%A6%BB%E6%8C%87%E6%A0%87"><span class="nav-text">分布距离指标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E6%80%A7%E4%B8%8E%E6%96%B0%E9%A2%96%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="nav-text">唯一性与新颖性评估</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-2%EF%BC%9A%E7%83%AD%E5%8A%9B%E5%AD%A6%E7%A8%B3%E5%AE%9A%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="nav-text">阶段 2：热力学稳定性评估</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%80%99%E9%80%89%E7%BB%93%E6%9E%84%E9%80%89%E6%8B%A9%E4%B8%8E-CHGNet-%E9%A2%84%E5%BC%9B%E8%B1%AB"><span class="nav-text">候选结构选择与 CHGNet 预弛豫</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DFT-%E5%80%99%E9%80%89%E8%BF%87%E6%BB%A4"><span class="nav-text">DFT 候选过滤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DFT-%E5%BC%9B%E8%B1%AB%E5%8D%8F%E8%AE%AE"><span class="nav-text">DFT 弛豫协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%B8%E5%8C%85%E4%B8%8A%E6%96%B9%E8%83%BD%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="nav-text">凸包上方能量计算</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E5%8F%91%E7%8E%B0%E6%8C%87%E6%A0%87"><span class="nav-text">最终发现指标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-2-%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">A.2 结果分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MatterGen-%E8%AF%84%E4%BC%B0%E5%B7%AE%E5%BC%82%E5%88%86%E6%9E%90"><span class="nav-text">MatterGen 评估差异分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FlowMM-%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE%E5%B7%AE%E5%BC%82"><span class="nav-text">FlowMM 评估协议差异</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-%E6%B6%88%E8%9E%8D%E7%A0%94%E7%A9%B6"><span class="nav-text">B 消融研究</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-1-%E5%8F%8C%E6%B5%81%E6%9E%B6%E6%9E%84"><span class="nav-text">B.1 双流架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">架构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-1%EF%BC%9A%E7%8B%AC%E7%AB%8B%E5%8E%9F%E5%AD%90%E5%A4%84%E7%90%86"><span class="nav-text">阶段 1：独立原子处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-2%EF%BC%9A%E7%8B%AC%E7%AB%8B%E6%99%B6%E6%A0%BC%E5%A4%84%E7%90%86"><span class="nav-text">阶段 2：独立晶格处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5-3%EF%BC%9A%E5%A4%8D%E6%9D%82%E8%81%94%E5%90%88%E5%A4%84%E7%90%86"><span class="nav-text">阶段 3：复杂联合处理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-text">计算复杂度分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E5%88%86%E6%9E%90"><span class="nav-text">交叉注意力机制分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-2-%E4%B8%80%E7%BB%B4%E5%8E%9F%E5%AD%90%E8%A1%A8%E7%A4%BA"><span class="nav-text">B.2 一维原子表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-text">实现细节</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E7%9F%A5%E8%AF%86%E6%95%B4%E5%90%88"><span class="nav-text">化学知识整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90"><span class="nav-text">性能分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-3-%E6%9E%B6%E6%9E%84%E6%B7%B1%E5%BA%A6%E6%B6%88%E8%9E%8D"><span class="nav-text">B.3 架构深度消融</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-4-%E5%BD%92%E4%B8%80%E5%8C%96%E6%B6%88%E8%9E%8D"><span class="nav-text">B.4 归一化消融</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-text">结果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90-1"><span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#B-5-%E5%85%83%E7%B4%A0%E5%88%86%E5%B8%83%E5%88%86%E6%9E%90"><span class="nav-text">B.5 元素分布分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E7%89%B9%E5%BE%81"><span class="nav-text">分布特征</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%96%E5%AD%A6%E5%A4%8D%E6%9D%82%E6%80%A7%E4%B8%8E%E7%A8%B3%E5%AE%9A%E6%80%A7%E7%9A%84%E6%9D%83%E8%A1%A1"><span class="nav-text">化学复杂性与稳定性的权衡</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E9%A2%9D%E5%A4%96%E7%BB%93%E6%9E%9C"><span class="nav-text">C 额外结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-1-Balance-Score-%E5%88%86%E6%9E%90%E4%B8%8E%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81"><span class="nav-text">C.1 Balance Score 分析与训练动态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E5%8D%8F%E8%AE%AE-1"><span class="nav-text">评估协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C-alpha-%E5%80%BC%E4%B8%8B%E7%9A%84-Balance-Score-%E9%AA%8C%E8%AF%81"><span class="nav-text">不同 alpha 值下的 Balance Score 验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%8A%A8%E6%80%81%E4%B8%8E%E8%B4%A8%E9%87%8F%E2%80%94%E5%8F%91%E7%8E%B0%E6%9D%83%E8%A1%A1"><span class="nav-text">训练动态与质量—发现权衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E9%98%B6%E6%AE%B5%E6%A3%80%E6%9F%A5%E7%82%B9%E9%80%89%E6%8B%A9%E7%9A%84%E7%90%86%E7%94%B1"><span class="nav-text">三阶段检查点选择的理由</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-2-%E5%AE%8C%E6%95%B4%E8%83%BD%E9%87%8F%E5%88%86%E5%B8%83%E6%AF%94%E8%BE%83"><span class="nav-text">C.2 完整能量分布比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%83%AD%E5%8A%9B%E5%AD%A6%E6%9C%89%E5%88%A9%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">热力学有利性分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-3-%E6%89%A9%E5%B1%95%E5%88%B0%E6%9B%B4%E5%A4%A7%E6%99%B6%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-text">C.3 扩展到更大晶体结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="nav-text">结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-text">D 可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#D-1-%E7%94%9F%E6%88%90%E7%9A%84%E6%99%B6%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-text">D.1 生成的晶体结构</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+            
+<script src="/js/post/share.js"></script>
+
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
