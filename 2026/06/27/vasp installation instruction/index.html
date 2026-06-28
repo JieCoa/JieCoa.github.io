@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Jie Cao">
+    
+    <title>
+        
+            VASP Installation Instruction |
+        
+        Jie Cao
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/github.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"jiecoa.github.io","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Jie Cao","author":"Jie Cao","avatar":"/images/portrait.jpg","logo":null,"favicon":"/images/github.svg","mode":"light"},"menu":{"home":"/","archives":"/archives","Publications & Related Work":"/publications-related-work","Me":{"children":[{"about":"/about || fa-solid fa-user-graduate"}]}},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"人生如戏，学会享受！","hitokoto":true},"social_contact":{"enable":true,"links":{"github":"https://github.com/JieCoa","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"email":"13989569616@163.com","google":"https://scholar.google.com/citations?user=-2f5dJoAAAAJ&hl=zh-CN","orcid":"https://orcid.org/0009-0006-3169-9768"}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":"My first academic paper has been accepted by npj Computational Materials!","category":false,"tag":true,"post_datetime":"updated","post_datetime_format":"YYYY-MM-DD HH:mm:ss"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":"炼丹师"},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":true,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2026,"word_count":false,"site_deploy":{"enable":true,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+            <a class="site-name border-box" href="/">
+               Jie Cao
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/publications-related-work">
+                                
+                                PUBLICATIONS &amp; RELATED WORK
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box has-sub-menu">
+                            <a class="menu-text-color border-box" href="javascript:void(0);">
+                                
+                                ME
+                                
+                                    <i class="menu-text-color collapse-icon fa-solid fa-angle-down"></i>
+                                
+                            </a>
+                            
+                                <ul class="sub-menu-list border-box">
+                                    
+                                        
+                                        <li class="sub-menu-item border-box ">
+                                            <a class="menu-text-color border-box flex-start" href="/about">
+                                                
+                                                    <i class="menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                                
+                                                ABOUT
+                                            </a>
+                                        </li>
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/publications-related-work">
+                            
+                            PUBLICATIONS &amp; RELATED WORK
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box has-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="javascript:void(0);">
+                            
+                            ME
+                        </a>
+                        
+                            <i class="right-side collapse-icon fa-solid fa-angle-left"></i>
+                        
+                    </label>
+                    
+                        <ul class="drawer-sub-menu-list border-box">
+                            
+                                
+                                <li class="sub-menu-item border-box">
+                                    <a class="drawer-menu-text-color border-box flex-start" href="/about">
+                                        
+                                            <span class="sub-menu-icon-wrap border-box flex-center">
+                                                <i class="drawer-menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                            </span>
+                                        
+                                        ABOUT
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        VASP Installation Instruction
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/portrait.jpg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Jie Cao</span>
+                                
+                                    <span class="author-badge">炼丹师</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-06-27 22:33:58</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Sun Jun 28 2026 15:34:41 GMT+0800">2026-06-28 15:34:41</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/VASP-Density-Functional-Theory-DFT/">VASP, Density Functional Theory(DFT)</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>830 Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>3 Mins</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a class="link" target="_blank" rel="noopener" href="https://blog.csdn.net/liouver/article/details/138821421">vasp6.3.2安装包及安装步骤<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uRPKeNE4i/">Linux (Ubuntu 24.04虚拟机) 系统安装 VASP.6.4.3<i class="fas fa-external-link-alt"></i></a></li>
+</ol>
+<h2 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h2><ul>
+<li><a class="link" target="_blank" rel="noopener" href="https://pan.baidu.com/s/11qe91jq4wra7cKnyZGyh8A?pwd=CCDC">VASP.6.4.3<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link" target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/oneapi-toolkit-download.html?packages=oneapi-toolkit&oneapi-toolkit-os=linux&oneapi-lin=offline">Intel® oneAPI Toolkit<i class="fas fa-external-link-alt"></i></a></li>
+</ul>
+<blockquote>
+<p>下面的安装过程严格遵照 <a class="link" target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1uRPKeNE4i/">Linux (Ubuntu 24.04虚拟机) 系统安装 VASP.6.4.3<i class="fas fa-external-link-alt"></i></a> 完成！</p>
+</blockquote>
+<h2 id="第一步-安装-Intel-oneapi"><a href="#第一步-安装-Intel-oneapi" class="headerlink" title="第一步 安装 Intel oneapi"></a>第一步 安装 Intel oneapi</h2><h3 id="①-下载-Intel-OneAPI-Base-Toolkit-和-Intel-OneAPI-HPC-Toolkit"><a href="#①-下载-Intel-OneAPI-Base-Toolkit-和-Intel-OneAPI-HPC-Toolkit" class="headerlink" title="① 下载 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit"></a>① 下载 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit</h3><blockquote>
+<p>目前大概率下载 Intel OneAPI HPC Toolkit 时<u>没有显示下载按钮</u>。</p>
+<p>选择下载 <a class="link" target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/oneapi-toolkit-download.html?packages=oneapi-toolkit&oneapi-toolkit-os=linux&oneapi-lin=offline">Intel® oneAPI Toolkit<i class="fas fa-external-link-alt"></i></a> (With the 2026.0 Release, the Intel® oneAPI Base Toolkit (Base Kit) and Intel® oneAPI HPC Toolkit have been combined into the <strong>Intel® oneAPI Toolkit</strong>. )，已经集成了 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit。</p>
+</blockquote>
+<h3 id="②-更新并安装环境变量"><a href="#②-更新并安装环境变量" class="headerlink" title="② 更新并安装环境变量"></a>② 更新并安装环境变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update </span><br><span class="line">sudo apt upgrade </span><br><span class="line">sudo apt install build-essential </span><br><span class="line">sudo apt install gfortran </span><br></pre></td></tr></table></figure>
+
+<h3 id="③-安装：使用-sh-命令安装"><a href="#③-安装：使用-sh-命令安装" class="headerlink" title="③ 安装：使用 sh 命令安装"></a>③ 安装：使用 sh 命令安装</h3><blockquote>
+<ul>
+<li>文件导入可以使用 <code>Xftp</code>，<code>WinSCP</code> 软件</li>
+</ul>
+<p>导入 <code>intel-oneapi-toolkit-xxx_offline.sh</code> 文件到 home&#x2F;username（username 是你自己的登录用户名） 目录下，执行安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh intel-oneapi-toolkit-2026.0.1.27_offline.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>因为安装过程是 GUI 界面，如果使用 XShell 等命令行界面，可以通过 <code>Tab</code>，<code>Space</code>，<code>↑↓←→</code> 键控制安装过程。</li>
+<li>如果是下载的 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit 分开的安装包，则单独执行2次 sh。</li>
+<li>对于 Base 计算包只用安装 <code>Intel OneAPI Math Kernel Library</code>；对于 HPC 计算包安装 <code>Intel MPI Library</code>，<code>Intel OneAPI DCP++/C++ Complier</code> 和 <code>Intel Fortran Complier</code>。（建议<strong>先取消所有的文件选中，再根据上面的文件名选择安装内容</strong>，有些附带内容会被自动勾选，无法取消）</li>
+</ul>
+</blockquote>
+<h3 id="④-添加环境变量"><a href="#④-添加环境变量" class="headerlink" title="④ 添加环境变量"></a>④ 添加环境变量</h3><p>将 Intel oneapi 的安装目录添加至 <code>~/.bashrc</code> 文件中，通过 <code>vim ~/.bashrc</code> 打开（如果没有安装 vim，则使用 <code>vi ~/.bashrc</code>），使用 <code>Shift + g</code> 快捷键跳转到文件底部添加，按 <code>i</code> 进入<strong>插入模式</strong>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">oneapi</span> </span><br><span class="line">source /home/xxx/intel/oneapi/setvars.sh (替换成自己安装的目录) </span><br></pre></td></tr></table></figure>
+
+<p>按 <code>Esc</code> 退出<strong>插入模式</strong>，直接输入 <code>:wq</code> 保存并退出，再重启环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc </span><br></pre></td></tr></table></figure>
+
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260628111947915.png" style="zoom:60%;">
+
+<p>出现上述图片内容说明环境配置成功。</p>
+<h2 id="第二步-安装VASP"><a href="#第二步-安装VASP" class="headerlink" title="第二步 安装VASP"></a>第二步 安装VASP</h2><h3 id="1-导入-vasp-xx-tgz-安装包并解压"><a href="#1-导入-vasp-xx-tgz-安装包并解压" class="headerlink" title="1. 导入 vasp.xx.tgz 安装包并解压"></a>1. 导入 vasp.xx.tgz 安装包并解压</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf vasp.6.4.3.tgz</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-进入-vasp-6-4-3-arch-文件夹，复制-makefile-include-intel-至上一级目录，并重命名为makefile-include"><a href="#2-进入-vasp-6-4-3-arch-文件夹，复制-makefile-include-intel-至上一级目录，并重命名为makefile-include" class="headerlink" title="2. 进入 ~/vasp.6.4.3/arch 文件夹，复制 makefile.include.intel 至上一级目录，并重命名为makefile.include"></a>2. 进入 <code>~/vasp.6.4.3/arch</code> 文件夹，复制 makefile.include.intel 至上一级目录，并重命名为makefile.include</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp makefile.include.intel makefile.include</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-修改-makefile-include-文件（很重要）"><a href="#3-修改-makefile-include-文件（很重要）" class="headerlink" title="3. 修改 makefile.include 文件（很重要）"></a>3. 修改 makefile.include 文件（很重要）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FC = mpiifort &gt;&gt;&gt; FC = mpiifx</span><br><span class="line">FCL = mpiifort &gt;&gt;&gt; FCL = mpiifx</span><br><span class="line">CC_LIB = icc &gt;&gt;&gt; CC_LIB = icx （此处和视频中不一样，mpiicx和icx都可以正常编译）</span><br><span class="line">CXX_PARS = icpc &gt;&gt;&gt; CXX_PARS = icpx </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="4-make-编译"><a href="#4-make-编译" class="headerlink" title="4. make 编译"></a>4. make 编译</h3><blockquote>
+<p>在 <code>~/vasp.6.4.3/</code> 目录下执行 make，编译过程通常为0.5-1小时，若时间过短则说明安装不正确。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260628150340076.png" style="zoom:50%;">
+
+<p><code>~/vasp.6.4.3/bin/</code> 下出现 <code>vasp_gam, vasp_ncl, vasp_std</code>，代表安装成功。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260628150518764.png" style="zoom:66%;"></blockquote>
+<h3 id="5-添加环境变量"><a href="#5-添加环境变量" class="headerlink" title="5. 添加环境变量"></a>5. 添加环境变量</h3><blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">step 1</span></span><br><span class="line">vim ~/.bashrc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">step 2: insert</span></span><br><span class="line">export PATH=/home/xxx/vasp.6.4.3/bin:$&#123;PATH&#125; (替换成自己安装的目录) </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">step 3</span></span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure></blockquote>
+<h2 id="第三步-测试"><a href="#第三步-测试" class="headerlink" title="第三步 测试"></a>第三步 测试</h2><h3 id="以-VASP-官网的氧原子为例，计算结果与官网一致"><a href="#以-VASP-官网的氧原子为例，计算结果与官网一致" class="headerlink" title="以 VASP 官网的氧原子为例，计算结果与官网一致"></a>以 <a class="link" target="_blank" rel="noopener" href="https://vasp.at/">VASP<i class="fas fa-external-link-alt"></i></a> 官网的<a class="link" target="_blank" rel="noopener" href="https://vasp.at/tutorials/latest/molecules/part1/#1.3.1-stdout">氧原子<i class="fas fa-external-link-alt"></i></a>为例，计算结果与官网一致</h3><blockquote>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260628152848846.png" style="zoom:50%;">
+
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img/image-20260628152944852.png" style="zoom:50%;"></blockquote>
+<h3 id="关于-mpirun-np-2-vasp-std-的参数说明"><a href="#关于-mpirun-np-2-vasp-std-的参数说明" class="headerlink" title="关于 mpirun -np 2 vasp_std 的参数说明"></a>关于 <code>mpirun -np 2 vasp_std</code> 的参数说明</h3><blockquote>
+<p>如果服务器支持超线程（Hyper-Threading）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">lscpu</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输出</span></span><br><span class="line">CPU(s):              32</span><br><span class="line">Core(s) per socket:  16</span><br><span class="line">Thread(s) per core:  2</span><br></pre></td></tr></table></figure>
+
+<p>此时：</p>
+<ul>
+<li><code>-np 16</code> 往往对应 16 个物理核心，性能通常较好。</li>
+<li><code>-np 32</code> 使用了超线程，性能不一定比 <code>-np 16</code> 更好，具体取决于计算类型。VASP 通常更偏向使用物理核心。</li>
+</ul>
+</blockquote>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/VASP-Density-Functional-Theory-DFT/">VASP, Density Functional Theory(DFT)</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/06/17/Research%20Note%20-%20CrystalDiT/"
+                                   title="Research Notes(1) - CrystalDiT"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Research Notes(1) - CrystalDiT</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-text">安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%AE%89%E8%A3%85-Intel-oneapi"><span class="nav-text">第一步 安装 Intel oneapi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A0-%E4%B8%8B%E8%BD%BD-Intel-OneAPI-Base-Toolkit-%E5%92%8C-Intel-OneAPI-HPC-Toolkit"><span class="nav-text">① 下载 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A1-%E6%9B%B4%E6%96%B0%E5%B9%B6%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">② 更新并安装环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A2-%E5%AE%89%E8%A3%85%EF%BC%9A%E4%BD%BF%E7%94%A8-sh-%E5%91%BD%E4%BB%A4%E5%AE%89%E8%A3%85"><span class="nav-text">③ 安装：使用 sh 命令安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A3-%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">④ 添加环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%AE%89%E8%A3%85VASP"><span class="nav-text">第二步 安装VASP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AF%BC%E5%85%A5-vasp-xx-tgz-%E5%AE%89%E8%A3%85%E5%8C%85%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-text">1. 导入 vasp.xx.tgz 安装包并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%BF%9B%E5%85%A5-vasp-6-4-3-arch-%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%A4%8D%E5%88%B6-makefile-include-intel-%E8%87%B3%E4%B8%8A%E4%B8%80%E7%BA%A7%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BAmakefile-include"><span class="nav-text">2. 进入 ~&#x2F;vasp.6.4.3&#x2F;arch 文件夹，复制 makefile.include.intel 至上一级目录，并重命名为makefile.include</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9-makefile-include-%E6%96%87%E4%BB%B6%EF%BC%88%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-text">3. 修改 makefile.include 文件（很重要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-make-%E7%BC%96%E8%AF%91"><span class="nav-text">4. make 编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">5. 添加环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E6%B5%8B%E8%AF%95"><span class="nav-text">第三步 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5-VASP-%E5%AE%98%E7%BD%91%E7%9A%84%E6%B0%A7%E5%8E%9F%E5%AD%90%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%AE%98%E7%BD%91%E4%B8%80%E8%87%B4"><span class="nav-text">以 VASP 官网的氧原子为例，计算结果与官网一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-mpirun-np-2-vasp-std-%E7%9A%84%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-text">关于 mpirun -np 2 vasp_std 的参数说明</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Jie Cao</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+        
+        <div class="deploy-info info-item">
+            
+            This site is deployed on <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/brands/github.png"></span>
+            
+        </div>
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-text">参考文献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-text">安装包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%AE%89%E8%A3%85-Intel-oneapi"><span class="nav-text">第一步 安装 Intel oneapi</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A0-%E4%B8%8B%E8%BD%BD-Intel-OneAPI-Base-Toolkit-%E5%92%8C-Intel-OneAPI-HPC-Toolkit"><span class="nav-text">① 下载 Intel OneAPI Base Toolkit 和 Intel OneAPI HPC Toolkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A1-%E6%9B%B4%E6%96%B0%E5%B9%B6%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">② 更新并安装环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A2-%E5%AE%89%E8%A3%85%EF%BC%9A%E4%BD%BF%E7%94%A8-sh-%E5%91%BD%E4%BB%A4%E5%AE%89%E8%A3%85"><span class="nav-text">③ 安装：使用 sh 命令安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%91%A3-%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">④ 添加环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%AE%89%E8%A3%85VASP"><span class="nav-text">第二步 安装VASP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AF%BC%E5%85%A5-vasp-xx-tgz-%E5%AE%89%E8%A3%85%E5%8C%85%E5%B9%B6%E8%A7%A3%E5%8E%8B"><span class="nav-text">1. 导入 vasp.xx.tgz 安装包并解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%BF%9B%E5%85%A5-vasp-6-4-3-arch-%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%A4%8D%E5%88%B6-makefile-include-intel-%E8%87%B3%E4%B8%8A%E4%B8%80%E7%BA%A7%E7%9B%AE%E5%BD%95%EF%BC%8C%E5%B9%B6%E9%87%8D%E5%91%BD%E5%90%8D%E4%B8%BAmakefile-include"><span class="nav-text">2. 进入 ~&#x2F;vasp.6.4.3&#x2F;arch 文件夹，复制 makefile.include.intel 至上一级目录，并重命名为makefile.include</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BF%AE%E6%94%B9-makefile-include-%E6%96%87%E4%BB%B6%EF%BC%88%E5%BE%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-text">3. 修改 makefile.include 文件（很重要）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-make-%E7%BC%96%E8%AF%91"><span class="nav-text">4. make 编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%B7%BB%E5%8A%A0%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">5. 添加环境变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E6%B5%8B%E8%AF%95"><span class="nav-text">第三步 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5-VASP-%E5%AE%98%E7%BD%91%E7%9A%84%E6%B0%A7%E5%8E%9F%E5%AD%90%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E4%B8%8E%E5%AE%98%E7%BD%91%E4%B8%80%E8%87%B4"><span class="nav-text">以 VASP 官网的氧原子为例，计算结果与官网一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-mpirun-np-2-vasp-std-%E7%9A%84%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-text">关于 mpirun -np 2 vasp_std 的参数说明</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+            
+<script src="/js/post/share.js"></script>
+
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
