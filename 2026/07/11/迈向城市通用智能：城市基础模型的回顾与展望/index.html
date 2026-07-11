@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Jie Cao">
+    
+    <title>
+        
+            Research Notes(2) - 迈向城市通用智能：城市基础模型的回顾与展望 |
+        
+        Jie Cao
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/github.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"jiecoa.github.io","root":"/","language":"en","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Jie Cao","author":"Jie Cao","avatar":"/images/portrait.jpg","logo":null,"favicon":"/images/github.svg"},"menu":{"home":"/","archives":"/archives","Publications & Related Work":"/publications-related-work","Me":{"children":[{"about":"/about || fa-solid fa-user-graduate"}]}},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"人生如戏，学会享受！","hitokoto":true},"social_contact":{"enable":true,"links":{"github":"https://github.com/JieCoa","weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"email":"13989569616@163.com","google":"https://scholar.google.com/citations?user=-2f5dJoAAAAJ&hl=zh-CN","orcid":"https://orcid.org/0009-0006-3169-9768"}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":"My first academic paper has been accepted by npj Computational Materials!","category":false,"tag":true,"post_datetime":"updated","post_datetime_format":"YYYY-MM-DD HH:mm:ss"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":"炼丹师"},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":true,"reward":{"enable":false,"img_link":null,"text":null,"icon":null}},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.39"},"waline":{"server_url":null,"reaction":false,"version":"3.3.2"},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2026,"word_count":false,"site_deploy":{"enable":true,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+            <a class="site-name border-box" href="/">
+               Jie Cao
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                HOME
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                ARCHIVES
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/publications-related-work">
+                                
+                                PUBLICATIONS &amp; RELATED WORK
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box has-sub-menu">
+                            <a class="menu-text-color border-box" href="javascript:void(0);">
+                                
+                                ME
+                                
+                                    <i class="menu-text-color collapse-icon fa-solid fa-angle-down"></i>
+                                
+                            </a>
+                            
+                                <ul class="sub-menu-list border-box">
+                                    
+                                        
+                                        <li class="sub-menu-item border-box ">
+                                            <a class="menu-text-color border-box flex-start" href="/about">
+                                                
+                                                    <i class="menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                                
+                                                ABOUT
+                                            </a>
+                                        </li>
+                                    
+                                </ul>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                            HOME
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                            ARCHIVES
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/publications-related-work">
+                            
+                            PUBLICATIONS &amp; RELATED WORK
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box has-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="javascript:void(0);">
+                            
+                            ME
+                        </a>
+                        
+                            <i class="right-side collapse-icon fa-solid fa-angle-left"></i>
+                        
+                    </label>
+                    
+                        <ul class="drawer-sub-menu-list border-box">
+                            
+                                
+                                <li class="sub-menu-item border-box">
+                                    <a class="drawer-menu-text-color border-box flex-start" href="/about">
+                                        
+                                            <span class="sub-menu-icon-wrap border-box flex-center">
+                                                <i class="drawer-menu-text-color sub-menu-icon fa-solid fa-user-graduate"></i>
+                                            </span>
+                                        
+                                        ABOUT
+                                    </a>
+                                </li>
+                            
+                        </ul>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Research Notes(2) - 迈向城市通用智能：城市基础模型的回顾与展望
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/portrait.jpg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Jie Cao</span>
+                                
+                                    <span class="author-badge">炼丹师</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2026-07-11 15:33:58</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                    <span class="datetime" data-updated="Sat Jul 11 2026 16:24:23 GMT+0800">2026-07-11 16:24:23</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Urban-General-Intelligence-UGI-Urban-Foundation-Models-UFMs/">Urban General Intelligence (UGI), Urban Foundation Models (UFMs)</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>37.7k Words</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>131 Mins</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h1 id="迈向城市通用智能：城市基础模型的回顾与展望"><a href="#迈向城市通用智能：城市基础模型的回顾与展望" class="headerlink" title="迈向城市通用智能：城市基础模型的回顾与展望"></a>迈向城市通用智能：城市基础模型的回顾与展望</h1><p>Weijia Zhang，Jindong Han，Zhao Xu，Hang Ni，Tengfei Lyu，Hao Liu，Hui Xiong</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>机器学习技术的整合已成为智能城市服务发展的基石，并显著促进了城市效率、可持续性和整体宜居性的提升。以 ChatGPT 为代表的基础模型的近期进展，已在机器学习与人工智能领域引入范式转变。这些模型具有卓越的上下文理解、问题求解和任务适应能力，为重塑智慧城市的未来、推动城市通用智能（Urban General Intelligence，UGI）的发展提供了变革性机遇。</p>
+<p>尽管城市基础模型（Urban Foundation Models，UFMs）受到越来越多的关注，这一快速发展的领域仍面临关键挑战，包括缺少清晰定义、系统性综述和可泛化的通用解决方案。为解决这些问题，本文首先介绍 UFMs 的定义与概念，并强调其发展过程中涉及的独特挑战。随后，我们提出一种以数据为中心的分类体系，根据不同的城市数据模态和类型对现有 UFM 研究进行归类。此外，我们提出了一个前瞻性框架，旨在促进通用 UFMs 的实现，以克服所识别出的挑战并推动该领域进一步发展。最后，本文系统总结和讨论了与 UFMs 相关的现有基准与数据集，并探索了 UFMs 在城市情境中的广泛应用，展示了其对城市系统产生重大影响和推动变革的潜力。</p>
+<p>相关研究论文与开源资源的综合汇集持续更新于：<a class="link" target="_blank" rel="noopener" href="https://github.com/usail-hkust/Awesome-Urban-Foundation-Models">https://github.com/usail-hkust/Awesome-Urban-Foundation-Models<i class="fas fa-external-link-alt"></i></a>。</p>
+<hr>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>城市通用智能（UGI）是指一种面向理解、解释和熟练管理复杂城市系统与环境而定制的高级人工智能概念形态。类似于通用人工智能（Artificial General Intelligence，AGI），UGI 被设想为能够自主执行任何与城市情境相关的智力任务，其能力可与人类相当，甚至超越人类，从而将城市转变为更加宜居、韧性更强且更具适应性的空间。</p>
+<p>机器学习技术已成为重塑城市环境不可或缺的一部分，并为多种智慧城市计划提供基础。通过实现更高效的资源分配、改善公共服务以及提升居民生活质量，这些技术对城市智能化作出了重要贡献 [302]。借助来自城市传感器、卫星影像和社交媒体平台等来源的大规模数据集，机器学习算法能够发现复杂的城市模式，并对城市动态进行精确预测 [104, 399]。这种分析能力对于优化智能能源管理、交通流调控和环境监测等城市运营至关重要，进而推动更智能、更可持续城市的发展 [146, 239]。</p>
+<p>大语言模型（LLMs，例如 ChatGPT）和视觉基础模型（VFMs）等基础模型的出现，已深刻改变机器学习和人工智能领域的研究范式 [432]。这些模型以在海量数据集上进行广泛预训练为特征，展现出显著的涌现能力，例如上下文推理、复杂问题求解，以及跨越多种任务的零样本适应性 [18, 139]。这些能力使基础模型成为应对动态、多层面城市环境复杂性的理想工具：它们能够无缝整合多源数据，实现实时且多样化的分析，并促进自适应决策。这为构建无缝集成、高度智能且能够应对不断变化挑战的城市系统奠定了基础。</p>
+<p>如图 1 所示，城市基础模型（UFMs）是一类新兴模型，其在大量具有不同粒度和多种模态的城市数据源上进行预训练。这些模型对多样化城市数据特征表现出深刻理解，并对广泛的城市应用展现出显著适应性 [11]，因此在推动城市通用智能的实现中发挥关键作用。通过整合和解释异构城市数据，UFMs 能够提供全面洞见、揭示复杂的时空模式，并显著增强针对不同城市挑战的决策过程。例如，UFMs 能够联合分析人类指令、视觉场景数据、交通传感器读数和 GPS 轨迹，以优化交通效率与安全性 [50, 149, 395, 422]。此外，UFMs 还可共同利用人口统计、土地利用和环境数据，生成支持城市地区可持续发展的关键信息 [213, 313, 438]。</p>
+<p>尽管人们对 UFMs 的兴趣和其潜力不断增长，该领域仍面临重大挑战，包括缺少清晰定义、缺乏对已有文献的系统综述，以及对普遍适用解决方案的需求 [11, 124, 216, 350, 352, 395]。为填补这些关键空白，本文对 UFMs 进行了全面综述。本文首先给出 UFMs 的明确界定和基本概念，并概述其开发和应用所面临的独特挑战。在此基础上，本文提出了以数据为中心的分类体系，用以归纳和概括该领域已有研究。该分类体系立足于城市数据的多样模态与类型，旨在揭示该新兴领域已经取得的进展和所作出的协同努力。</p>
+<p>此外，本文提出一个用于构建通用 UFMs 的前瞻性框架。该框架旨在应对所识别出的挑战，同时具备跨多种城市任务与领域广泛泛化的潜力。最后，本文探索 UFMs 的实际应用，强调其在推动多个城市领域发展以及增强城市智能不同方面的作用。</p>
+<p>本文是我们此前被 KDD’24 tutorial track 接收的工作 [397] 的显著扩展版本，原会议版本为 8 页，可访问 <a class="link" target="_blank" rel="noopener" href="https://dl.acm.org/doi/abs/10.1145/3637528.3671453">https://dl.acm.org/doi/abs/10.1145/3637528.3671453<i class="fas fa-external-link-alt"></i></a>。相较于精简的会议版本，本文作出如下主要贡献与扩展：</p>
+<ol>
+<li>本文正式定义并概念化 UGI，阐明通过 UFMs 实现 UGI 的变革性机遇。</li>
+<li>本文对 UFMs 文献的综述和以数据为中心的分类体系进行了大幅扩展与完善：新增一节介绍构建 UFMs 的当前关键技术；新增一节总结 UFMs 的现有基准和数据集；加入关于基于地理向量 UFMs 的专门章节；增加多个新的小节，例如介绍普通时间序列的预训练方法、用于时间序列跨模态适应的提示工程和模型重编程方法、用于轨迹跨模态适应的模型微调和重编程方法；整合与 UFMs 相关的最新进展和文献，其中 65% 的参考文献为新增内容，从而提供一个更全面、更新且更具洞见的综述框架。</li>
+<li>本文提出一个用于开发通用 UFMs 的前瞻性总体框架，为应对所识别出的挑战、并在多样化城市应用和动态环境中实现泛化能力提供潜在解决方案。</li>
+</ol>
+<p>本文其余部分组织如下：第 2 节介绍 UFMs 的基本定义与概念；第 3 节强调构建 UFMs 所涉及的独特挑战；第 4 节深入讨论已有 UFM 研究，并将其分为基于语言的模型、基于视觉的模型、基于时间序列的模型、基于轨迹的模型、基于地理向量的模型、多模态模型和其他模型；第 5 节提出构建通用 UFMs 的前瞻性框架；第 6 节总结与 UFMs 相关的现有基准和数据集；第 7 节讨论 UFMs 在不同城市领域中的前景应用；最后，第 8 节总结全文。</p>
+<h2 id="2-城市基础模型基础"><a href="#2-城市基础模型基础" class="headerlink" title="2 城市基础模型基础"></a>2 城市基础模型基础</h2><p><strong>定义 1（城市基础模型）。</strong> 城市基础模型（UFMs）是一类在海量多源、多粒度和多模态城市数据上进行预训练的大规模模型。它们在预训练阶段获得显著的通用能力，表现出卓越的涌现能力和适应性，专门服务于交通、城市规划、能源管理、环境监测以及公共安全与保障等一系列城市应用领域。</p>
+<h3 id="2-1-数据特征"><a href="#2-1-数据特征" class="headerlink" title="2.1 数据特征"></a>2.1 数据特征</h3><p>UFMs 的突出特点在于其能够处理和分析大量不同类型的数据，每一类数据均以独特方式促进对城市动态的全面理解。UFMs 的数据特征，包括多源、多粒度和多模态特征，对于捕捉城市环境的复杂性至关重要。</p>
+<ul>
+<li><strong>多源。</strong> UFMs 整合来自多样化城市来源的大规模数据，包括传感器网络、社交媒体、卫星影像、移动设备等，从而促进对城市环境的全面理解。</li>
+<li><strong>多粒度。</strong> UFMs 处理不同空间和时间粒度的数据。在空间上，它们能够在宏观层面分析交通流和人口流动等全市模式，同时在微观层面对社区或个体的局部行为进行建模。在时间上，收集的数据可以覆盖从年度记录到实时测量的范围。</li>
+<li><strong>多模态。</strong> UFMs 需要整合文本、视觉和基于传感器的输入等不同数据模态，使其能够比单模态模型更有效地捕捉城市复杂性。</li>
+</ul>
+<h3 id="2-2-构建城市基础模型的关键技术"><a href="#2-2-构建城市基础模型的关键技术" class="headerlink" title="2.2 构建城市基础模型的关键技术"></a>2.2 构建城市基础模型的关键技术</h3><p>与其他领域的基础模型类似，UFMs 的构建主要依赖两类技术，即预训练和适应。</p>
+<h4 id="2-2-1-预训练"><a href="#2-2-1-预训练" class="headerlink" title="2.2.1 预训练"></a>2.2.1 预训练</h4><p>UFMs 通常在包含地理文本数据、社交媒体内容、街景图像、轨迹、时空时间序列、兴趣点（Points of Interests，POIs）、道路网络等在内的大规模、多样化数据集上进行预训练。预训练的主要目标是使这些模型尽可能获取通用知识和模式，从而捕捉数据中固有的整体特征和结构。UFMs 的预训练方法主要分为四类：监督预训练、生成式预训练、对比预训练和混合预训练 [193]。</p>
+<ul>
+<li><strong>监督预训练。</strong> 该方法在拥有大量标注数据的数据集上训练模型，将输入与其对应输出进行配对 [54, 63]。它使模型以监督方式学习输入与输出之间的关系。设 $D&#x3D;{(x_1,y_1),(x_2,y_2),\ldots,(x_N,y_N)}$ 为训练数据集，其中 $x_i$ 表示第 $i$ 个样本，$y_i$ 表示对应标签。最常用的交叉熵损失函数示例如下 [87]：</li>
+</ul>
+<p>$$<br>L_{\mathrm{sup}}&#x3D;-\sum_{i&#x3D;1}^{N}\sum_{c&#x3D;1}^{C} y_{ic}\log(\hat{y}_{ic}).<br>$$</p>
+<p>其中，$N$ 为样本数量，$C$ 为类别数，$y_{ic}$ 是二元指示变量（0 或 1），表示类别标签 $c$ 是否为观测 $i$ 的正确分类，$\hat{y}_{ic}$ 是观测 $i$ 属于类别 $c$ 的预测概率。</p>
+<ul>
+<li><strong>生成式预训练。</strong> 这种方法在没有标注数据的情况下训练模型生成或重建被掩蔽的输入数据 [250, 251]。它要求模型能够自主识别模式和规律，从而生成与真实数据高度相似的输出。生成式预训练中一种称为负对数似然（Negative Log-Likelihood，NLL）损失的函数如下 [250]：</li>
+</ul>
+<p>$$<br>L_{\mathrm{gen}}&#x3D;-\sum_{i\in T}\log P(x_i\mid x_{\setminus i},\theta).<br>$$</p>
+<p>其中，$T$ 是待预测目标词元的集合，$x_i$ 表示第 $i$ 个词元，$x_{\setminus i}$ 表示除词元 $x_i$ 外的所有可用上下文，例如自回归生成中位于 $x_i$ 之前的所有词元，或基于重建生成中可见词元（未掩蔽位置）；$P(x_i\mid x_{\setminus i},\theta)$ 表示在给定可用词元 $x_{\setminus i}$ 和模型参数 $\theta$ 的条件下，模型为正确词元 $x_i$ 分配的条件概率。</p>
+<ul>
+<li><strong>对比预训练。</strong> 该方法通过评估数据样本间的相似性和差异性，训练模型区分数据实例，并学习稳健的数据表示 [99]。对于一对样本，对比损失的一种简单形式可定义为：</li>
+</ul>
+<p>$$<br>L_{\mathrm{con}}&#x3D;yD^2+(1-y)\max(0,\epsilon-D)^2.<br>$$</p>
+<p>其中，$y$ 是二元标签，表示样本对是否具有相同标签（$y&#x3D;1$）或不同标签（$y&#x3D;0$）；$D$ 是该对样本表示之间的距离，通常使用欧氏距离等度量计算；$\epsilon$ 是定义不相似样本对最小距离的超参数。近期进展 [39] 将对比学习扩展至自监督范式，使模型能够从数据自身自动生成正负标签，从而无需使用带标注的数据集。这一创新显著减轻了对人工标注数据集的依赖，使得大规模无标注数据集能够得到更高效的处理。</p>
+<ul>
+<li><strong>混合预训练。</strong> 该方法整合监督、生成和对比技术等多种预训练方法 [142, 292]，旨在根据具体问题需求定制训练过程，并利用每种方法的优势。</li>
+</ul>
+<p>通常，监督预训练用于拥有丰富标注数据的情境。然而，在许多领域，获取大量高质量标注数据可能代价高昂或不可行，因此经常采用生成式和对比式预训练，以充分利用不同类型的数据集，提高模型的泛化能力和通用性。</p>
+<h4 id="2-2-2-适应"><a href="#2-2-2-适应" class="headerlink" title="2.2.2 适应"></a>2.2.2 适应</h4><p>预训练之后，模型可根据预训练和适应阶段的数据模态是否一致，通过单模态或跨模态适应被定制为适合特定任务或领域。适应方法主要包括模型微调、提示调优和提示工程，可增强 UFMs 在不同应用情境下的灵活性和能力。选择合适的适应策略，对于在降低资源成本的同时最大化预训练模型在特定任务和数据集上的性能至关重要。</p>
+<ul>
+<li><p><strong>模型微调。</strong> 模型微调是 UFMs 中广泛使用的一种适应方法。该方法使用任务特定数据集对预训练模型进行额外训练 [54, 194]。微调过程调整模型参数，以增强模型针对特定任务的有效性。尽管微调是一种直接而有效的任务特定适应方法，但它通常需要目标任务具有足够的标注数据和大量计算资源。因此，一些参数高效微调方法 [115] 被提出，以最小化适应过程中需要调整的参数数量，在模型适应性能和资源消耗之间保持平衡。</p>
+</li>
+<li><p><strong>提示调优。</strong> 与传统的“预训练—微调”范式不同，提示调优采用包含目标任务相关信息的轻量提示词元。在实践中，这些提示通常是一小部分任务特定的可学习参数 [128]。在提示调优阶段，预训练骨干模型的参数被冻结，仅对可训练提示进行调整。该方法已被证明能够有效利用预训练骨干模型中蕴含的固有知识。此外，这种“预训练、提示与预测”范式 [188] 更为高效，因为它仅需训练极少量提示参数，从而无需大规模修改模型原有参数。</p>
+</li>
+<li><p><strong>提示工程。</strong> 提示工程 [251] 是一种无需训练的方法，可直接利用 LLM 等预训练基础模型，而不改变其参数。它涉及构建任务特定提示，以引导模型的响应。这些提示充当指令或线索，使模型的注意力指向输入数据中的相关信息。</p>
+</li>
+</ul>
+<p>这些适应方法，包括模型微调、提示调优和提示工程，使 UFMs 能够适应不同城市情境并表现出色。适应方法的选择需要综合考虑数据可用性、计算资源和任务特定需求，并平衡适应性能与资源成本。</p>
+<h2 id="3-构建城市基础模型的挑战"><a href="#3-构建城市基础模型的挑战" class="headerlink" title="3 构建城市基础模型的挑战"></a>3 构建城市基础模型的挑战</h2><p>尽管 UFMs 在理解和管理复杂城市环境方面具有巨大潜力，构建 UFMs 是一项面临多种独特挑战的复杂任务。这些挑战主要源于城市数据的内在复杂性、城市环境的动态性、城市任务领域的多样性，以及对隐私和安全的关注。以下深入讨论凸显构建有效 UFMs 复杂性的关键挑战。</p>
+<ul>
+<li><strong>多源、多粒度与多模态数据整合。</strong> 多源、多粒度和多模态数据的整合是构建 UFMs 的首要挑战之一。UFMs 需要有效整合来自不同城市传感器、卫星影像、社交媒体信息流和交通系统等多种来源的数据。所收集的数据跨越不同的空间与时间粒度，涵盖从广泛的全市模式到特定的局部细节，以及从年度记录到实时测量。此外，数据模态差异显著，包括文本、图像、传感器读数、地理向量等。整合这些异构数据类型会对数据预处理、归一化和融合带来重大挑战，使模型难以识别不同数据集中的相关模式，并难以调和数据中潜在的不一致性或冲突。</li>
+<li><strong>时空推理能力。</strong> UFMs 的另一项重大挑战是掌握时空推理。城市环境是动态的，其变化和模式会在空间和时间上不断演化。UFMs 需要理解并预测同时依赖空间和时间的复杂现象。这涉及对城市空间分布和时间模式进行复杂建模，例如理解城市实体之间或不同位置活动之间的地理关系，以及理解城市时序事件或趋势的连续性和因果性。需要先进算法来处理高维城市数据与非线性交互，并纳入多种空间分辨率和时间尺度，以捕捉完整的城市动态范围。这种时空推理能力在城市情境中尤为关键，但在其他领域已有基础模型中往往未受到充分重视，甚至并不存在。</li>
+<li><strong>面向多样化城市任务领域的通用性。</strong> UFMs 面向多种城市任务领域的通用性是另一项重大挑战。城市环境本质上复杂，涵盖交通、城市规划、能源管理和环境监测等广泛领域。每一领域都有独特挑战和需求，因此要求 UFMs 具备足够的通用性以适应这些不同情境。为满足这一需求，UFMs 应能够在任务和领域之间无缝切换，根据需要灵活调整分析重点，同时不牺牲任务性能。虽然此类泛化能力已在 LLMs 中出现，但由于城市数据和任务的异构性、数据稀疏性以及多样空间与时间情境之间的分布偏移等挑战，它仍然是现有 UFMs 的关键局限。</li>
+<li><strong>隐私与安全问题。</strong> UFMs 的部署因其依赖来自个人设备和社交媒体等多种来源的大量城市数据，而带来关键隐私和安全挑战。确保遵守《通用数据保护条例》（GDPR）等隐私法规 [306] 至关重要，这要求采用稳健的数据匿名化措施、明确的数据使用同意程序以及透明的数据处理实践，以保护个人隐私。在安全方面，UFMs 必须保障数据完整性，并防止在多源数据流固有的多种脆弱性中发生未授权访问，例如防范针对传感器网络的欺骗攻击。此外，还应确保模型安全，以抵御数据隐私泄露、数据投毒、越狱攻击和对抗攻击等不同恶意活动。鉴于其显著的社会影响，有效应对这些问题是开发可信、且在伦理上负责任的 UFMs 的必要条件。</li>
+</ul>
+<h2 id="4-城市基础模型概述"><a href="#4-城市基础模型概述" class="headerlink" title="4 城市基础模型概述"></a>4 城市基础模型概述</h2><p>本文提出一种以数据为中心的 UFMs 相关研究分类体系，以揭示该领域已经取得的进展和所作努力。根据 UFMs 处理的城市数据模态，现有 UFM 工作被划分为七类：基于语言的模型、基于视觉的模型、基于时间序列的模型、基于轨迹的模型、基于地理向量的模型、多模态模型和其他模型。随后，本文从其所关注的预训练和适应技术角度介绍这些研究。</p>
+<h3 id="4-1-基于语言的模型"><a href="#4-1-基于语言的模型" class="headerlink" title="4.1 基于语言的模型"></a>4.1 基于语言的模型</h3><p>形式化地，文本数据可表示为一个词元序列 $T&#x3D;[t_1,t_2,\ldots,t_n]$，其中每个词元 $t_i$ 对应文本中的一个单词或字符。这些词元通常会被转换为数值表示，例如词嵌入，以供处理。</p>
+<p>近年来，已有大量工作致力于开发预训练语言模型（PLMs）。PLMs 通常以 Transformer 模型为骨干，并在大规模无标注文本语料上进行预训练，在自然语言处理（NLP）任务中表现出强大的能力。早期具有代表性的 PLMs，如 BERT [54]、XLNet [367] 和 GPT 系列模型 [250, 251]，即 GPT-1 和 GPT-2，采用“预训练与微调”范式处理下游任务。近期，研究者发现，将 PLMs 的参数规模提升至显著水平，例如数百亿参数，不仅能够增强其能力，还会带来小型 PLMs（如 BERT）所不具备的显著涌现能力，例如指令遵循、上下文学习和复杂推理。文献中也将这些扩展后的 PLMs 称为 LLMs [418]。LLMs 的一个显著进展是 ChatGPT 的发布，其在人类式对话中展现出卓越性能，并获得社会的广泛关注。</p>
+<p>城市居民生成了大量反映城市模式的文本语料，包括文档，例如交通事故报告；对话，例如网约车对话；以及地理文本，例如带地理标签的推文或实体描述。不同于一般文本数据，城市文本通常与特定位置关联，其内容反映地理与空间属性，例如地标、社区和 GPS 坐标。例如，社交媒体平台上一则餐馆评论与该餐馆的精确位置相关联。此外，城市文本通常具有时间依赖性，能够捕捉实时事件和城市动态演化，例如交通事故和公共集会。这些时空特征使城市文本成为研究城市中人、地点和事件之间复杂交互的宝贵来源。</p>
+<p>尽管 PLMs 在回答各领域一般性问题方面展现出熟练能力，但由于缺乏对细粒度城市知识的系统注入，它们难以应对与特定位置相关或与时间关联的查询。因此，使 PLMs 更好地利用和解释城市环境的独特上下文至关重要。该领域的既有研究主要分为两类：单模态预训练方法和单模态适应方法。</p>
+<h4 id="4-1-1-单模态预训练"><a href="#4-1-1-单模态预训练" class="headerlink" title="4.1.1 单模态预训练"></a>4.1.1 单模态预训练</h4><p>目前，大量工作致力于开发通用 PLMs。这些模型在覆盖广泛主题和领域的文本语料上训练。虽然交通报告、社交媒体帖子等专门城市数据集已被纳入训练过程，但其目标仍是增强 PLMs 的通用能力。更近期地，一些研究 [57, 120] 专注于仅使用城市文本数据从头训练 PLMs，并在特定城市领域内的任务上优于通用模型。</p>
+<p>例如，ERNIE-GeoL [120] 是一种旨在改善百度地图多种用户服务的预训练语言模型。ERNIE-GeoL 在一个包含丰富城市和空间知识的异构图中提取的大规模数据上进行预训练，采用掩蔽语言建模和地理编码任务。类似地，Ding 等人 [57] 提出 MGeo，这是一种专为查询—POI 匹配而设计、在丰富地理上下文数据上进行预训练的语言模型。具体而言，MGeo 设计了地理编码器来编码地理上下文表示，并在预训练阶段采用掩蔽语言建模和对比学习。然而，大规模预训练通常需要大量计算资源和电力，这些资源对研究人员而言可能并不容易获得。</p>
+<h4 id="4-1-2-单模态适应"><a href="#4-1-2-单模态适应" class="headerlink" title="4.1.2 单模态适应"></a>4.1.2 单模态适应</h4><p>与从头训练城市语言模型不同，既有研究主要集中于将已建立的 PLMs 适应于城市场景。通过这种方式，可以充分利用已建立 PLMs 中蕴含的世界知识，同时显著降低所需计算成本。具体而言，所采用的适应方法主要包括提示工程和模型微调两类。</p>
+<ul>
+<li><p><strong>提示工程。</strong> 提示旨在通过预定义的文本输入，例如任务描述或一组示例，引导 PLM 的行为朝向预期输出，使 PLMs 能够处理从未被显式训练过的任务。提示提供了一种灵活、高效且用户友好的方式，可以无需重新训练或微调模型便利用 PLMs 的能力。近期文献中的若干初步研究表明，PLMs 已经从其训练语料中编码了丰富的城市事实和时空知识，这些知识可以通过提示工程技术有效调用。例如，Gurnee [95] 进行实证研究，表明 LLMs 学习到了空间和时间的表示，这些表示对提示变化具有稳健性，并在不同城市地理实体间保持一致。类似地，Ji 等人 [127] 指出，LLMs 能够通过适当提示来表示空间对象的几何性质和关系。此外，Prabin 等人 [13] 研究了 LLMs 的多种地理空间技能，包括地理空间知识、意识和推理。通过精心构建的提示，LLMs 可以利用所编码的地理空间知识，服务于推导城市坐标和理解空间介词等多种任务。</p>
+<p>此外，已有多项研究将 LLMs 应用于多种城市感知和决策任务，包括城市概念理解 [76]、旅行规划 [258, 349] 和地理空间问答 [229]。例如，Aghzal 等人 [1] 通过不同的小样本提示策略，系统评估了 LLMs 在路径规划任务中的时空推理能力。GeoLLM [221] 专注于使用由辅助地图数据增强的提示，从 LLMs 中提取地理空间知识，并在真实世界地理空间预测任务中获得优异性能。Zheng 等人 [422] 通过提示信息探索 LLMs 在交通安全应用中的潜力，所涉及内容包括事故报告自动化、交通数据增强、多传感数据分析和对比跨模态学习。Mai 等人 [215, 216] 对 LLM 提示在广泛城市应用中的有效性进行了全面研究。借助提示，LLMs 可作为零样本或小样本学习器，在地名识别、国家级时间序列预测和城市功能分类等任务中优于专门模型。</p>
+<p>尽管直接提示灵活且资源高效，但它要求功能强大的通用 LLMs 和丰富的上下文信息才能取得令人满意的性能，这可能限制 LLMs 在广泛场景中的适用性。</p>
+</li>
+<li><p><strong>模型微调。</strong> 在海量网页文本数据上预训练的通用 PLMs 可能缺乏针对特定任务或领域的充分知识。因此，一些研究专注于使用领域特定数据微调 PLMs，以提升模型在目标领域的性能。SpaBERT [167] 是一种为空间地理实体理解设计的空间语言模型。它扩展 BERT，通过在由地理数据库生成的合成句子上进行微调，以捕捉地理实体在空间上变化的语义。此外，SpaBERT 引入空间坐标嵌入模块，以在潜在特征空间中保留地理实体之间的空间关系。GeoLM [171] 提出通过对比学习和掩蔽语言建模联合学习语言和地理空间上下文。与 SpaBERT 相比，GeoLM 可以有效保留一般语言信息，而这对许多地理空间任务至关重要。Xie 等人 [348] 提出 QUERT，这是一种专为解释旅行领域用户搜索查询而定制的语言模型。具体而言，QUERT 在地理哈希编码预测和地理感知掩蔽建模等多项领域特定任务上进行联合微调，并在多种下游旅行相关任务中表现出显著性能提升。更近期地，Mei 等人 [224] 提出一种经过微调的 BERT 模型，以增强 POI 检索任务中的查询意图理解。该模型以 BERT 的预训练权重初始化，并在用户行为日志和 POI 语料上进行微调。</p>
+<p>此外，大量工作致力于将开源 LLMs，例如 LLaMA [295]、ChatGLM [66]，微调用于城市应用。在交通场景中，Wang 等人 [324] 通过在包括交通文档、驾驶测试和学术数据库在内的不同来源文本数据上微调 ChatGLM，构建第一个以交通为中心的 LLM，命名为 TransGPT-SM。TransGPT-SM 在交通规划、问答和交通报告生成等交通相关任务中展现出巨大潜力。LLMLight [149] 提出一种开创性框架，将 LLMs 作为控制智能体，用于在交通信号控制任务中实现类人决策，并展现出卓越的有效性、可解释性和泛化能力。CoLLMLight [384] 进一步扩展此方向，通过引入协作式 LLM 智能体来实现全网络交通信号控制，强调通过结构化时空建模和复杂度感知推理实现路口间协调。Zhou 等人 [437] 提出由 LLM 驱动的协作框架，用于大规模多车辆导航，强调复杂城市交通环境中多智能体间的协同决策。</p>
+<p>除交通外，Wang 等人 [329] 开发了城市更新领域的 LLM：首先通过 self-instruct [331] 方法生成领域特定指令数据，随后通过 Prefix [162] 和 LoRA [115] 策略，在指令数据上微调 ChatGLM。PlanGPT [441] 被提出用于提升 LLMs 在城市与空间规划领域的理解和推理能力。具体而言，PlanGPT 采用两阶段微调方法，先在一般文本数据上训练 LLM，再在专门的城市规划数据集上进行微调。更近期地，LAMP [10] 提出检索增强微调框架，将特定城市中地理实体的知识纳入 LLMs。通过 POI 检索任务，LAMP 构建一个微调数据集，其中涵盖 POIs 信息，以及 POIs 与查询的空间位置。CityGPT [72] 通过模拟人类如何在城市空间中导航、交互和推理，构建更加全面的指令调优数据集。它通过微调多个 LLMs，证明该精心构建数据集在多样化城市情境中的有效性。</p>
+<p>地球科学和 GIS 领域的相关工作也遵循类似的微调范式。Deng 等人 [52] 提出 K2，一种基于 LLaMA 的地球科学知识理解和利用模型。K2 同时在无标注地球科学文本语料（55 亿词元）和领域特定监督数据上进行微调。该模型表现出强大的地球科学专业能力，显著提升了地球科学领域中问答和指令遵循的性能。沿着这一方向，BB-GeoGPT [405] 通过领域特定预训练和指令调优构建面向 GIS 的 LLM，使其能够在下游 GIS 任务中更好地理解和利用地理知识。</p>
+</li>
+</ul>
+<p>展望未来，推动 UFMs 超越基础语言能力，对于构建真正智能的城市系统至关重要。下一代 UFMs 应整合时空推理、面向行动的规划和工具增强交互能力，使其不仅能解释静态事实，而且能理解持续演变的城市动态，例如交通状况、环境变化和公共事件。然而，这些高级能力的整合也放大了一个基础性挑战——幻觉 [294]。基于 LLM 的 UFMs 可能生成看似合理但错误的城市状态描述，推断不存在的空间关系，或误解随时间变化的模式，这可能在安全关键应用中造成重大风险。因此，整合明确的落地机制，例如实时数据检索、传感器感知工具使用和验证模块，对于确保事实一致性至关重要。特别是，稳健的工具利用 [246] 可通过将模型输出锚定于权威数据源和操作系统来缓解幻觉，从而使 UFMs 能够以可靠、可信的方式与动态城市环境交互并作出响应。</p>
+<h3 id="4-2-基于视觉的模型"><a href="#4-2-基于视觉的模型" class="headerlink" title="4.2 基于视觉的模型"></a>4.2 基于视觉的模型</h3><p>视觉数据包括以图像或视频形式捕获的任何视觉信息，例如街景图像、卫星影像和城市监控视频。形式化地，一幅图像可表示为三维矩阵 $I(x,y,c)$，其中 $x$ 和 $y$ 表示图像的空间维度，即宽度和高度，$c$ 表示颜色通道。矩阵中的每个元素对应一个像素值。</p>
+<p>近年来，视觉基础模型（VFMs）的发展取得显著进展 [9, 143, 249]。早期研究 [39, 107] 主要聚焦于在 ImageNet [53] 数据集上预训练卷积神经网络（CNN），例如 ResNet [109]，用于下游任务。遗憾的是，由于容量有限，基于 CNN 的架构可能难以扩展至非常大的数据集 [9]。视觉 Transformer（ViT）[63] 被提出，通过将图像表示为图像块序列，使用 Transformer 架构学习视觉表示。与基于 CNN 的模型相比，基于 ViT 的模型具有更高容量，能够有效吸收海量可用数据中的知识。</p>
+<p>自 ViT 出现以来，大量研究利用 ViT 开发先进 VFMs。现有文献中，VFMs 分为两类：语言增强 VFMs 和纯视觉 VFMs。以 CLIP [249] 为代表的语言增强模型旨在通过对比学习对齐成对的文本和图像，以学习图像编码器。相反，纯视觉 VFMs 通过掩蔽自编码器（MAE）[106] 和 LVM [9] 等自监督目标，在纯视觉内容数据上进行预训练。这些在一般视觉数据上预训练的新兴 VFMs 在广泛计算机视觉任务中展现出稳健泛化能力和令人印象深刻的零样本学习能力。然而，由于城市视觉数据，例如卫星图像，与一般视觉数据，例如自然图像，之间的分布存在显著差异 [124]，现有 VFMs 可能不适合处理城市相关任务。因此，构建定制化城市 VFMs 具有很高必要性和实践价值。</p>
+<h4 id="4-2-1-单模态预训练"><a href="#4-2-1-单模态预训练" class="headerlink" title="4.2.1 单模态预训练"></a>4.2.1 单模态预训练</h4><p>随着相机和卫星技术的广泛部署，城市空间中已经收集到海量视觉数据，涵盖城市景观、基础设施、公共空间和人类活动等不同方面。数据的大规模可获得性推动了一系列从头训练大型城市视觉模型的研究。根据其使用的预训练数据类型，现有模型可分为现场城市视觉数据、遥感数据和城市栅格数据模型。</p>
+<ul>
+<li><p><strong>现场城市视觉数据。</strong> 现场城市视觉数据，例如街景图像 [16] 和监控视频 [19]，由部署在城市中的地面设备生成，例如智能手机、相机和车载 LiDAR。这类数据与特定空间位置紧密关联，并提供街道场景、车辆与行人交通等丰富细节。此类数据可用于评估房地产价值 [153]、发现高拥堵区域 [275] 和量化城市的社会经济影响 [197]。</p>
+<p>该领域早期研究主要依赖任务特定监督信号，例如人口统计变量 [84]，来学习城市图像的视觉表示。然而，这些方法会产生额外标注成本，且通常具有有限的泛化能力。为解决这些问题，近期研究 [159, 197, 333] 转向自监督学习，从无标注视觉数据中学习可泛化图像表示，以支持多种下游任务。例如，Urban2Vec [333] 应用托布勒地理学第一定律 [228]——“万物皆相关，但相近的事物比相远的事物更相关”——构建对比学习框架。该框架通过约束空间上相邻图像在潜在特征空间中具有相似表示，学习街景图像的表示。另一个例子是 KnowCL [197]，它采用对比损失最大化一个区域的街景图像表示与其对应知识图谱嵌入之间的互信息。目前，既有研究主要关注相对较小的数据集，而在大规模现场城市视觉数据上预训练 VFMs 仍未得到充分探索。</p>
+</li>
+<li><p><strong>遥感数据。</strong> 遥感（Remote Sensing，RS）数据通常由卫星、飞机或无人机捕获。RS 可在单张图像或单个数据集中覆盖广阔城市区域，因此特别适合土地利用分类、城市规划和环境监测等大尺度分析。受自监督学习在计算机视觉中成功的启发，大量研究 [6, 220] 探索了将该技术用于从无标注 RS 数据中提取知识。关于 RS 数据自监督学习算法的更多细节可参见 [331]。在这些工作的基础上，RS 基础模型研究近期取得显著进展，并受到学术界 [63, 316] 和工业界 [124] 的广泛关注。</p>
+<p>大多数 RS 基础模型遵循掩蔽图像建模（MIM）[106] 范式：首先利用图像编码器编码被掩蔽的 RS 图像，再解码未掩蔽部分以重建完整图像。不同于自然图像，RS 图像通常包含旋转、密集且小型的对象，因此在预训练中考虑这些独特属性是有益的。具体而言，Wang 等人 [316] 训练了一个具有 1 亿参数的普通 ViT，以解决从城市对象检测到区域功能识别及全市景观理解等多种 RS 任务。值得注意的是，该工作提出旋转、变尺寸窗口注意力，用以替代 ViT 中的标准注意力块，从而显著降低高分辨率 RS 图像的计算成本。ScaleMAE [256] 将尺度不变性引入标准 ViT，并采用拉普拉斯金字塔网络学习 RS 图像中的多尺度语义。更近期地，Cha 等人 [25] 研究了将 ViT 扩展至 10 亿参数对 RS 领域的影响。RingMo [286] 使用 ViT 的著名变体 Swin Transformer [198] 作为基于 MIM 预训练的模型骨干。特别地，RingMo 在被掩蔽图像块中随机保留部分像素，确保图像重建期间保留关键的细粒度细节。该策略使模型能够有效捕捉 RS 场景中常被忽略的密集小对象。RingMo-Sense [369] 进一步将 RingMo 扩展至 RS 时空预测任务。它开发多分支结构以学习多尺度时空表示，并为不同分支采用不同掩蔽策略，即块级、管级和帧级掩蔽，进行基于 MIM 的预训练。近期，多个研究 [218, 225] 开始探索训练 RS 基础模型的不同范式。例如，CSP [218] 通过对比预训练目标对齐配对位置与 RS 图像，从而学习视觉表示。GFM [225] 使用多目标持续预训练范式构建 RS 基础模型；该方法利用 ImageNet 预训练模型和蒸馏策略引导模型训练，同时通过掩蔽图像建模学习领域特定 RS 特征。</p>
+</li>
+<li><p><strong>城市栅格数据。</strong> 城市栅格数据以类似网格的结构组织，每个网格单元包含代表某一感兴趣属性的数值。此类数据通常表现出独特的时间序列模式，包括趋势和周期行为。例如，空气污染模式 [426]、气象数据 [36] 和区域移动流 [392]。城市栅格数据可自然地表示为图像，其中像素强度表征特定变量的空间分布，因此适合由视觉模型处理。</p>
+<p>近年来，VFMs 的快速发展显著影响了城市栅格数据的处理范式。在海量、多样化城市栅格数据集上预训练的大型 VFMs 展现出强泛化能力，并可适应广泛的分析任务，尤其是气候和天气领域 [15, 31, 151, 219, 234, 236, 243]。例如，FourCastNet [243] 开创性地基于 ViT 架构和自适应傅里叶神经算子 [91] 开发高分辨率全球天气预测模型。该模型通过自回归目标在大规模气象记录再分析数据上进行预训练。此后，Pangu-Weather [15] 首先将地表和高空气象变量表示为三维栅格数据，并将三维数据划分为三维图像块。随后，这些图像块被传入三维地球特定 Transformer，以进行中期天气预报。值得注意的是，Pangu-Weather 在再分析数据上优于世界领先的数值天气预测（NWP）系统，显示出在基于栅格的天气数据上进行预训练的巨大潜力。相比之下，GraphCast [151] 首先将基于栅格的天气数据组织为多网格图，随后借助图神经网络和编码器—解码器架构处理该数据。此外，FengWu [31] 将天气建模视为多模态多任务问题，并开发基于 Transformer 的架构，融合多种大气变量或模态以独立进行预测。不同于上述以自回归方式训练的模型，W-MAE [219] 将 MAE 技术适应于天气和气候建模。该模型通过重建气象变量之间的空间关系进行预训练，从而可被微调用于下游预测任务以增强性能。</p>
+<p>除天气预测外，Nguyen 等人 [234] 提出 ClimaX，这是首个用于广泛气候和天气建模任务的基础模型。ClimaX 通过解耦变量编码和聚合策略改进标准 ViT 架构，从而增强模型对异构大气变量的适应性。它还能够很好地泛化至预训练期间未遇到的区域和变量情境。更近期地，Aurora [17] 通过在大规模、异构地球系统数据上预训练 Swin Transformer [198]，统一空气污染、全球海浪、热带气旋路径和天气的预测建模。预训练的 Aurora 模型可进一步针对任意所需地球系统预测任务进行微调，展示出其作为地球系统应用基础模型的巨大潜力。另有 UniExtreme [236] 提出一种用于多类极端天气预测的通用基础模型，在高影响、罕见气象条件下展现稳健预测能力。</p>
+</li>
+</ul>
+<h4 id="4-2-2-单模态适应"><a href="#4-2-2-单模态适应" class="headerlink" title="4.2.2 单模态适应"></a>4.2.2 单模态适应</h4><p>在数据受限的城市场景中，可能没有充足领域特定数据来从头训练大规模 VFM。为解决这一问题，一些研究直接将已在一般视觉数据上预训练的现成 VFMs 适应于城市任务。此类适应可通过提示工程或模型微调技术有效实现。</p>
+<ul>
+<li><p><strong>提示工程。</strong> 当前该类别研究主要聚焦于将分割一切模型（SAM）[143] 适应于城市 RS 图像分割。SAM 是专为分割任务定制的基础模型，由三个部分组成：（1）基于 ViT 的图像编码器，用于生成图像嵌入；（2）提示编码器，用于处理用户提示，即指定图像中需分割的对象，并创建嵌入；（3）轻量级掩码解码器，用于结合图像和提示嵌入预测分割掩码。特别地，用户提示可以从稀疏提示，例如点、框和文本，变化至密集提示，例如粗粒度掩码。由于 SAM 在自然图像上训练，难以泛化至 RS 场景，相关研究采用了特定提示方法，使 SAM 能够有效适应 RS 数据集。Wang 等人 [315] 提出 SAMRS，通过直接利用 SAM 的零样本能力进行 RS 分割。SAMRS 基于 RS 图像特征手动设计六种基本提示，并通过实验识别提示的最优组合，以实现有效分割。在此基础上，RSPrompter [32] 通过自动化提示生成进一步简化流程。它通过分析编码器的隐藏层，为 SAM 输入生成适当提示，例如点或框嵌入。</p>
+<p>除基于 SAM 的方法外，Roberts 等人 [259] 近期使用思维链（CoT）提示 [144] 探索多模态 LLMs，例如 GPT-4V，所具备的地理与地理空间能力。通过在多种视觉地理数据上的一系列实验，该研究表明多模态 LLMs 能够从城市图像中提取细粒度细节，但在需要精确定位和准确绘制边界框的任务中仍存在困难。</p>
+</li>
+<li><p><strong>模型微调。</strong> 在城市场景中，模型微调用于将预训练 VFM 改进至某种特定能力，例如 RS 图像分割。例如，GeoSAM [281] 在自动生成视觉提示的辅助下，通过参数高效微调提升 SAM 在移动基础设施分割上的性能。RingMo-SAM [360] 使用微调更新 SAM 的提示编码器，以实现多源 RS 分割。此外，近期研究 [97, 408] 已探索语言增强 VFMs，例如 CLIP，在街道场景分析中的应用。具体而言，Zhang 等人 [408] 提出一种街景图像分析方法，使用经定制损失函数和分类层微调后的语言增强 VFM。该方法有助于从多样化城市景观中提取详细文本描述，并将街景图像与地理标记文本连接。StreetCLIP [97] 通过元学习方法，利用合成图注进行微调，从而使 CLIP 适应街景图像地理定位任务。此外，GeoCLIP [305] 通过提出新颖的图像到 GPS 检索方法解决全球范围地理定位问题，该方法对齐图像及其相应 GPS 坐标。为实现此目标，GeoCLIP 使用位置—图像对，联合微调预训练的基于 CLIP 的图像编码器和新增的位置编码器。</p>
+</li>
+</ul>
+<p>尽管已经取得丰富进展，现有研究主要集中于使用相对较小数据集的任务特定应用，这限制了模型在多样城市情境中的通用效用和适应性。为克服这一局限，未来研究应优先考虑跨领域预训练和跨模态监督。一方面，跨领域预训练可纳入街景和遥感图像等不同城市视觉来源的数据，以增强模型泛化能力。另一方面，整合 POIs、时间序列和轨迹等数据类型的跨模态监督预训练，可通过捕捉城市内多模态语义关系，丰富模型对城市动态的理解。</p>
+<h3 id="4-3-基于时间序列的模型"><a href="#4-3-基于时间序列的模型" class="headerlink" title="4.3 基于时间序列的模型"></a>4.3 基于时间序列的模型</h3><p>时间序列是按时间顺序排列的可观测记录集合，表示变量状态随时间的演化。由于城市环境具有时变特征，时间序列数据在城市情境中无处不在，并与交通预测 [104, 399, 402]、空气质量预测 [101, 102, 105]、能源消耗预测 [356] 等多个重要城市任务相关。形式化地，一个时间序列可表示为 $X\in\mathbb{R}^{T\times N\times C}$，其中，$T$ 是时间步数，$N$ 是变量数量，例如传感器数量，$C$ 表示通道数量。</p>
+<p>本文将构建可处理城市时间序列基础模型的最新进展划分为三类：（1）单模态预训练；（2）单模态适应；（3）跨模态适应。</p>
+<h4 id="4-3-1-单模态预训练"><a href="#4-3-1-单模态预训练" class="headerlink" title="4.3.1 单模态预训练"></a>4.3.1 单模态预训练</h4><p>单模态预训练通常涉及以监督或自监督方式，在大量大型时间序列数据集上训练深度神经网络。在预训练中，模型学习捕捉时间序列数据中复杂的时间模式和变量间相关性。以下分别介绍普通时间序列和空间相关时间序列上的基础模型预训练方法。</p>
+<ul>
+<li><p><strong>普通时间序列。</strong> 对于普通时间序列，现有工作专注于在预训练期间提取时间模式和依赖关系，并根据训练方案分为监督式、生成式、对比式和混合式方法。</p>
+<p>监督式方法 [51, 62, 67, 196, 200, 241, 254] 直接使用真实信息进行模型预训练，例如预测任务中的未来值、分类任务中的标签。例如，GPHT [200] 深入研究类似语言建模的自回归预训练策略，该策略能够充分捕捉被预测序列中的时间模式，并泛化至任意长度的预测范围。近期，TimesFM [51] 探索构建具有良好零样本预测性能的时间序列基础模型，并构建大型时间序列语料及仅解码器模型架构。Time-MoE [274] 借助专家混合（MoE）[270] 技术，将时间序列基础模型扩展至十亿级参数，在模型容量和推理开销间取得平衡。</p>
+<p>生成式方法通常采用掩蔽重建方案，即对输入时间序列进行随机掩蔽，并训练模型恢复缺失内容 [388]。例如，SimMTM [60] 发现直接掩蔽部分时间序列会严重破坏时间语义变化。因此，它从流形角度看待掩蔽重建，并提出从多个被掩蔽序列中恢复原始时间序列。其他许多基于掩蔽重建的预训练方法 [68, 182, 237] 则专注于改进模型架构，以获得更好的时间序列分析能力。近期，基于解耦自编码器架构 [44]，HiMTM [417] 开创性地将多尺度时间模式提取整合到被掩蔽时间序列重建中。受对比学习启发，TimSiam [59] 设计了一种新颖的基于重建的预训练策略，对超出当前上下文的远距离子序列间相关性进行建模，从而捕获整个时间序列的全局动态。此外，Moirai [341] 构建一种基于掩蔽编码器的通用 Transformer 架构，以容纳具有不同频率、不同变量规模和不同分布的时间序列。</p>
+<p>对比式方法旨在增强具有相似语义的时间序列对象表示之间的一致性，例如正样本对，同时降低语义不同对象表示之间的一致性，例如负样本对。基于对比的时间序列预训练的关键在于定义应当彼此靠近的正样本对一致性。对比时间序列预训练主要采用五类一致性 [211]：子序列一致性 [75] 假设参考时间序列的表示应与其子序列相似；变换一致性 [69, 342] 表示不同增强视图下的时间序列应保持一致；时间一致性 [293] 表示一个时间序列中相邻子序列应相似；上下文一致性 [385] 假设同一子序列的两个增强视图中，相同时间戳的表示应一致；连续一致性 [69, 252, 423] 表示时间序列的两个连续部分，即历史部分和预测范围，应保持一致。</p>
+<p>混合式方法 [79, 190] 整合前述训练方案，以实现稳健预训练。例如，为捕捉源领域之间，例如天气和电力，时间特征的变化，UniTime [190] 使用领域特定文本信息作为人工提示来增强输入嵌入。此外，它使用输入与输出填充来适应不同数据特征，例如历史和预测范围的长度，并设计面向不平衡学习的输入掩蔽机制，以适应不同收敛速度。UniTS [79] 修改 Transformer，以适应多领域时间序列数据中时间动态的差异。它支持多任务监督训练或统一掩蔽重建预训练，并可通过提示学习适应多种时间序列任务。</p>
+</li>
+<li><p><strong>空间相关时间序列。</strong> 除通常只考虑时间维度的普通时间序列预训练外，城市时间序列研究还强调整合空间维度，以显式容纳变量之间的依赖关系。许多相关文献也将其称作时空数据 [191, 269, 383]。</p>
+<p>一些工作 [321, 370, 415] 将空间关系建模为具有固定大小的网格地图，并使用 CNN 编码空间模式。例如，ST-GSP [415] 提出以 ResNet 为骨干的语义流编码器来捕捉空间依赖性。此外，它采用早期融合范式设计 Transformer 编码器，用于捕捉多尺度时间信息，以进行基于重建的预训练和下游城市流预测。近期，UniST [383] 进一步提出一种可泛化至多样数据格式和数据分布变化的通用时空预测基础模型。它设计了带有四种不同掩蔽技术的生成式预训练策略，以及用于适应的先验知识引导提示网络。然而，基于网格的空间建模仅限于局部规则依赖，且无法利用不规则、任意的变量间连接。</p>
+<p>针对这一问题，近期工作 [137, 191, 203, 242, 290] 专注于基于图的空间编码，通常使用时空图神经网络（STGNNs）提取时空信息。例如，由于数据稀缺，STGCL [191] 为交通预测设计对比预训练框架。它引入节点级和图级对比范式、四种数据增强技术，以及从时间和空间两个视角设计的去偏负样本过滤策略。OpenCity [168] 通过处理多样数据特征造成的时空异构性，构建用于交通预测的自适应基础模型。然而，这些方法采用预定义图结构，可能具有偏差和噪声，进而负面影响空间信息提取 [269] 或跨城市知识迁移 [138]。</p>
+<p>为解决上述缺陷，STEP [269] 在下游预测中引入图结构学习模块。由于标准 STGNNs 通常聚焦短期时间序列，STEP 设计 TSFormer 用于时间序列预训练，以利用片段级表示捕获长期时间模式。TransGTR [138] 专注于以可迁移方式学习图结构，预训练结构生成器，并在城市之间迁移该生成器和时空预测模块。进一步地，MC-STL [403] 关注时空异构性，即空间相关性和区域重要性随时间变化，并提出两种预训练策略：空间掩蔽重建和时间对比学习，以理解区域间相关性及区域模式随时间的变化。类似于 TransGTR，TPB [201] 专注于时空预测的跨城市迁移学习。为捕捉数据丰富城市中的交通模式并将其迁移至数据稀缺城市，TPB 通过聚类生成代表性交通模式，并在下游预测期间进行模式聚合。此外，它设计基于注意力的图重建，随后使用 STGNN 提取时空模式。GPT-ST [170] 观察到，现有方法缺少时空模式定制化表示，且未充分考虑不同层次的空间依赖。因此，它通过引入参数定制方案和自适应掩蔽策略，预训练时空掩蔽自编码器，并使用分层超图结构从全局视角捕获多层次空间依赖。特别地，为提升计算和数据效率，CompactST [103] 被开发为紧凑型时空基础模型，具有约 $300\text{K}$ 参数。该模型可借助多尺度时空混合器和归一化器混合，在海量多领域城市数据集上高效预训练，以处理异构模式。结果表明，尤其在下游数据稀缺时，该模型具有更好的预测准确性和效率。</p>
+</li>
+</ul>
+<h4 id="4-3-2-单模态适应"><a href="#4-3-2-单模态适应" class="headerlink" title="4.3.2 单模态适应"></a>4.3.2 单模态适应</h4><p>单模态适应旨在将预训练时间序列基础模型定制到新的时间序列数据集，以增强下游任务性能。随着提示调优方法在自然语言、视觉和图等数据模态中的出现 [285]，面向时间序列的提示方法也日益受到关注。例如，PT-Tuning [182] 在被掩蔽词元中加入可调提示，以实现城市时间序列数据中预训练目标，即掩蔽重建，与适应目标，即预测，之间的一致性。对于时间序列分类，POND [320] 除了通用提示外，进一步设计实例级提示生成器进行自适应提示。为捕捉多样领域特定信息，POND 还提出元学习范式和精心设计的对比约束来初始化提示。</p>
+<p>此外，一些研究探索了用于空间相关时间序列任务的提示调优。例如，PromptST [410] 向时空数据添加可调提示，以高效微调预训练交通预测模型并避免灾难性遗忘问题。STGP [117] 设计两阶段提示流水线，使提示能够整理领域知识和任务特定属性。UniST [383] 学习具有键值结构参数的空间和时间记忆池，随后使用输入表示查询提示记忆池，以提取知识引导提示。MetePFL [37] 和 FedWing [38] 聚焦联邦天气预测，使用提示技术进行个性化联邦学习，以降低通信开销并增强隐私保护。</p>
+<h4 id="4-3-3-跨模态适应"><a href="#4-3-3-跨模态适应" class="headerlink" title="4.3.3 跨模态适应"></a>4.3.3 跨模态适应</h4><p>由于缺乏足够的时间序列数据以从头训练基础模型，跨模态适应方法直接采用在其他模态上预训练的基础模型，并旨在将模态共享知识迁移至时间序列任务。近期大多数跨模态研究专注于将预训练 LLMs 适应于时间序列任务，以充分利用其显著能力 [135, 136]。根据 LLMs 是纯黑箱模型还是开源模型，本文遵循 [135] 将它们分为两类：嵌入不可见 LLM，例如 ChatGPT、GPT-4；嵌入可见 LLM，例如 GPT-2 [251]、LLaMA [295]。对于前者，只能通过 API 调用进行提示推理；对于后者，则可以在各种任务中微调模型参数，或重新编程时间序列输入。</p>
+<ul>
+<li><p><strong>提示工程。</strong> 一些近期发布的 LLMs 具有突出的能力，但属于闭源模型，即嵌入不可见。可行的适应方案是将时间序列转换为自然语言句子，作为 API 调用的提示。PromptCast [356] 首次提出一种基于提示的预测范式，并发布大规模数据集 PISA，该数据集由基于模板的提示构建，包含天气温度、电力消耗和人类移动预测任务。进一步地，LLMTime [88] 认为，如果对输入时间序列数据进行精心词元化，则无需添加任何文本或提示工程，LLMs 即可直接作为零样本预测器。</p>
+</li>
+<li><p><strong>模型微调。</strong> 除提示 LLMs 外，许多研究致力于微调嵌入可见 LLMs 用于时间序列任务。FPT [436] 将预训练 LLMs 用于多种时间序列任务。为了提高效率，它仅微调 LLM 的一小部分参数，即位置嵌入和层归一化层；并利用线性探测与分块，将不同城市领域，例如天气、电力和交通，的时间序列与语言模态对齐。为对齐时间序列和语言模态，LLM4TS [26] 设计两阶段微调过程：首先对时间序列采用自回归监督微调；之后微调预训练模型，用于下游时间序列预测。TEMPO [23] 进一步解决 LLMs 在捕捉趋势、季节性和分布偏移等时间序列特征方面的局限。该方法对输入时间序列进行趋势—季节性分解，将这些分量输入 LLM 进行推理，同时使用可调提示缓解不同数据集之间的分布偏移。为应对不同上下文长度的时间序列，AutoTimes [195] 提出一种基于 LLM 的自回归预测方法，采用与 LLM 获取方式一致的下一个词元预测作为训练目标。此外，AutoTimes 设计词元级提示技术，利用 LLM 生成表示时间戳信息的提示。</p>
+<p>为将 LLMs 适应于空间相关时间序列，GATGPT [43] 使用图注意力模块进行空间图编码，并将时空嵌入传给预训练 GPT-2 模型，以完成下游时空插补。TPLLM [257] 使用一维卷积神经网络和图卷积网络，使 LLMs 能够理解交通数据中的时空模式。此外，STG-LLM [187] 提出时空词元器，将时空数据转换为词元，并提出适配器架构实现高效适应，从而促进预训练 LLMs 的理解。类似地，ST-LLM [178] 将每个空间位置上的时间步视为词元，并将多种空间与时间先验信息融入输入嵌入，以促进交通预测。此外，STD-PLM [121] 通过部分更新注意力、位置嵌入和层归一化层来微调预训练语言模型，并使用 LoRA 实现高效适应，以编码时空结构。这种选择性调优使预训练语言模型能够理解节点拓扑、时间模式和缺失性，从而支持预测、插补，以及强大的零样本和小样本泛化。</p>
+</li>
+<li><p><strong>模型重编程。</strong> 为将时间序列显式对齐至自然语言或语音等其他模态，模型重编程 [35] 是一种前瞻性方法，它既不直接编辑时间序列输入，也不微调预训练模型。例如，V2S [361] 通过输入重编程和输出标签映射，利用预训练声学模型进行时间序列分类。TEST [282] 提出以数据为中心的框架，冻结 LLM 参数并改进输入。它通过对比学习将时间序列嵌入与文本表示对齐，并使用可调提示进行下游预测和分类。为释放 LLMs 在时间序列预测中的潜力，Time-LLM [134] 将时间序列重编程为文本原型表示，并加入描述时间序列数据统计信息的基于语言的提示。为避免巨大且稠密的重编程空间，Time-LLM 仅通过线性探测维护一小部分词汇表中的预训练词嵌入。为增强时空数据的重编程框架，RePST [319] 在频率空间中解耦时空数据，以捕捉复杂时空依赖。它还从整个词汇表中离散采样词嵌入，以避免语义混合，并增强时空数据文本原型的表达能力。为了将时空依赖与 LLMs 的理解空间对齐，UrbanGPT [169] 提出时空指令调优范式，将时空数据与 LLMs 的知识空间对齐。</p>
+</li>
+</ul>
+<p>尽管单模态和跨模态方法均已作出诸多努力，大多数基于时间序列的现有 UFMs 仍局限于同质数据格式，例如规则采样时间序列，并且在新领域和新任务上的零样本适应能力不足。此外，LLMs 如何有效理解城市时间序列尚未被充分探索，而这可能促进更强大的预训练或适应技术。进一步地，将上下文文本等其他模态数据纳入基于时间序列的 UFMs，以增强其多功能时间序列分析能力，例如时间序列问答，仍未得到充分探索。</p>
+<h3 id="4-4-基于轨迹的模型"><a href="#4-4-基于轨迹的模型" class="headerlink" title="4.4 基于轨迹的模型"></a>4.4 基于轨迹的模型</h3><p>轨迹数据是一种在基于位置的城市任务中广泛存在的重要模态，例如驾驶行为分析 [85, 118, 150, 365] 和人类移动分析 [73, 129, 176, 177, 183]。形式化地，轨迹数据是一种特殊的地理传感数据，可定义为空间—时间点序列：</p>
+<p>$$<br>T&#x3D;{(p_1,t_1),(p_2,t_2),\ldots,(p_n,t_n)},<br>$$</p>
+<p>其中，每个点 $p_i$ 是空间中的位置，通常以地理坐标表示，$t_i$ 为相应时间戳。基于轨迹的 UFMs 被设计为通过预训练和适应技术，捕捉轨迹数据中固有的时空相关性和通用移动模式，从而支持广泛城市情境中的应用。</p>
+<h4 id="4-4-1-单模态预训练"><a href="#4-4-1-单模态预训练" class="headerlink" title="4.4.1 单模态预训练"></a>4.4.1 单模态预训练</h4><p>轨迹数据通常需要定制化建模以适应特定应用 [73, 150, 442]。单模态预训练通常涉及在大规模纯轨迹数据集上进行自监督学习，使模型能够捕捉轨迹之间的内在特征和模式，并增强其在不同应用场景间的泛化能力。预训练方法可分为道路网络轨迹和自由空间轨迹两类。</p>
+<ul>
+<li><p><strong>道路网络轨迹。</strong> 道路网络轨迹是指受道路网络约束的轨迹，例如车辆或行人在街道和高速公路上的路径。学习轨迹和路径的低维嵌入是道路网络轨迹预训练中最关键的任务之一，因为这些嵌入可惠及旅行时间估计和路径规划等多种下游任务。T2vec [161] 和 Traj2vec [368] 是基于轨迹预训练模型的早期尝试，它们采用序列到序列 [288] 编码器—解码器框架学习轨迹表示。这些模型通过一个生成式自监督任务重建轨迹序列进行预训练。然而，这些方法以原始轨迹作为输入，噪声可能损害轨迹表示质量。为缓解这一问题，Trembr [77] 将原始轨迹投影至道路网络上，并使用道路片段序列作为输入。此外，Trembr 的解码器被定制为同时重建道路片段及其相应旅行时间。这一增强使学习到的轨迹表示能够有效用于轨迹相似性测量、旅行时间预测和目的地预测等多种下游应用。</p>
+<p>近年来，更先进的方法被提出以进一步优化轨迹表示。PIM [365] 是一种两阶段轨迹表示模型，采用 node2vec 生成道路嵌入，并利用基于对比学习的互信息最大化方法训练 LSTM 编码器以生成路径嵌入。不同于 PIM，LightPath [366] 通过在自监督关系推理方法中加速路径编码器训练，直接学习用于多样化下游任务的路径表示。STPT [118] 提出用于人类轨迹表示建模的时空预训练和微调方法。在预训练阶段，它通过自监督相似性学习任务预测子轨迹的来源；微调阶段使用任务特定适配器将预训练模型适应至不同任务。JGRM [212] 提出一种通过联合建模 GPS 和路径轨迹增强轨迹表示的方法。它利用双模态信息交互，将 GPS 轨迹的丰富细节与路径轨迹中稳健的状态转换记录相结合，并采用掩蔽语言建模和跨模态匹配等自监督任务进行预训练。</p>
+<p>尽管上述方法在预训练中采用生成式或对比式方法，MMTEC [176] 认为这些方法可能引入由前置任务造成的轨迹嵌入偏差。为缓解这一问题，MMTEC 使用最大熵编码构建独特预训练任务，以减少轨迹嵌入中的偏差。该策略有助于为相似轨迹搜索、旅行时间估计和目的地预测等多种下游任务开发通用、高质量的轨迹嵌入。此外，一些研究探索结合生成式和对比式方法的预训练方式。HMTRL [183] 是面向多模态交通推荐的路径表示学习框架。它整合时空图神经网络以捕捉空间和时间自相关，并结合注意力模块来建模路径序列的语义连贯性。该框架还采用层次多任务学习模块，学习跨交通方式的路径表示。其具有掩蔽属性预测和轨迹对比学习的时空预训练策略增强了泛化能力。START [129] 为预训练轨迹表示模型引入两项自监督任务：跨度掩蔽轨迹恢复和轨迹对比学习，在不同道路网络数据集上表现出稳健可迁移性，并在三项不同下游任务中表现优异。UniTraj [443] 提出一种通用轨迹基础模型，旨在应对人类轨迹建模中的任务特异性、区域依赖性和数据质量敏感性问题。它在 WorldTrace 上预训练，该数据集包含来自 70 个国家的 245 万条轨迹。该模型使用通用编码器—解码器结构，并在预训练中采用重采样与掩蔽策略。它在轨迹恢复、预测、分类和生成等多种轨迹相关任务上展现出优越的可扩展性和适应性。</p>
+</li>
+<li><p><strong>自由空间轨迹。</strong> 自由空间轨迹是指位于开放、非结构化空间中且不受道路网络约束的轨迹，例如行人在公园或开放区域中的移动。这一类别的代表性子集是签到轨迹，即个体通常使用社交媒体或基于位置的服务，在特定 POIs 记录其位置。为应对自由空间轨迹分析的挑战，已有多种创新方法被开发，专注于模拟和理解非结构化环境中的人类移动。Feng 等人 [73] 提出 MoveSim，这是一种用于模拟人类移动的生成对抗框架。该框架利用面向生成器和判别器的独特预训练任务，利用人类移动中的空间连续性和时间周期性，从而显著提升模拟保真度。SML [433] 是面向人类移动建模的框架。通过采用时空上下文学习并整合常见数据增强技术，它能够应对数据稀疏性，从而提高准确理解人类移动模式的能力。此外，作者实现了用于模型预训练的预训练任务，随后通过对比轨迹学习进行微调。CTLE [177] 提出一种专为学习位置表示而定制的预训练模型，主要面向下一位置预测等任务。该模型采用 BERT 中的掩蔽语言模型预训练任务，并通过考虑轨迹内上下文邻居生成位置嵌入，有效处理位置的多功能属性。Gong 等人 [85] 提出 CACSR，一种用于学习签到序列表示的对抗对比模型。该模型为编码器设计基于对比学习的预训练任务，从而改善表示学习。预训练之后，CACSR 可针对位置预测和轨迹—用户连接任务等多样化多分类问题进行微调，表现出显著性能。</p>
+</li>
+</ul>
+<h4 id="4-4-2-单模态适应"><a href="#4-4-2-单模态适应" class="headerlink" title="4.4.2 单模态适应"></a>4.4.2 单模态适应</h4><p>单模态适应主要集中于在不同轨迹数据集之间微调预训练轨迹模型，例如将一个城市训练的模型适应至另一个城市。Reformd [93] 采用标准迁移学习程序，将数据丰富区域学习到的模型参数迁移到数据稀缺的目标区域。该方法通过带标记时间点过程，建模源区域中移动预测任务的区域不变动态。它同时将签到序列的时间间隔分布和空间距离分布学习为两个独立的归一化流。在迁移过程中，已学习到的空间和时间流被迁移，随后针对目标区域微调模型参数，并纳入注意力参数以增强特异性。</p>
+<p>Axolotl [94] 同样关注跨区域模型迁移，通过利用数据丰富区域的数据，提升数据稀缺区域的 POI 推荐。该方法采用基于聚类的知识迁移，无需区域间共享用户或 POIs。在这一思想基础上，CATUS [284] 通过迁移类别级通用转换知识，解决不同城市间 POI 推荐中的数据稀缺和不平衡问题。它在预训练阶段使用两项自监督任务实现该目标：下一类别预测和下一 POI 预测。在微调期间，CATUS 使用面向距离的采样器，使 POI 表示能够更好地与城市局部上下文对齐，并考虑 POIs 之间的地理距离和语义相似性。TransferTraj [338] 提出统一轨迹学习模型，同时实现区域和任务迁移能力。通过区域可迁移编码器和基于掩蔽的输入—输出方案，该模型支持无需重新训练的多种轨迹任务，并在零样本和小样本设置下优于现有基线。此外，一些研究探索提升泛化能力的适应策略。例如，AdaMove [100] 提出偏好感知测试时适应机制，使用输入的测试轨迹更新已训练模型的参数，使模型在推理期间能够更好地适应分布偏移。</p>
+<h4 id="4-4-3-跨模态适应"><a href="#4-4-3-跨模态适应" class="headerlink" title="4.4.3 跨模态适应"></a>4.4.3 跨模态适应</h4><p>跨模态适应方法旨在将从其他数据模态中学习到的模式、特征或知识适应至轨迹数据。GPT-4 [240]、Llama2 [296] 等 LLMs 的近期进展已在不同领域展现卓越的零样本学习与泛化能力。越来越多的研究探索将 LLMs 用于基于轨迹的任务。</p>
+<ul>
+<li><p><strong>提示工程。</strong> 此类工作大多通过提示工程技术，利用 LLMs 解决人类移动相关任务。例如，LLM-Mob [327] 设计有效提示以增强 LLMs 对移动数据的推理能力，并在人类移动预测任务中产生准确且可解释的结果。为捕捉长期和短期依赖，移动数据被格式化为历史停留和上下文停留。Zhang 等人 [409] 开展实证研究，评估 LLMs 在识别人类移动数据异常行为方面的有效性和局限性，并将其性能与专门异常检测算法进行比较。LLM-MPE [173] 寻求使用 LLMs 在公共事件等复杂场景中预测人类移动，采用思维链提示方法，基于历史移动模式和事件描述作出预测。不同于直接提示 LLMs，TrajCogn [439] 设计轨迹提示，以编码时空特征、移动模式和出行目的，并引入轨迹语义嵌入器，将连续轨迹信号映射至与语言兼容的表示。该方法使 LLMs 可执行旅行时间估计、目的地预测和相似轨迹搜索等多项轨迹相关任务。</p>
+<p>此外，在自动驾驶领域，已有研究尝试利用 LLMs 进行运动规划和轨迹预测。Keysan 等人 [140] 提出一种方法，将文本形式的场景描述与预训练语言编码器整合，用于预测自动驾驶情境下的轨迹。类似地，GPT-Driver [222] 将运动规划重新定义为语言建模任务，将异构规划器输入转换为语言词元。该过程使用 ChatGPT 模型处理输入词元并生成驾驶轨迹预测。LanguageMPC [263] 使用 ChatGPT 等 LLMs 指导自动驾驶中的模型预测控制（MPC）。它使用提示将环境信息输入 LLM，并在对话中利用思维链将问题分解为可管理的子问题。DrPlanner [175] 提出一种使用 LLMs 改进运动规划器的框架，旨在减少所需人工干预。该框架使用 LLMs 通过结构化描述自主识别问题并为运动规划器提出修复建议，并基于评估反馈迭代优化过程。</p>
+</li>
+<li><p><strong>模型微调与重编程。</strong> 除提示工程外，少数研究探索微调或重编程 LLMs，以充分将其用于基于轨迹的任务。例如，AuxMobLCast [357] 将数值时间序列转换为自然语言句子，并微调 BERT、RoBERTa、GPT-2 和 XLNet 等预训练语言模型，以预测 POIs 的访客数量。该工作为预训练语言模型能够有效发现移动预测任务中序列模式提供实证证据。Traj-LLM [152] 提出使用预训练 LLMs 的轨迹预测框架，无需显式提示工程。它采用稀疏上下文编码、参数高效微调技术进行场景交互学习，并结合采用 Mamba 模块的车道感知概率学习机制，以增强场景理解。此外，多模态 Laplace 解码器确保生成多样化、符合场景的预测，即使在数据有限时也实现高准确性和适应性。PLMTrajRec [337] 仅使用有限的稠密轨迹微调预训练语言模型，并通过将间隔和移动特征转换为自然语言提示处理不同采样间隔。它将轨迹统一至共享时间尺度，通过区域级交通流提示建模道路状况，并在轨迹恢复中展现可扩展性和泛化能力。</p>
+<p>除模型微调外，Mobility-LLM [86] 提出统一框架，通过将签到序列转换为语义有意义的输入，对 LLMs 进行重编程以理解人类移动数据。通过设计用于丰富 POI 语义、建模短期访问意图和捕捉长期出行偏好的多个关键模块，该方法使 LLM 能够像理解自然语言一样解释移动行为。</p>
+</li>
+</ul>
+<p>尽管现有基于轨迹的 UFMs 在多种轨迹相关应用中展现出强大潜力，它们主要关注参数规模相对较小的预训练模型。类似 LLMs 的模型与数据规模扩展能否解锁处理复杂轨迹数据的新能力，仍然缺乏探索。此外，当前研究主要通过直接提示或简单微调使用 LLMs。进一步探索更高级的微调策略，例如指令调优和强化学习微调，有望使 LLMs 更有效地适应多样化轨迹相关任务。这些空白凸显了推进基于轨迹 UFMs 的重要机遇。</p>
+<h3 id="4-5-基于地理向量的模型"><a href="#4-5-基于地理向量的模型" class="headerlink" title="4.5 基于地理向量的模型"></a>4.5 基于地理向量的模型</h3><p>地理向量数据包括用于识别城市地图中地理要素和边界位置的信息，通常通过坐标系表示 [41, 216, 291, 401]。它可用于分析多种城市任务中的空间模式和关系，例如位置嵌入 [81, 167, 291, 307]、道路网络表示 [212, 393] 和城市规划 [163, 435]。</p>
+<p>形式化地，地理向量数据由三类主要几何元素组成：点，例如 POIs；折线，例如道路路段；多边形，例如行政区域。在地理向量数据中，一个点表示为 $p&#x3D;(l,x)$，其中，$l$ 表示地理坐标，即纬度和经度，$x$ 表示其关联特征，例如属性、读数。一条折线由相连的线段序列组成，每条线段由位置坐标定义，可表示为点列表：</p>
+<p>$$<br>L&#x3D;[(l_1,x_1),\cdots,(l_n,x_n)],<br>$$</p>
+<p>其中，$l_i$ 表示第 $i$ 个点的地理坐标，$x_i$ 表示其关联特征。一个多边形表示地块，由一系列相连折线形成的闭合边界定义，记为：</p>
+<p>$$<br>G&#x3D;[L_1,L_2,\ldots,L_n],<br>$$</p>
+<p>其中，$L_i$ 表示第 $i$ 条折线，并围合特定区域。</p>
+<h4 id="4-5-1-单模态预训练"><a href="#4-5-1-单模态预训练" class="headerlink" title="4.5.1 单模态预训练"></a>4.5.1 单模态预训练</h4><p>单模态预训练通常涉及通过监督或自监督任务，学习地理向量数据实体，例如 POIs、道路路段或区域的表示。这一过程捕捉关键属性和关系，生成通用且信息丰富的表示，从而增强多种下游地理空间任务的性能 [41, 401]。不同类型的地理向量数据实体通常需要定制化预训练方法，以最佳方式反映其空间、时间和上下文特征。</p>
+<ul>
+<li><p><strong>基于点的数据。</strong> 基于点的地理空间数据主要表示特定位置，例如 POIs 和事件发生点。现有工作通常通过构建位置预测等自监督学习任务，在此类数据上实现预训练，以捕捉这些点之间的空间和上下文关系，并增强通用空间表示学习。例如，GeoBERT [81] 利用跨 30 个中国城市的 1700 万个 POI 语料，通过掩蔽 POI 类型预测预训练网格嵌入，支持多个下游任务。此外，还有额外预训练策略用于改进空间表示。GeoVectors [291] 使用 fastText 的预训练词向量编码 OpenStreetMap 实体标签，从而确保有效捕捉语义含义。进一步地，该工作使用基于图的 DeepWalk 算法，从实体之间的地理关系中学习潜在表示。TALE [307] 利用丰富无标注轨迹数据进行自监督预训练，以学习位置嵌入向量，并通过整合通用位置信息增强下游任务性能。G2PTL [343] 使用丰富地理知识和空间拓扑信息预训练位置表示，并在多个 GIS 下游任务中评估其性能。</p>
+</li>
+<li><p><strong>基于折线的数据。</strong> 基于折线的数据描述线性实体，例如道路路段，并表示元素的连通性与顺序性质。折线数据预训练旨在理解和编码这些内在属性，以改善导航、路径优化和交通预测等任务。一种广泛使用的预训练策略是折线预测，即模型预测折线中的下一点或下一路段，从而学习连通和序列模式。例如，Hier [276] 利用真实世界轨迹数据，通过下一地点预测任务预训练模型，以获得更细粒度的地点嵌入。Toast [42] 利用交通上下文感知 skip-gram 模块和轨迹增强 Transformer 模块进行预训练，有效捕捉交通模式和出行语义，以增强道路网络表示学习，并应用于四项下游任务。另一种突出的方式是增强折线对比学习，它通过数据增强技术创建原始折线的多个增强版本。例如，Mao 等人 [223] 提出一种预训练模型，利用对比学习，通过最大化道路网络表示与轨迹表示之间的互信息来联合学习两者。</p>
+</li>
+<li><p><strong>基于多边形的数据。</strong> 基于多边形的数据涉及由闭合边界定义的区域实体，例如行政区域、地块或建筑轮廓。多边形数据的预训练侧重于学习能够捕捉空间层级和区域属性的通用表示。一种突出方法是编码区域内空间实体的地理上下文信息与复杂交互。例如，GMEL [199] 旨在通过编码城市地理单元的地理上下文信息，为其预训练有效嵌入，从而改善社会经济预测和城市功能分类等任务的性能。在此基础上，GeoHG [445] 引入有效异构图结构，以学习全面的区域嵌入。通过利用区域内不同类型空间实体之间的关系，GeoHG 支持多种下游任务，并增强所学表示的丰富性。另一种方法是区域对比学习，它基于这样一种直觉：关系网络中连接的地图实体应具有相似表示。RegionDCL [163] 在不同区域划分中采用组级和区域级对比学习策略，从而能够适应多样化空间方案，并增强不同情境中的灵活性。此外，近期研究聚焦于利用基于图的预训练方法来增强城市区域表示。GURPP [133] 构建整合详细空间实体数据的城市区域图，并开发以子图为中心的预训练模型。该模型捕捉实体间异构且可迁移的交互模式，从而改善城市区域表示，并提升城市规划和政策制定等任务的性能。</p>
+</li>
+</ul>
+<h4 id="4-5-2-单模态适应"><a href="#4-5-2-单模态适应" class="headerlink" title="4.5.2 单模态适应"></a>4.5.2 单模态适应</h4><p>预训练后，学习到的地理向量数据表示需要适应具体下游任务，以实现最优性能。该过程通常涉及监督学习，其中预训练模型作为基础模型，使用与目标任务相关的标注数据训练额外层或模块。例如，AGB [233] 通过使用面向巴西多样生态区域的星载数据进行微调，将地理空间基础模型适应至地上生物量估计。此外，还引入提示调优以增强对不同下游任务的适应。HREP [435] 提出异构区域嵌入模块与提示学习相结合的方法。该方法通过建模区域内多样空间实体之间的复杂交互，动态地使表示适应任务特定需求，从而支持跨不同情境更细致且灵活的应用。</p>
+<h4 id="4-5-3-跨模态适应"><a href="#4-5-3-跨模态适应" class="headerlink" title="4.5.3 跨模态适应"></a>4.5.3 跨模态适应</h4><p>除监督微调外，将地理向量数据的几何精度与自然语言等其他模态的丰富上下文信息结合，也已被证明是有益的。LLMs 能够捕捉地理实体更全面的特征，从而提升位置推荐 [253]、语义地图构建 [171] 和城市规划 [221] 等任务的性能。例如，Ramrakhiyani 等人 [253] 使用一个由 Wikidata 三元组生成的 5,268 个掩蔽句子探测数据集，评估预训练语言模型学习到的地理知识。该工作通过掩蔽词元预测和文本生成任务探测八种预训练语言模型。类似地，Maheshwary 等人 [214] 预训练和微调语言模型，以确定两个地址是否表示同一物理建筑。</p>
+<p>尽管基于地理向量的 UFMs 在点、折线和多边形数据上取得显著进展，处理大规模地理向量数据集仍会在计算资源和处理时间上带来挑战。现有模型通常缺少有效处理全国道路网络或全球 POIs 等大规模地理空间数据所需的可扩展性。需要研究可扩展、高效的算法或架构，以有效支持大规模地理向量数据集的预训练和适应。此外，整合卫星影像和文本描述等其他模态数据，可能增强对地理空间实体比仅依赖地理向量数据更全面的理解和表示。</p>
+<h3 id="4-6-多模态模型"><a href="#4-6-多模态模型" class="headerlink" title="4.6 多模态模型"></a>4.6 多模态模型</h3><p>由于城市环境具有以多样化数据类型为特征的复杂性质，人们日益关注开发多模态 UFMs 来处理城市任务。通过整合这些不同数据模态，多模态 UFMs 旨在对城市动态形成更整体性的理解，大幅增强多种城市应用，并为城市通用智能奠定基础。</p>
+<h4 id="4-6-1-多模态预训练"><a href="#4-6-1-多模态预训练" class="headerlink" title="4.6.1 多模态预训练"></a>4.6.1 多模态预训练</h4><p>为对城市环境形成全面理解，多模态 UFMs 旨在系统地在包含文本、视觉和地理数据等城市特定信息的大规模多模态数据集上预训练模型。</p>
+<p>在既有研究中，相当一部分工作专注于学习城市实体，例如区域、道路和 POIs，的通用表示，以支持多种下游任务。UrbanCLIP [358] 是一个利用 LLMs 增强多模态城市区域画像的框架。它利用 LLMs 为卫星图像生成文本描述，并采用对比学习和语言建模损失作为监督，以学习城市视觉表示。此外，ReFound [346] 利用语言、视觉和视觉—语言基础模型进行城市区域理解。它从多模态地理空间数据中学习领域内知识，同时从已建立的基础模型中蒸馏通用知识，使模型同时具备通用知识和领域知识。生成的区域表示可用于人口预测和商业活动评估等多种城市分析任务。</p>
+<p>此外，MM-Path [354] 提出多模态、多粒度路径表示学习框架，通过利用基于道路网络的路径和基于图像的路径，使用对比学习预训练道路嵌入。它能够有效适应大规模真实世界数据集中的旅行时间估计和路径排序等下游任务。CityFM [11] 则提出一个框架，使用 OpenStreetMap 中的空间、视觉和文本数据，以自监督方式预训练地理空间实体的通用表示。它基于节点、路径和关系设计三个对比目标，以学习地理空间实体的多模态表示，并在交通速度推断和建筑功能分类等下游任务中证明其有效性。</p>
+<p>除面向城市实体的多模态表示学习外，BIGCity [378] 开发一种通用时空基础模型，通过共享 ST-unit 表示与基于 GPT 的提示驱动框架，统一轨迹数据和交通状态数据。由掩蔽重建预训练和多任务提示调优组成的两阶段训练范式，使其无需任务特定微调即可支持这两种模态中的八项异构任务。</p>
+<p>此外，AllSpark [268] 引入“以语言为参照框架”（Language as Reference Framework，LaRF），以开发一种多模态时空模型，将 13 种不同模态整合到单一框架中。LaRF 的核心概念在于，将每种模态中的抽象概念与语言关联，从而在基于语言的统一表示空间中实现共同解释。TengYun [412] 是为 TransVerse 开发的交通基础模型，聚焦认知、运营、管理和控制。它结合预训练和提示调优进行训练：首先在云服务器上使用 Transformer 框架和深度强化学习处理历史多模态数据；在提示调优阶段，边缘服务器通过将训练视为自监督回归问题，为不同任务和策略定制提示。</p>
+<h4 id="4-6-2-多模态适应"><a href="#4-6-2-多模态适应" class="headerlink" title="4.6.2 多模态适应"></a>4.6.2 多模态适应</h4><p>另一类工作探索引入来自其他领域的基础模型，例如 LLMs，以解决城市挑战。这些工作的适应方法主要包括提示工程和模型微调。</p>
+<ul>
+<li><p><strong>提示工程。</strong> 使用提示工程的工作通常将基础模型与地理信息系统（GIS）和外部数据库等领域特定工具相结合。TrafficGPT [395] 是用于城市交通管理的框架，整合 ChatGPT 和多种外部工具。它包含提示管理、通过 LLMs 实现的任务理解与规划，并利用 LLMs 调用可用工具以执行特定操作，例如数据库检索和分析、数据可视化及系统优化。TrafficGPT 还通过存储对话记忆来增强未来交互中的会话上下文。GeoGPT [406] 是一个整合 LLMs 和成熟 GIS 工具的框架，帮助非专业人员使用自然语言解决复杂地理空间任务。它利用 LLMs 理解用户需求，并在 GIS 中完成自动化数据收集、处理和分析，使用户能够执行空间查询和设施选址等任务。此外，Zhou 等人 [438] 使用 LLMs 模拟规划师和居民，开展参与式城市规划。该工作提出一种规划流程：规划师根据区域图像地图和文本描述提出初始土地利用方案，然后通过与居民的讨论对方案进行修订。</p>
+</li>
+<li><p><strong>模型微调。</strong> 除直接调用现成基础模型外，一些研究还引入微调过程，以更好地将其他领域的基础模型适应至城市应用。TransGPT-MM [324] 从通用多模态 LLM VisualGLM-6B [56] 微调而来，以专门服务交通领域。这一适应过程在由驾驶测试、交通标志和地标构成的多模态领域特定数据集上微调 LLM，并在交通相关分析与建模任务中展示强大能力。Xu 等人 [352] 将 LLMs 整合到城市系统中以应对城市挑战，使用持续预训练将城市知识注入 CityGPT 模型。该方法结合通用文本、领域特定数据，例如城市知识图谱和地理数据，以及任务求解过程，随后采用监督微调，使 CityGPT 更贴近具体城市任务和人类偏好。GeoReasoner [157] 专为地理定位设计，通过两阶段过程微调大型视觉—语言模型。首先，使用与街景图像配对的文本线索进行推理调优，以增强模型推断能力；其次，位置调优使用精心筛选的高可定位性图像改进模型，并整合视觉和文本数据以实现精确地理定位。进一步地，VELMA [260] 实现一种基于具身 LLM 的智能体，用于街景中的视觉和语言导航。它通过 CLIP 整合来自街景的视觉观察以进行地标识别，并采用语言化流水线将视觉信息和导航指令转换为用于决策的文本提示。它使用 LoRA [115] 在城市领域训练实例上微调 LLM，以适应 LLM 中的注意力投影。</p>
+</li>
+</ul>
+<p>尽管这些工作积极推动 UFMs 处理多模态城市数据，但它们主要局限于整合受限范围的城市数据类型，特别是语言和视觉模态，或仅应用于狭窄范围的城市领域。此外，UFMs 发展中的时空推理潜力以及隐私与安全问题仍未得到充分探索。这揭示出创建更加通用、实用且可信的 UFMs 的重要机会。</p>
+<h3 id="4-7-其他模型"><a href="#4-7-其他模型" class="headerlink" title="4.7 其他模型"></a>4.7 其他模型</h3><p>除上述类别外，还存在一些研究探索其他城市场景中的基础模型，例如表格相关任务 [339]、决策制定 [149] 和仿真 [50, 314]。具体而言，智能交通领域已出现一些关于如何利用 LLMs 能力解决复杂交通控制任务的研究 [49, 149, 304]。例如，PromptGAT [49] 使用 LLMs 生成人类知识，帮助神经网络理解交通信号控制任务中的现实情形，例如天气条件。</p>
+<p>此外，一些初步努力致力于构建交通系统建模的基础模型 [314, 330]，这些模型利用图 Transformer 架构动态探索海量参与者的状态及其交互。进一步地，Open-TI [50] 整合 SUMO 和 CityFlow 等多个交通仿真平台。在 LLMs 增强下，它支持从零开始处理地图数据、交通信号控制和需求优化等复杂仿真任务。</p>
+<h2 id="5-城市基础模型的展望"><a href="#5-城市基础模型的展望" class="headerlink" title="5 城市基础模型的展望"></a>5 城市基础模型的展望</h2><p>尽管开发 UFMs 的努力不断涌现，这些尝试主要集中于整合有限范围的城市数据类型，并将其应用于有限的城市任务和情境。UFMs 在时空推理、多任务通用性、与用户及物理世界交互，以及构建 UFMs 时的隐私、安全和所有权问题等方面的潜力，仍未得到充分开发。</p>
+<p>理想情况下，UFMs 应能够处理多源、多粒度和多模态城市数据，并适应广泛的城市任务和领域。此外，它们应具备智能时空推理能力，以掌握和解释城市环境内部复杂的动态与相互连接。这应在不损害数据隐私和模型安全的前提下实现，同时确保与外部环境的无缝交互，并支持基于反馈的自我改进。因此，本文提出一个前瞻性框架，以克服当前障碍并迈向构建通用 UFMs。该框架包括五个主要组成部分：城市数据整合、多模态 UFMs 构建、时空推理、效用增强，以及隐私、安全与所有权。</p>
+<h3 id="5-1-城市数据整合"><a href="#5-1-城市数据整合" class="headerlink" title="5.1 城市数据整合"></a>5.1 城市数据整合</h3><h4 id="5-1-1-多源数据收集与预处理"><a href="#5-1-1-多源数据收集与预处理" class="headerlink" title="5.1.1 多源数据收集与预处理"></a>5.1.1 多源数据收集与预处理</h4><p>构建 UFMs 的标准流程始于多源城市数据收集与预处理。</p>
+<ul>
+<li><strong>收集多源城市数据。</strong> 城市数据收集需要汇聚多个数据来源和多种数据类型，以形成全面的多模态城市数据集 [255]。多源多模态城市数据可包括但不限于地理文本数据、社交媒体数据、街景图像、遥感数据、轨迹数据、时间序列数据和地理向量数据 [207, 216]。这些数据的粒度多样，范围从城市级，例如天气监测数据，到个体级，例如个人轨迹；从年度记录到实时测量。数据收集过程通常包括从数据库中提取、从网络爬取、从各类已部署传感器收集、众包等 [2, 351]。</li>
+<li><strong>预处理多源城市数据。</strong> 该阶段通常包括数据清洗、标准化、归一化和按需标注，对于确保基础模型训练和分析中数据的可用性与有效性尤为关键 [29, 389]。数据清洗识别并纠正或删除数据中的错误、噪声和不一致性，以提高数据质量。数据标准化对齐数据格式和结构，以实现一致性并确保多个来源之间的互操作性 [78]。数据归一化确保来自不同来源的数据处于可比较的尺度。对于模型监督学习而言，数据标注是必要的，可帮助模型更好地理解特定城市任务和场景，例如对图像添加标签、对文本分类、在时间序列中标记事件等。</li>
+</ul>
+<h4 id="5-1-2-多粒度数据整合"><a href="#5-1-2-多粒度数据整合" class="headerlink" title="5.1.2 多粒度数据整合"></a>5.1.2 多粒度数据整合</h4><p>多粒度数据整合旨在采用合适的数据处理方法和 GIS 工具，对多粒度城市数据进行细致的融合和关联。具体包括数据尺度变换、层次化数据结构和数据交叉参照。</p>
+<ul>
+<li><strong>数据尺度变换。</strong> 城市数据通常来自具有不同空间和时间分辨率的多样来源。为有效整合这些数据集，可采用降尺度和升尺度技术来协调其尺度 [82]。降尺度将粗分辨率数据细化，以获得更高的空间或时间细节，并使其与更细尺度数据集对齐。当整合全球或区域数据与本地观测时，这种方法尤其有用。例如，统计降尺度方法 [340] 可调整大尺度气候预测，使其更准确反映地方城市气候。相反，升尺度将高分辨率数据聚合至较粗尺度，从而促进与更广泛数据集的整合。当需要将详细的地方测量数据纳入区域或全球数据时，该方法十分有益。</li>
+<li><strong>层次化数据结构。</strong> 将数据组织为层次结构，是应对城市数据复杂性与多样性的有效策略 [98]，因为它可实现更细致的表示，并更接近真实城市景观。在层次结构顶层，可放置城市级数据，其中包含定义整个城市的宏观指标和趋势，如整体人口统计、全市经济指标或一般环境数据。在顶层之下，层次结构进一步分解为更本地化的数据集，例如行政区、社区和个体。每个层次提供更细的数据分辨率，捕捉较小区域的独特特征和动态。例如，区级数据可聚焦区域交通模式或特定经济活动，社区级数据则可深入本地公共服务、住房趋势和社区特定问题。在最细粒度上，个体数据可能包括详细个人轨迹及其他移动记录。这种结构有助于系统分析各层级的数据，并理解它们复杂的关系和交互。</li>
+<li><strong>数据交叉参照。</strong> 对多粒度城市数据进行交叉参照是一个复杂过程，但对于获得城市环境的全面洞见至关重要。它涉及识别、对齐和关联不同数据粒度中的相关数据，例如将微观层面数据——驾驶员轨迹、个体排放或地方犯罪报告——与宏观层面数据——全市交通测量、总体空气污染指数或总体经济指标——相关联，从而使不同城市数据分辨率能够相互提供有价值洞见。实现多粒度城市数据交叉参照的系统方法，应从不同数据来源的标准化开始 [78]。通常利用先进 GIS 工具，将多样数据集叠加到共同空间网格上。完成对齐后，采用统计相关分析、空间分析和机器学习算法等分析技术，识别整合数据中的模式与关系 [5, 271]。这一阶段对于从多种城市参数的复杂交互中提取有意义洞见至关重要。最后，可通过数据可视化工具 [430] 呈现这些洞见，将复杂数据关系转化为可理解、可操作的形式，以帮助研究人员设计 UFMs。</li>
+</ul>
+<h4 id="5-1-3-多模态数据整合"><a href="#5-1-3-多模态数据整合" class="headerlink" title="5.1.3 多模态数据整合"></a>5.1.3 多模态数据整合</h4><p>不同模态的数据彼此异构，但由于共享互补信息，通常相互关联。多模态数据整合对开发 UFMs 至关重要，因为它为整合多种数据类型奠定基础，从多种数据视角形成对城市环境的全面理解。这种整体视角是增强 UFMs 在广泛城市任务和领域中稳健泛化与适应能力的基础，包括多模态数据表示和对齐。</p>
+<ul>
+<li><p><strong>数据表示。</strong> 为协调文本、图像、轨迹和时间序列等异构数据，并促进其整合，第一步是将多样化城市数据模态编码至潜在表示空间 [172]。可分别为每种数据模态开发嵌入层 [12]，或使用相应已建立的单模态基础模型作为编码器 [344]。例如，文本数据通过 Transformers 或 LLMs 处理，图像通过 CNNs 或 VFMs 处理。</p>
+<p>通常采用表示融合、协调或分裂，以创建同时捕捉各模态特征和相互作用的统一表示 [172]。融合将来自多个模态的信息整合至联合表示中，通常使用加性、乘性、基于注意力或基于张量的交互，以反映模态共享和独有特征 [413]。协调通过将不同模态映射至共享空间来对齐和优化表示，既可采用强对齐 [249]，强制语义相关元素具有高相似度，也可采用部分协调 [172]，保留一般关系。最后，分裂将多模态数据分解为模态特定和共享成分，通常采用解耦表示 [300] 或聚类 [114] 等技术，以在保留各自结构的同时捕捉细粒度模态交互。这些方法共同实现连贯、灵活的表示，以支持多样化多模态任务。</p>
+</li>
+<li><p><strong>数据对齐。</strong> 对齐旨在建立不同模态元素之间有意义的联系，确保它们被同步表示并接受整合处理。多模态学习的数据对齐方法主要包括三类 [172]。</p>
+<p>离散对齐聚焦于连接不同模态间明确界定的特定元素。局部对齐通过对比学习等方法，将文本中的词语与图像中的对象区域等清晰片段连接起来，对齐不同模态中相似概念的表示 [249]。在缺少显式配对时，可采用全局对齐，通过最优传输等技术最小化模态空间之间的差异，优化两个模态中所有元素的关系 [33]。</p>
+<p>连续对齐处理缺少明确分段的数据，需要同步不同模态间的连续数据流。它适用于轨迹和时间序列等连续传感数据的对齐。例如，对齐交通摄像头和 GPS 设备的连续数据流，以监测实时交通状态；同步气象站测量和卫星图像，以追踪动态环境状况。相关技术包括连续变形，它通过对抗训练 [232] 或动态时间规整 [297] 等方式，对齐模态并在两个表示空间之间建立桥梁，从而有效地将一个表示转换为匹配另一个表示。此外，分割方法通过识别语义边界，将这些高维信号划分为有意义单元，例如时间分割 [381] 和聚类 [283]。这些方法对于模态存在时间或空间模糊性的任务至关重要，可实现结构化对齐并改善跨模态理解。</p>
+<p>上下文化对齐超越基本配对，通过自动学习一个模态的元素如何与其他模态中所有相关元素交互，将它们整合为连贯表示。关键方法包括联合无向对齐，其专注于捕捉模态元素之间的对称连接，通常使用多模态 Transformer 将所有模态元素纳入对齐 [158]。另一种方法是跨模态有向对齐，其中一个模态的元素指向另一个模态，利用查询—键—值注意力等机制建模非对称连接 [299]。最后，图对齐超越顺序模式，使用图网络构建模态交互，从而允许元素之间任意连接，并有效建模跨模态关系 [363]。</p>
+</li>
+</ul>
+<h3 id="5-2-多模态-UFMs-构建"><a href="#5-2-多模态-UFMs-构建" class="headerlink" title="5.2 多模态 UFMs 构建"></a>5.2 多模态 UFMs 构建</h3><p>为了构建能够处理多种城市任务与领域的通用 UFMs，关键在于增强 UFMs 对多模态城市数据的理解能力。然而，直接以端到端方式构建能够处理所有城市数据模态的统一 UFM 将极具挑战，因为不同数据类型和来源之间存在显著异构性与不同粒度。迈向多模态 UFMs 的更可行方法，是进一步分解该目标并同时结合单模态训练和多模态协同训练。这不仅提供了整合无限范围模态的灵活性和潜力，还允许采用更有针对性的方法来适应不同模态的异构性。</p>
+<h4 id="5-2-1-单模态训练"><a href="#5-2-1-单模态训练" class="headerlink" title="5.2.1 单模态训练"></a>5.2.1 单模态训练</h4><p>单模态训练是指分别针对多种城市数据模态训练单模态 UFMs，可通过从头训练基础模型或适应已建立基础模型实现。</p>
+<ul>
+<li><p><strong>从头训练基础模型。</strong> 当某一数据模态提供丰富、高质量的信号，但缺乏任何合适的预训练模型时，从头构建基础模型是一种可行但资源密集的方案。在这种情况下，自监督学习为大规模预训练提供自然路径。典型策略包括：针对时间序列的下一步预测，针对移动轨迹的下一位置预测，或基于上下文相似性对 POIs 和道路网络等地理向量实体进行对比 [11, 51, 161, 366, 383]。这些目标使模型能够自主发现城市大数据中潜在的时间依赖、移动规律、空间相关性和功能相似性。当有标注数据时，还可使用监督学习，进一步增强模型在领域特定任务和城市情境中的专门化能力 [183]。</p>
+<p>从头构建基础模型时，一个核心挑战是大规模自监督预训练带来的显著计算负担。为此，已有多种技术被提出，使该过程更轻量、更高效。一种策略是采用模块化或轻量架构，例如 MoE [270, 274] 或线性复杂度架构 [89]，从而在不显著增加计算开销的情况下扩展模型容量。另一个方向是采用针对城市数据结构属性的紧凑架构设计，例如多尺度混合器 [103] 和分层 Transformers [15]，以高效处理多分辨率时空输入。此外，课程式预训练 [312] 和知识蒸馏 [110] 等高效训练范式，可先学习粗粒度模式，再仅细化最具信息量的组成部分，从而大幅缩短训练时间。从优化视角看，混合精度训练、合理模型规模与初始化、选择性词元或实例训练等技术，也能显著降低内存占用和计算需求 [308]。这些策略共同使得在城市研究与部署常见的计算资源受限条件下，构建既紧凑又富有表达能力的基础模型成为可能。</p>
+</li>
+<li><p><strong>适应已建立基础模型。</strong> 对于已经具有通用基础模型的数据模态，例如 LLMs 和 VFMs，将这些已有基础模型适应至城市数据的具体情境，通常比从头建立模型更具计算效率和经济性。适应通常通过以下方式实现：</p>
+<ol>
+<li><strong>提示方法 [188]。</strong> 包括提示工程和提示调优。提示工程通常使用精心设计的提示，在不改变基础模型参数的情况下，利用已有基础模型在城市环境中的能力 [238, 315, 357]。提示调优仅调整与专门设计输入提示关联的一小部分参数，而不是调整整个模型 [154]。这些提示充当可适应的引导，帮助模型聚焦并改进特定任务，例如理解特定城市情境或生成主题化响应 [383, 410, 412]。提示方法能有效利用大模型预训练知识库，实现高效、任务特定的适应，而无需进行大规模重新训练。</li>
+<li><strong>模型微调方法。</strong> 使用标注数据集以监督方式微调模型参数，其中城市数据中的标注能够引导模型在街景图像识别或地理文本推理等任务中取得更好性能 [149, 305]。或者，可利用数据中固有模式构建自监督目标，而无需显式标签，从而增强模型对城市上下文的理解 [3, 171]。由于调优整个大型基础模型的计算代价高昂且可能导致灾难性遗忘，当前研究更倾向于使用参数高效微调技术 [115] 改进模型。</li>
+</ol>
+<p>对于缺少已建立基础模型的模态，一些积极工作尝试将城市数据对齐至其他已有模态基础模型，例如 LLMs、VFMs，的表示空间。这可以通过以下方式完成：（1）直接提示 LLMs 等基础模型理解城市数据 [327]；（2）训练轻量级编码器或解码器，将特定城市数据模态转换至已有基础模型可以理解的表示空间 [169, 436]；（3）利用模型重编程技术 [35]，重新格式化数据，使其模拟预训练基础模型预期的数据格式 [134, 319]。</p>
+</li>
+</ul>
+<h4 id="5-2-2-多模态协同训练"><a href="#5-2-2-多模态协同训练" class="headerlink" title="5.2.2 多模态协同训练"></a>5.2.2 多模态协同训练</h4><p>多模态协同训练旨在建立跨模态连接、交互和信息传递，从而丰富 UFMs 的全面多模态理解。通常，首先使用对应模态编码器嵌入每种模态数据，该编码器可以由模态特定嵌入层 [12] 或相应已建立单模态基础模型 [344] 实例化。随后，引入可学习接口来弥合模态之间的差距，旨在将不同模态的信息投影至统一语义空间，例如共享表示空间，或文本等特定模态空间，以实现多模态对齐 [376]。在该过程中，预训练基础模型可保持冻结，仅训练可学习接口 [155, 184]，从而在不丢失预训练知识的情况下对齐不同模态。或者，也可微调部分预训练参数，以实现更灵活的多模态对齐 [7, 326, 374]。多模态协同训练可能涉及已建立基础模型或一些需要预训练的新模块，具体取决于特定领域和应用 [346, 358]。</p>
+<p>在协同训练过程中，通常使用多种技术将不同模态对齐至统一语义表示空间，该空间封装城市环境的多层面本质，从而实现更全面的理解和洞见：</p>
+<ol>
+<li><strong>跨模态映射。</strong> 开发映射函数，将一个模态的输出转换到另一个模态的空间 [184]。例如，将 VFMs 的特征空间映射至 LLMs 的特征空间。这通常通过在配对数据上训练实现，例如图像—图注对。</li>
+<li><strong>正则化技术。</strong> 使用对比损失 [249] 或三元组损失 [262] 等正则项对齐不同模态的表示。这些损失鼓励不同模态中相似项目的表示在潜在空间接近，同时将不相似项目推远。</li>
+<li><strong>典型相关分析（CCA）。</strong> 使用 CCA 将不同模态表示转换至共享子空间，使它们的相关性最大化，在保留模态间关系的同时增强模态之间的关联 [287]。</li>
+</ol>
+<h3 id="5-3-时空推理"><a href="#5-3-时空推理" class="headerlink" title="5.3 时空推理"></a>5.3 时空推理</h3><p>时空推理是指以整合方式理解和分析城市数据的空间，即地理和位置相关方面，以及时间，即时间相关方面的能力。它对于赋能 UFMs 形成更全面的理解和对城市动态进行更准确预测至关重要，可促进复杂城市环境的有效规划和管理。</p>
+<h4 id="5-3-1-空间推理增强"><a href="#5-3-1-空间推理增强" class="headerlink" title="5.3.1 空间推理增强"></a>5.3.1 空间推理增强</h4><p>空间推理是使 UFMs 能够导航和解释定义城市环境的复杂空间关系的关键组成部分。两项技术可增强空间表示和推理能力：通用地理位置嵌入和符号推理。</p>
+<ul>
+<li><strong>通用地理位置嵌入。</strong> 受 LLMs 中词嵌入，例如 word2vec [227]，成功启发，学习覆盖地球上相互关联位置的通用地理位置嵌入是直观的 [217]。具体而言，可基于地理距离、交通可达性、区域间流动和区域功能等多种因素，衡量地点之间的空间相似性和相关性。随后，使用对比学习或上下文预测等自监督方法，类似于 word2vec，预训练通用地理位置嵌入。预训练完成后，这些地理位置嵌入可作为跨多种模态的通用空间表示，实现跨模态地理空间对齐，并增强所有数据类型中的空间推理能力 [216]。此外，对象的位置编码，例如相对坐标或图像块位置，也有助于增强视觉—空间推理 [179]。</li>
+<li><strong>符号推理。</strong> 可以通过在中间推理步骤中使用简洁符号表示空间关系来增强空间推理。这简化了表示并减少复杂环境中的模糊性，使模型关注关键空间信息 [116]。此外，符号训练通过将显式逻辑规则纳入训练过程来增强空间推理 [244]。这可通过将逻辑约束转换为可微软逻辑，并将其添加到损失函数中实现，从而引导模型遵循空间逻辑规则。通过在基于空间规则的推理链步骤中强制一致性，模型能够学习处理复杂空间问题。</li>
+</ul>
+<h4 id="5-3-2-时间推理增强"><a href="#5-3-2-时间推理增强" class="headerlink" title="5.3.2 时间推理增强"></a>5.3.2 时间推理增强</h4><p>时间推理是 UFMs 理解和预测城市系统随时间变化的动态变化及因果关系的重要能力。增强时间推理可包括利用外部知识、整合逻辑规则和纳入时间编码技术。</p>
+<ul>
+<li><strong>外部知识。</strong> 整合外部知识来源，例如知识图谱，如 ConceptNet [280]、ATOMIC2020 [122]，可以提供关于事件顺序和持续时间的额外上下文 [380]。通过纳入已建立的事件模式与因果关系，它有助于减轻 UFMs 对有偏或不完整数据的依赖；同时，它还可利用先验信息引导 UFMs 更好地理解罕见或新颖事件，使其能够在多样化城市情境中进行更稳健的预测和推理 [238]。</li>
+<li><strong>逻辑推理。</strong> UFMs 可以纳入显式规则和逻辑，以系统表示时间事件之间的关系。例如，概率逻辑可以施加如下约束：“持续一年时间的事件必须以低于每年一次的频率重复” [22]。通过将逻辑规则纳入推理，模型能够泛化时间规则，而非仅依赖数据驱动关联，从而支持更可靠的事件排序和持续时间估计 [21, 380]。</li>
+<li><strong>时间编码。</strong> 可通过纳入不同时间粒度，例如年、月、日、时、分和秒，的时间编码来增强时间推理 [266]。此外，可使用可学习三角函数编码连续时间，以捕捉周期性特征 [402]。时间编码可增强不同数据模态和任务中的时间理解与推理，例如时空预测 [181, 402] 和文本生成 [24]。</li>
+</ul>
+<h4 id="5-3-3-时空推理增强"><a href="#5-3-3-时空推理增强" class="headerlink" title="5.3.3 时空推理增强"></a>5.3.3 时空推理增强</h4><p>可通过让 UFMs 接触推理增强数据集和任务、并提升审慎推理能力，来加强整合时空推理。</p>
+<ul>
+<li><strong>在推理增强数据集和任务上学习。</strong> 可通过将 UFMs 适应于富含空间和时间动态特征的推理数据集或任务来增强时空推理能力，例如时空问答 [160]、复杂旅行规划任务 [349]、与人类推断知识配对的可定位街景图像 [157]，以及包含时间推理路径的复杂事件 [380]。这些数据集或任务旨在覆盖现实世界中的多维空间和时间信息，并确保场景的多样性与代表性。它们可用于 UFMs 的指令调优 [72, 380]、上下文学习 [160]、工具学习 [349] 和推理调优 [157]，以增强时空推理能力。</li>
+<li><strong>学习审慎推理。</strong> 由于时空推理是通用推理能力的一个方面，增强模型整体推理能力也应增强其时空推理技能。OpenAI o1 的成功表明，在推理过程中进行更充分的内部思考，能够显著增强 LLMs 的推理能力；这表明增加审慎思考同样可改善时空推理。为培养审慎推理，可采用思维链 [336]、思维树 [371]、推理自举 [387]、响应前内部审议 [386]、检索增强自我批评 [4]、在推理期间分配额外计算资源 [278]，以及使用强化微调进行推理 [298] 等策略，从而大幅增强基于 LLM 的模型推理能力。</li>
+</ul>
+<h3 id="5-4-效用增强"><a href="#5-4-效用增强" class="headerlink" title="5.4 效用增强"></a>5.4 效用增强</h3><p>UFMs 的效用体现在：能够处理横跨不同城市领域的广泛任务；能够与用户和物理世界无缝交互；能够通过持续更新和学习不断演进；能够有效利用可用外部资源等。</p>
+<h4 id="5-4-1-多任务通用性"><a href="#5-4-1-多任务通用性" class="headerlink" title="5.4.1 多任务通用性"></a>5.4.1 多任务通用性</h4><p>UFMs 处理广泛任务的通用性对于其在城市系统中的效用至关重要。这种通用性减少了对每项任务使用专门模型的依赖，同时增强对新任务和不断变化城市需求的适应性，最大化其适用性和影响力。</p>
+<ul>
+<li><strong>提示学习。</strong> 该方法涉及设计引导模型生成期望输出的提示。通过构建有效提示，可引导模型生成相关且准确的响应，从而无需大规模重新训练便可高效适应多种任务 [188]。提示学习已被用于增强模型处理城市任务的通用性，例如时空预测 [383, 410]、区域表示 [133] 和虚拟城市更新 [113]。</li>
+<li><strong>指令调优。</strong> 在该方法中，训练模型遵循显式指令，提升其理解和执行特定任务的能力。该方法增强零样本任务泛化，使模型能通过解释和遵循给定指令执行未见任务 [394]。指令调优已被用于增强 GIS 特定 LLMs [405]、零样本时空预测 [169] 和人类移动预测 [289]。</li>
+<li><strong>上下文学习。</strong> 该技术使模型能够通过以包含示例或指令的输入提示为条件执行任务，而无需显式参数更新。通过利用提供上下文中的模式，模型可泛化至新任务，从而增强跨多种应用的适应性 [61]。在城市场景中，上下文学习已被用于增强人类移动 [327] 和时间序列 [204] 的预测。</li>
+<li><strong>多任务学习。</strong> 该技术涉及同时在多个任务上训练模型，使其学习共享表示并提升跨任务性能 [407]。通过利用任务之间的共同性，模型可实现更好泛化，并在处理多样化挑战时更加通用，例如多任务视觉理解 [208] 和时空预测 [375]。</li>
+<li><strong>迁移学习。</strong> 该方法允许模型将从一项任务中获得的知识应用于改善相关任务性能。通过迁移所学习的特征或表示，模型能更快地适应新任务，减少对大规模训练数据和计算资源的需求 [444]。当前研究通常将迁移学习应用于不同空间之间的知识迁移，例如从数据丰富城市迁移至数据稀缺城市 [137, 396]。</li>
+</ul>
+<h4 id="5-4-2-AI-智能体构建"><a href="#5-4-2-AI-智能体构建" class="headerlink" title="5.4.2 AI 智能体构建"></a>5.4.2 AI 智能体构建</h4><p>构建利用 LLMs 的城市 AI 智能体，具有与用户和物理世界动态交互、智能利用外部资源、促进复杂决策过程的变革性潜力 [322]。</p>
+<ul>
+<li><strong>与用户和物理世界的交互。</strong> LLMs 支持直观的对话接口，使用户能够使用自然语言甚至多模态查询与 AI 智能体交互 [347]。这种能力使智能体能够理解复杂用户查询、检索相关数据，并提供透明、可解释的洞见 [149, 395, 422]。此外，LLMs 还可与物联网（IoT）传感器整合，以解释和分析传感器数据，有效弥合数字智能与物理环境之间的差距，使 AI 智能体理解和响应真实世界场景 [90, 353]。</li>
+<li><strong>持续更新与学习。</strong> 城市环境持续演变，因此城市 AI 智能体应支持持续更新和学习机制，以适应新的数据模式、季节性变化和新出现的城市趋势。这可能涉及以下技术：（1）自我演化 [92]：智能体根据环境或人类反馈动态调整其规划策略或目标；（2）检索增强 [71]：检索和整合包含历史经验的存储记忆，或持续更新的外部知识库；（3）持续学习 [272, 323]：使用新数据更新或调整模型参数，以增强其基础知识或专门知识；（4）在线学习 [112]：顺序处理数据，并在新数据到达时实时更新模型。</li>
+<li><strong>模型与工具的智能协调。</strong> 调用和协调专门模型与工具，例如 GIS 工具，的能力可大幅提升 UFMs 在特定领域中的专业性和可信度。LLMs 凭借先进语言理解和推理能力，可作为集中式编排器，管理和协调多样化的专门模型与城市管理工具 [395]。近期工具学习技术 [246] 使 LLMs 能够通过访问外部资源扩展其核心功能之外的能力，使输出更加准确、全面和信息丰富。这种整合对需要额外信息或功能的复杂查询尤其有益 [245]。</li>
+<li><strong>多智能体协作。</strong> 单一 AI 智能体可能受限于自身能力，而城市智能可从多智能体协作中显著受益。在这种协作中，多个分别负责子任务的智能体共同完成更复杂的城市任务。通常首先为基于 LLM 的智能体创建特定角色和画像，以增强它们在特定领域执行指定子任务的专业能力 [149]。多智能体系统使用自然语言进行通信，并可组织为分层、去中心化、中心化或共享消息池结构，以促进有效沟通 [92]。这使智能体能够共享信息与策略，并共同工作，从而促进多智能体协作。</li>
+<li><strong>世界模拟。</strong> 世界模拟为城市 AI 智能体提供受控环境，使其能够在部署前测试和优化决策策略。最新生成模型，例如 Earth-2、Sora、UrbanWorld [265]，以及基于 LLM 的世界模型 [74, 83, 359]，为物理世界与网络世界的结合打开新的窗口。这不仅能最小化潜在现实世界风险，也有助于智能体预期和准备应对罕见或前所未有的情境。</li>
+</ul>
+<h3 id="5-5-隐私、安全与所有权"><a href="#5-5-隐私、安全与所有权" class="headerlink" title="5.5 隐私、安全与所有权"></a>5.5 隐私、安全与所有权</h3><p>保护敏感数据、确保模型安全并促进公平所有权，对于 UFMs 的可靠性、可信度和繁荣发展至关重要。本节讨论 UFMs 的隐私保护、安全防护以及数据与模型定价。</p>
+<h4 id="5-5-1-隐私保护"><a href="#5-5-1-隐私保护" class="headerlink" title="5.5.1 隐私保护"></a>5.5.1 隐私保护</h4><p>UFMs 需要在由不同机构或个人收集的大规模多源城市数据上训练。然而，这些城市数据通常包含个人移动模式和社会记录等敏感信息，可能引发严重隐私问题 [80, 273]。传统集中式训练将所有数据集中在同一位置，增加数据泄露和滥用风险。联邦学习 [364] 通过使模型从分散数据源中学习而无需共享原始数据来解决这一问题，从而保护数据隐私。为确保针对大型基础模型的学习过程可行且更高效，可采用模型并行 [379]、参数高效训练方法 [205, 414]、模型剪枝 [132] 和模型压缩 [40] 等先进联邦学习策略。</p>
+<p>此外，缓解用户与 UFMs 交互过程中的潜在隐私泄露也至关重要。应实施安全数据协议，以保护用户信息不通过模型输出或交互日志被意外暴露 [123]。匿名化、加密和差分隐私可防止敏感信息被无意披露，确保整个交互过程中的用户隐私 [65, 404]。</p>
+<p>还应考虑模型参数的隐私，因为模型参数可能无意中捕获并揭示训练数据中的私人或敏感信息。可采用参数剪枝 [132] 和隐私保护模型蒸馏 [267] 等技术，降低参数泄露风险。这些方法与强访问控制相结合，有助于提升 UFMs 整体隐私韧性。</p>
+<h4 id="5-5-2-安全防护"><a href="#5-5-2-安全防护" class="headerlink" title="5.5.2 安全防护"></a>5.5.2 安全防护</h4><p>在构建 UFMs 时，实施稳健安全措施至关重要，以防御恶意攻击、防止生成有害或误导性输出，并确保模型与人类偏好保持一致。</p>
+<p>UFMs 可能容易受到后门攻击、投毒攻击、对抗攻击和越狱攻击等多种恶意攻击 [372]。UFMs 可整合数据审查 [145]、对抗训练 [30, 180, 261]、遗忘学习 [206] 和安全训练 [355] 等防护策略，增强对这些恶意攻击的防御能力，从而降低实际应用风险。</p>
+<p>UFMs 的另一项关键挑战，是确保其输出安全、符合事实且不含有害内容。幻觉输出，即事实错误或具有误导性的响应，若被用于重要决策或应急管理，可能产生尤其严重的负面影响。可使用安全对齐 [126]、自我改进和检索增强生成 [294] 等技术应对这些问题。</p>
+<p>为使 UFMs 有效服务城市居民，必须使模型输出与人类偏好、价值观和社会规范对齐。该对齐过程通常包括：在反映人类偏好的数据集上微调基础模型；整合强化学习技术，对符合人类反馈的输出给予奖励 [332]。来自城市居民、公共利益相关者或城市管理机构的定期反馈循环，对于帮助模型更准确地优化响应并满足人类期望十分重要 [313]。</p>
+<h4 id="5-5-3-数据与模型定价"><a href="#5-5-3-数据与模型定价" class="headerlink" title="5.5.3 数据与模型定价"></a>5.5.3 数据与模型定价</h4><p>UFMs 的成功依赖公平的补偿机制，以鼓励数据共享和模型开发。对于数据定价，实施贡献度量框架至关重要，该框架用于量化每个数据提供者对 UFMs 的贡献 [318]。激励机制能够鼓励不同利益相关者共享高质量、多样化数据集，最终增强 UFM 的泛化性和稳健性 [301]。</p>
+<p>类似地，可纳入模型定价策略，以激励 UFMs 的持续开发和增强 [34]。通过建立基于效用、稳健性和政策对齐程度来奖励模型改进的价值体系，UFMs 可吸引更广泛的开发者和研究者社区。这一定价框架确保 UFMs 发展中具有可持续的协作努力，在创新与长期运营成功之间形成平衡。</p>
+<h2 id="6-基准与数据集"><a href="#6-基准与数据集" class="headerlink" title="6 基准与数据集"></a>6 基准与数据集</h2><blockquote>
+<p>本节中的表格内容及表格说明按照要求省略。</p>
+</blockquote>
+<h3 id="6-1-基准"><a href="#6-1-基准" class="headerlink" title="6.1 基准"></a>6.1 基准</h3><p>近年来，面向 UFMs 的基准迅速涌现，旨在评估其跨异构数据模态、推理范式和应用场景的能力。现有基准大致可分为三类主题：时空推理与决策、城市感知与具身，以及专门城市任务。</p>
+<p>时空推理与决策基准聚焦于评估大模型能否对涉及空间、时间和行动的动态城市过程进行推理。USTBench [148]、CityBench [74]、STBench [160] 和 STARK [247] 等基准，在从移动和拥堵预测到定位、轨迹推理和导航式推断的多样任务上评估模型。这些基准之间的一个关键区别在于推理的评估方式。CityBench、STBench 和 STARK 主要强调任务级正确性，衡量模型能否在复杂性不断提高的条件下推断时空关系或数值结果。相较之下，USTBench 明确引入过程级评估，探究中间推理步骤，例如理解、预测、规划和反思，而非仅评估最终结果。跨这些基准的实证发现一致表明，尽管 LLMs 能够处理短期预测和符号推理，但它们在长期规划、几何推理以及反馈条件下的错误修正中仍面临困难。这表明语言推理与可执行的城市智能之间仍存在差距。</p>
+<p>城市感知与具身基准将评估扩展到感知和具身化的城市场景中。UrBench [431]、CityEQA [420] 和 UrbanVideo-Bench [411] 等基准考察多模态模型如何解释城市场景、基于视觉证据进行推理并支持导航。UrBench 聚焦多视角城市感知和跨视角一致性，通过多种问答任务，在街景、航拍和卫星视角图像中评估大型多模态模型的地理定位、场景理解与推理、对象理解以及一致性。CityEQA 和 UrbanVideo-Bench 超越静态感知，转向具身和时间理解：CityEQA 要求智能体在现实城市模拟器中导航并回答开放词汇问题，从而评估具身主动探索和长期空间推理；UrbanVideo-Bench 使用富含运动信息的城市尺度视频序列，在回忆、感知、推理和导航方面评估城市视频理解。总体而言，这些基准的结果揭示，尽管视觉—语言模型可捕捉局部视觉线索，但它们在持续空间记忆、随时间展开的因果与关系推理，以及长期一致性方面仍有困难，尤其是在需要整合感知、记忆和决策的开放式、城市尺度具身环境中。</p>
+<p>专门城市任务基准侧重于专业城市领域知识，而非感知或控制。CityLens [189] 突出了从城市图像推断潜在社会经济指标的困难，表明仅有视觉落地不足以实现可靠的定量预测。LLM-UrbanPlan [419] 在数百项真实世界城市规划任务中评估 LLMs，涵盖规划文档、专业考试、常规数据分析、算法支持和学术写作，并结合自动指标与专家人工判断。TravelPlanner [349] 评估长期且约束密集的规划，要求模型在时间、预算、交通和物流硬约束下生成现实的多日旅行行程，并使用细粒度约束满足和执行有效性指标评估方案。TP-RAG [235] 在查询特定时空上下文和轨迹级外部知识下评估检索增强旅行规划，检验模型能否生成空间连贯、时间自适应且语义上符合用户约束的行程。</p>
+<p>这些基准暴露出当前基础模型的一个显著局限：尽管它们具有强大的通用语言流畅性和视觉—语义对齐能力，却难以支持可靠的城市分析与规划，对定量推理具有较弱的因果落地能力，并且对领域特定约束和标准的掌握不均衡。因此，在面对专业城市任务时，它们经常生成看似合理但脆弱、浅层或不正确的输出。即使是先进的推理导向模型，也未达到专业级能力，这突显出将通用基础模型迁移至专业城市领域的挑战。</p>
+<h3 id="6-2-数据集"><a href="#6-2-数据集" class="headerlink" title="6.2 数据集"></a>6.2 数据集</h3><p>构建 UFMs 依赖于涵盖语言、视觉、时间序列、轨迹、地理向量和多模态数据的多样化数据集生态系统。现有数据集可根据模态和数据类型进行系统组织，这既反映城市数据的异构本质，也反映这些数据源在 UFMs 预训练、适应和评估中可能承担的不同功能角色。</p>
+<p>基于语言的数据集是 UFMs 高层知识的主要载体，不仅涵盖语义理解，还包含支撑城市分析和规划任务的程序逻辑与规范性约束。在该模态中，PlanBench [427] 和 UrbanLLM-Data [131] 等城市规划文本与问答数据集，整理专业文档、法规和专家级问题，其中编码了规划标准和领域特定术语。TravelPlanner [349]、Travel-QA [226] 和 QUERT-Data [348] 等面向旅行的问答数据集，聚焦行程构建、约束满足以及真实世界旅行约束下的常识推理。GeoBench [52]、GeoSignal [52] 和 BB-GeoGPT-Data [405] 等问答式数据集捕捉地球科学与环境知识，而 Global Earthquake [311]、Climate-Fever [55] 和 Climate500 [231] 等事件中心数据集强调对气候和灾害相关主张的事实验证与因果解释。这些数据集使 UFMs 能够解释专业话语、遵循监管与常识约束，并开展与真实世界城市政策、环境动态和社会规范一致的推理。</p>
+<p>基于视觉的数据集为 UFMs 提供城市物理环境的直接感知证据，捕捉从街道级场景到空中和大气观测的视觉结构与环境条件。nuScenes [20]、nuPlan [96]、WOMD [70]、WATonoBus [14]、CARLA [64]、AirSim [264]、BDD-X [141]、NuInstruct [58]、DriveLM [277] 和 Talk2BEV [46] 等街景与自动驾驶数据集，提供多视角图像、传感器融合数据以及日益丰富的语言标注推理信号，用于感知、定位和决策。Million-AID [202] 和 Know-CL-Data [197] 等遥感数据集支持大尺度土地利用分析和城市形态理解；ERA5 [111] 和 ExtremeWeather [248] 等气象栅格产品则使大气过程与城市动态的耦合成为可能。通过从这些视觉落地数据源中学习，UFMs 可内化细粒度空间布局、多尺度城市形态，以及建成环境与自然过程之间的耦合——这些能力无法仅凭文本或抽象表示可靠推断。</p>
+<p>时间序列数据集捕捉城市系统的连续时间信号，提供基础设施、移动、环境和社会活动如何随时间演变的重要观测。ETT [434]、Electricity [147] 和 Solar-Energy [147] 等能源消耗数据集支持负荷预测和基础设施分析。交通流量与速度数据集构成规模最大、最成熟的类别，包括 Traffic [147]、PEMS [279]、PEMS-D7(M&#x2F;L) [377]、METR-LA [165]、LargeST [192]、Q-Traffic [174]、SZ-TAXI [416]、TaxiBJ [392] 和众多城市特定基准。这些交通数据集主要用于预测拥堵、估计旅行时间和学习大规模交通网络中的时空依赖。Weather [434]、City Temperature [356]、NYC&#x2F;CHI-Weather [309] 等天气条件数据集，UrbanAir [429]、KnowAir [325] 等空气质量数据集，以及犯罪时间序列 [166]，进一步将覆盖范围扩展至环境和社会信号。通过从这些多样时间流中学习，UFMs 可形成对周期性、长程时间依赖和跨领域时空交互的稳健表示，这些能力支撑预测、监测与自适应城市决策。</p>
+<p>轨迹数据集记录人和车辆如何穿行城市空间，为个体和人群如何随时间与建成环境交互提供直接证据。Foursquare [362]、Gowalla [45] 和 Yelp [328] 等 POI 签到数据集编码语义活动偏好，并广泛用于下一 POI 预测与推荐任务。GeoLife [428]、T-Drive [382] 和 Portal-Taxi [130] 等 GPS 轨迹数据集提供细粒度时空轨迹，用于建模路径选择、起讫点流和城市移动动态。通过在这些移动轨迹上训练，UFMs 可获得对习惯性出行行为、空间约束和活动语义的理解，从而支持对城市动态和以人为中心决策过程更真实的建模。</p>
+<p>地理向量数据集通过将地点、道路和地块表示为向量化几何与语义实体，显式编码城市固定空间结构。从 OpenStreetMap [27, 291, 425] 提取的 POI 数据集和道路网络，通常用于构建空间图和语义地图。HLG、DHM [425]、SARN-Data [27] 和 PLUTO [199] 等更专门的数据集提供经过整理的道路层级、土地利用和行政区域表示。这类结构化空间标注对 UFMs 很有价值，因为它们使模型能够学习层级空间语义、功能分区和跨尺度关系；这些关系难以从其他数据模态中推断，因此能够增强模型的空间推理和城市上下文理解。</p>
+<p>多模态数据集通过系统耦合文本、地图、图像、轨迹和传感器信号等异构城市数据源，提供统一学习基础，使 UFMs 能够接触不同模态之间的交互和依赖。代表性数据集包括：用于基于地图规划的 PlanBench-V [440]；用于包含 POIs 和轨迹检索的旅行规划的 TP-RAG [235]；用于街景地理定位的 LLMGeo [334]；用于气象问答的 WeatherQA [209]；以及结合 POIs 和人类移动数据的卫星图像区域表示学习数据集 [8, 125, 345]。通过从这些对齐的多模态输入中学习，UFMs 能够超越孤立的感知或语言理解，迈向整体城市智能，支持复杂城市环境中的协同推理、长期规划和知情决策。</p>
+<h2 id="7-应用"><a href="#7-应用" class="headerlink" title="7 应用"></a>7 应用</h2><p>本节讨论可从 UFMs 中受益的若干潜在城市场景。尽管人工智能技术已在这些领域投入大量研究，本文预期 UFMs 将为每个应用领域带来更全面的解决方案。</p>
+<h3 id="7-1-交通"><a href="#7-1-交通" class="headerlink" title="7.1 交通"></a>7.1 交通</h3><p>智能交通系统已经深刻革新社会的多个方面，包括道路安全 [317]、公共交通 [185] 和交通管理决策 [149]。目前，大量反映交通动态的数据已经通过社交媒体信息流、数字政府平台、摄像头和海量 IoT 设备等多种来源生成和收集。基于这些数据，少数研究尝试开发交通基础模型，例如 TransGPT [324]、TrafficGPT [395] 和 TengYun [412]。然而，这些工作主要聚焦交通的特定方面，例如与文本相关的任务。开发能够解决多样化交通任务的通用 UFMs 仍是一个开放问题。</p>
+<p>一项主要挑战在于，交通系统数据具有内在异构性和多模态性，涵盖时间序列、轨迹、图像、文本等。因此，UFMs 需要有效处理交通数据的异构性和多模态性，并在不同应用中保持令人满意的性能。</p>
+<h3 id="7-2-城市规划"><a href="#7-2-城市规划" class="headerlink" title="7.2 城市规划"></a>7.2 城市规划</h3><p>有效城市规划对于建设智能、高效和生态友好型城市至关重要。广泛可得的城市数据，例如道路网络结构和人类移动，确实揭示了城市潜在问题，并为城市规划师提供有价值洞见，以支持知情决策 [424]。UFMs 可为城市规划带来显著益处。</p>
+<p>一方面，它们可协助分析海量城市数据，生成创造性想法，支持城市规划师和政策制定者更好地制定未来规划 [313]。另一方面，UFMs 还可以通过挖掘不同数字平台上的公众反馈，增强参与式规划过程 [438]。例如，公民可以与 UFMs 实时交互，就城市基础设施、公共交通时刻表和卫生服务提出建议。这将推动城市规划朝更具包容性和响应性的方向显著转变，使公众声音在塑造城市景观中发挥重要作用。</p>
+<h3 id="7-3-能源管理"><a href="#7-3-能源管理" class="headerlink" title="7.3 能源管理"></a>7.3 能源管理</h3><p>人工智能技术已被证明有利于城市能源系统的运行过程 [373, 390, 398, 400]。此外，城市能源数据的激增使构建领域特定基础模型成为可能。因此，UFMs 在能源管理领域的应用前景广阔。作为该领域的初步努力之一，Huang 等人 [119] 探索已有基础模型，即 GPT-4 和 GPT-4 Vision，的一系列能力，并在解决电力系统复杂挑战方面展示出有前景的结果。</p>
+<p>然而，一个潜在挑战是，大多数能源数据，例如家庭用电量，天然具有高度敏感性和个人隐私信息，这可能使相关部门不愿向公众披露已训练模型和相关数据。联邦学习 [364] 等隐私保护技术，可能是充分释放基础模型在能源管理中潜力的有希望解决方案。</p>
+<h3 id="7-4-环境监测"><a href="#7-4-环境监测" class="headerlink" title="7.4 环境监测"></a>7.4 环境监测</h3><p>快速城市化进程产生了空气污染、水污染和资源枯竭等大量环境问题，对公共健康和城市可持续发展造成巨大威胁。近期，Vaghefi 等人 [303] 提出 ChatClimate，这是一种检索增强框架，通过纳入最新领域特定数据，增强 LLMs 在气候变化领域的专业能力。此外，一系列研究 [15, 17, 151, 234] 使用来自再分析数据库、卫星和原位传感器的数值数据，为气候相关任务开发专门基础模型。</p>
+<p>尽管已有这些进展，UFMs 在更广泛环境问题，例如空气污染分析 [105]，中的利用仍未得到充分探索。潜在地与强大已有基础模型整合的通用 UFMs，可显著丰富现有研究，并进一步促进广泛环境应用。</p>
+<h3 id="7-5-公共安全与保障"><a href="#7-5-公共安全与保障" class="headerlink" title="7.5 公共安全与保障"></a>7.5 公共安全与保障</h3><p>公共安全与保障是城市生活的关键组成部分，直接影响市民福祉。面向该领域构建基础模型，可以推动犯罪预防、应急响应和灾害管理等多种应用。近期，已有一些基于 LLM 的方法被探索用于公共安全与保障，例如 TrafficSafetyGPT [421] 和 ChatLaw [47]。这些模型在源自人工标注者和 ChatGPT 的指令上微调，在生成具有可靠交通安全和法律领域知识的响应方面展示出巨大潜力。</p>
+<p>目前，LLMs 在增强城市公共安全方面的全部潜力仍基本未被开发。例如，LLMs 可以分析犯罪报告以识别新出现的模式或趋势，帮助执法机构发现潜在犯罪活动热点并更有效地配置资源。为实现这一目标，未来研究可以聚焦整合搜索引擎、犯罪预测模型等外部工具，以提高 LLMs 的问题解决能力。</p>
+<h3 id="7-6-其他领域"><a href="#7-6-其他领域" class="headerlink" title="7.6 其他领域"></a>7.6 其他领域</h3><p>UFMs 有潜力在其他相关领域推动变革性变化。在经济领域，UFMs 可通过分析经济数据预测市场趋势、评估投资机会，并优化城市发展项目的预算分配，从而支持城市尺度金融决策 [164]。例如，UFMs 可以分析房地产趋势、城市经济活动和公共支出模式，生成洞见以指导制定财务上更具可持续性的城市政策。</p>
+<p>在医疗保健领域，UFMs 可通过分析历史使用模式和预测医疗基础设施的未来需求，帮助优化医疗资源分配 [108, 230]，例如医院、紧急服务和疫苗接种中心。此外，通过释放涌现能力，UFMs 可以在最少人类指令下被提示，以动态定义根本性的新城市任务，例如创建改善城市福祉的可执行策略，从而进一步推动智能城市发展。</p>
+<h2 id="8-结论与未来工作"><a href="#8-结论与未来工作" class="headerlink" title="8 结论与未来工作"></a>8 结论与未来工作</h2><p>本文对城市基础模型（UFMs）进行了全面综述，强调其在推进城市动态理解和显著增强城市通用智能（UGI）方面的变革性潜力。本文首先定义 UGI 和 UFMs 的概念，并强调 UFMs 开发相关的关键挑战。随后，本文通过围绕城市数据模态和类型构建的以数据为中心分类框架，对已有 UFM 相关研究进行归类，从而为正在进行的研究提供连贯视角。</p>
+<p>此外，本文提出面向未来的解决方案，旨在应对这些挑战，并为构建更加通用和有效的 UFMs 铺平道路。本文还系统总结和讨论了与 UFMs 相关的现有基准和数据集。最后，本文探索了 UFMs 在多个关键城市领域的潜在应用及积极影响。我们希望该综述能够成为研究人员和从业者的有价值资源，促进这一新兴领域的进一步探索与创新。</p>
+<p>展望未来，UFMs 的演进蕴含重大突破潜力。未来研究预计将优先整合和分析多源、多粒度和多模态城市数据，以支持更广泛的城市应用与场景。另一关键重点是开发能够进行实时城市数据分析的通用 UFMs，以提供及时且可执行的城市洞见。增强其时空推理能力，将进一步提升其在动态城市环境中的性能。</p>
+<p>此外，确保 UGI 的伦理发展，需要在利用城市数据与保护隐私和安全之间实现审慎平衡。建立面向数据共享和模型开发的公平补偿机制，对于促进 UFM 创新的可持续协作进展同样至关重要。我们对 UFMs 的未来及其推动更智能、更具韧性和更具适应性城市空间的潜力充满期待。</p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Urban-General-Intelligence-UGI-Urban-Foundation-Models-UFMs/">Urban General Intelligence (UGI), Urban Foundation Models (UFMs)</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="Share to WeChat"
+            data-tooltip-img-tip="Scan by WeChat"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="Share to WeiBo"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2026/06/27/vasp%20installation%20instruction/"
+                                   title="VASP Installation Instruction"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">VASP Installation Instruction</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%88%E5%90%91%E5%9F%8E%E5%B8%82%E9%80%9A%E7%94%A8%E6%99%BA%E8%83%BD%EF%BC%9A%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9B%9E%E9%A1%BE%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="nav-text">迈向城市通用智能：城市基础模型的回顾与展望</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-text">2 城市基础模型基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81"><span class="nav-text">2.1 数据特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9E%84%E5%BB%BA%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">2.2 构建城市基础模型的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">2.2.1 预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E9%80%82%E5%BA%94"><span class="nav-text">2.2.2 适应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9E%84%E5%BB%BA%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%8C%91%E6%88%98"><span class="nav-text">3 构建城市基础模型的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">4 城市基础模型概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%9F%BA%E4%BA%8E%E8%AF%AD%E8%A8%80%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.1 基于语言的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.1.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.1.2 单模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%9F%BA%E4%BA%8E%E8%A7%86%E8%A7%89%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.2 基于视觉的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.2.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.2.2 单模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.3 基于时间序列的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.3.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.3.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.3.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E5%9F%BA%E4%BA%8E%E8%BD%A8%E8%BF%B9%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.4 基于轨迹的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.4.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.4.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.4.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E5%9F%BA%E4%BA%8E%E5%9C%B0%E7%90%86%E5%90%91%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.5 基于地理向量的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.5.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.5.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.5.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E5%A4%9A%E6%A8%A1%E6%80%81%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.6 多模态模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-1-%E5%A4%9A%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.6.1 多模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.6.2 多模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.7 其他模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B1%95%E6%9C%9B"><span class="nav-text">5 城市基础模型的展望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%9F%8E%E5%B8%82%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1 城市数据整合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-%E5%A4%9A%E6%BA%90%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">5.1.1 多源数据收集与预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-%E5%A4%9A%E7%B2%92%E5%BA%A6%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1.2 多粒度数据整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-3-%E5%A4%9A%E6%A8%A1%E6%80%81%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1.3 多模态数据整合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%A4%9A%E6%A8%A1%E6%80%81-UFMs-%E6%9E%84%E5%BB%BA"><span class="nav-text">5.2 多模态 UFMs 构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-%E5%8D%95%E6%A8%A1%E6%80%81%E8%AE%AD%E7%BB%83"><span class="nav-text">5.2.1 单模态训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E5%8D%8F%E5%90%8C%E8%AE%AD%E7%BB%83"><span class="nav-text">5.2.2 多模态协同训练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%97%B6%E7%A9%BA%E6%8E%A8%E7%90%86"><span class="nav-text">5.3 时空推理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1-%E7%A9%BA%E9%97%B4%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.1 空间推理增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2-%E6%97%B6%E9%97%B4%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.2 时间推理增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3-%E6%97%B6%E7%A9%BA%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.3 时空推理增强</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E6%95%88%E7%94%A8%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.4 效用增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-1-%E5%A4%9A%E4%BB%BB%E5%8A%A1%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">5.4.1 多任务通用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-2-AI-%E6%99%BA%E8%83%BD%E4%BD%93%E6%9E%84%E5%BB%BA"><span class="nav-text">5.4.2 AI 智能体构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E9%9A%90%E7%A7%81%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-text">5.5 隐私、安全与所有权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-1-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4"><span class="nav-text">5.5.1 隐私保护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-2-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="nav-text">5.5.2 安全防护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-3-%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%BB%B7"><span class="nav-text">5.5.3 数据与模型定价</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%9F%BA%E5%87%86%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">6 基准与数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%9F%BA%E5%87%86"><span class="nav-text">6.1 基准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">6.2 数据集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BA%94%E7%94%A8"><span class="nav-text">7 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E4%BA%A4%E9%80%9A"><span class="nav-text">7.1 交通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%9F%8E%E5%B8%82%E8%A7%84%E5%88%92"><span class="nav-text">7.2 城市规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E8%83%BD%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-text">7.3 能源管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E7%8E%AF%E5%A2%83%E7%9B%91%E6%B5%8B"><span class="nav-text">7.4 环境监测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-%E5%85%AC%E5%85%B1%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E9%9A%9C"><span class="nav-text">7.5 公共安全与保障</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-%E5%85%B6%E4%BB%96%E9%A2%86%E5%9F%9F"><span class="nav-text">7.6 其他领域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%BB%93%E8%AE%BA%E4%B8%8E%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-text">8 结论与未来工作</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;2026
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Jie Cao</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+        
+        <div class="deploy-info info-item">
+            
+            This site is deployed on <span class="tooltip" data-tooltip-content="GitHub Pages"><img src="/images/brands/github.png"></span>
+            
+        </div>
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="Search..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%88%E5%90%91%E5%9F%8E%E5%B8%82%E9%80%9A%E7%94%A8%E6%99%BA%E8%83%BD%EF%BC%9A%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9B%9E%E9%A1%BE%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="nav-text">迈向城市通用智能：城市基础模型的回顾与展望</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80"><span class="nav-text">2 城市基础模型基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%B0%E6%8D%AE%E7%89%B9%E5%BE%81"><span class="nav-text">2.1 数据特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9E%84%E5%BB%BA%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-text">2.2 构建城市基础模型的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">2.2.1 预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E9%80%82%E5%BA%94"><span class="nav-text">2.2.2 适应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%9E%84%E5%BB%BA%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%8C%91%E6%88%98"><span class="nav-text">3 构建城市基础模型的挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">4 城市基础模型概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%9F%BA%E4%BA%8E%E8%AF%AD%E8%A8%80%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.1 基于语言的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.1.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.1.2 单模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%9F%BA%E4%BA%8E%E8%A7%86%E8%A7%89%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.2 基于视觉的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.2.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.2.2 单模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%9F%BA%E4%BA%8E%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.3 基于时间序列的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.3.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.3.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.3.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E5%9F%BA%E4%BA%8E%E8%BD%A8%E8%BF%B9%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.4 基于轨迹的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.4.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.4.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.4.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E5%9F%BA%E4%BA%8E%E5%9C%B0%E7%90%86%E5%90%91%E9%87%8F%E7%9A%84%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.5 基于地理向量的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-1-%E5%8D%95%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.5.1 单模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-2-%E5%8D%95%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.5.2 单模态适应</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-3-%E8%B7%A8%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.5.3 跨模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E5%A4%9A%E6%A8%A1%E6%80%81%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.6 多模态模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-1-%E5%A4%9A%E6%A8%A1%E6%80%81%E9%A2%84%E8%AE%AD%E7%BB%83"><span class="nav-text">4.6.1 多模态预训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E9%80%82%E5%BA%94"><span class="nav-text">4.6.2 多模态适应</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E5%85%B6%E4%BB%96%E6%A8%A1%E5%9E%8B"><span class="nav-text">4.7 其他模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%9F%8E%E5%B8%82%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B1%95%E6%9C%9B"><span class="nav-text">5 城市基础模型的展望</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%9F%8E%E5%B8%82%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1 城市数据整合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-%E5%A4%9A%E6%BA%90%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%E4%B8%8E%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-text">5.1.1 多源数据收集与预处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-%E5%A4%9A%E7%B2%92%E5%BA%A6%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1.2 多粒度数据整合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-3-%E5%A4%9A%E6%A8%A1%E6%80%81%E6%95%B0%E6%8D%AE%E6%95%B4%E5%90%88"><span class="nav-text">5.1.3 多模态数据整合</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%A4%9A%E6%A8%A1%E6%80%81-UFMs-%E6%9E%84%E5%BB%BA"><span class="nav-text">5.2 多模态 UFMs 构建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-%E5%8D%95%E6%A8%A1%E6%80%81%E8%AE%AD%E7%BB%83"><span class="nav-text">5.2.1 单模态训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E5%A4%9A%E6%A8%A1%E6%80%81%E5%8D%8F%E5%90%8C%E8%AE%AD%E7%BB%83"><span class="nav-text">5.2.2 多模态协同训练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%97%B6%E7%A9%BA%E6%8E%A8%E7%90%86"><span class="nav-text">5.3 时空推理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1-%E7%A9%BA%E9%97%B4%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.1 空间推理增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2-%E6%97%B6%E9%97%B4%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.2 时间推理增强</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3-%E6%97%B6%E7%A9%BA%E6%8E%A8%E7%90%86%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.3.3 时空推理增强</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E6%95%88%E7%94%A8%E5%A2%9E%E5%BC%BA"><span class="nav-text">5.4 效用增强</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-1-%E5%A4%9A%E4%BB%BB%E5%8A%A1%E9%80%9A%E7%94%A8%E6%80%A7"><span class="nav-text">5.4.1 多任务通用性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-2-AI-%E6%99%BA%E8%83%BD%E4%BD%93%E6%9E%84%E5%BB%BA"><span class="nav-text">5.4.2 AI 智能体构建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E9%9A%90%E7%A7%81%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E6%89%80%E6%9C%89%E6%9D%83"><span class="nav-text">5.5 隐私、安全与所有权</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-1-%E9%9A%90%E7%A7%81%E4%BF%9D%E6%8A%A4"><span class="nav-text">5.5.1 隐私保护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-2-%E5%AE%89%E5%85%A8%E9%98%B2%E6%8A%A4"><span class="nav-text">5.5.2 安全防护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-3-%E6%95%B0%E6%8D%AE%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%BB%B7"><span class="nav-text">5.5.3 数据与模型定价</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%9F%BA%E5%87%86%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">6 基准与数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%9F%BA%E5%87%86"><span class="nav-text">6.1 基准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-text">6.2 数据集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BA%94%E7%94%A8"><span class="nav-text">7 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E4%BA%A4%E9%80%9A"><span class="nav-text">7.1 交通</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E5%9F%8E%E5%B8%82%E8%A7%84%E5%88%92"><span class="nav-text">7.2 城市规划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E8%83%BD%E6%BA%90%E7%AE%A1%E7%90%86"><span class="nav-text">7.3 能源管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-%E7%8E%AF%E5%A2%83%E7%9B%91%E6%B5%8B"><span class="nav-text">7.4 环境监测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-5-%E5%85%AC%E5%85%B1%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E9%9A%9C"><span class="nav-text">7.5 公共安全与保障</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-6-%E5%85%B6%E4%BB%96%E9%A2%86%E5%9F%9F"><span class="nav-text">7.6 其他领域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E7%BB%93%E8%AE%BA%E4%B8%8E%E6%9C%AA%E6%9D%A5%E5%B7%A5%E4%BD%9C"><span class="nav-text">8 结论与未来工作</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local search -->
+
+    
+<script src="/js/local-search.js"></script>
+
+
+
+<!-- lazyload -->
+
+    
+<script src="/js/lazyload.js"></script>
+
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+            
+<script src="/js/post/toc.js"></script>
+
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+            
+<script src="/js/post/share.js"></script>
+
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    
+<script src="/js/libs/pjax.min.js"></script>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+</body>
+</html>
