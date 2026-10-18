@@ -278,7 +278,7 @@
             
                 <span class="meta-info-item post-update-date">
                     <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                    <span class="datetime" data-updated="Sun Oct 18 2026 10:35:06 GMT+0800">2026-10-18 10:35:06</span>
+                    <span class="datetime" data-updated="Sun Oct 18 2026 20:06:38 GMT+0800">2026-10-18 20:06:38</span>
                 </span>
             
         
@@ -299,12 +299,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.2k Words</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>5.5k Words</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>7 Mins</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>20 Mins</span>
             </span>
         
         
@@ -323,9 +323,6 @@
 
                     
                          <h3 id="react-和-tool-call"><a class="markdownIt-Anchor" href="#react-和-tool-call"></a> ReAct 和 tool call</h3>
-<blockquote>
-<p>项目原文: <a class="link" target="_blank" rel="noopener" href="https://paicoding.com/react-vs-toolcall">https://paicoding.com/react-vs-toolcall<i class="fas fa-external-link-alt"></i></a></p>
-</blockquote>
 <h4 id="5-第一批工具怎么设计"><a class="markdownIt-Anchor" href="#5-第一批工具怎么设计"></a> 5. 第一批工具怎么设计</h4>
 <h5 id="1-为什么要有-edit_file"><a class="markdownIt-Anchor" href="#1-为什么要有-edit_file"></a> 1) 为什么要有 edit_file</h5>
 <h5 id="2-模型抄错了片段怎么办"><a class="markdownIt-Anchor" href="#2-模型抄错了片段怎么办"></a> 2) 模型抄错了片段怎么办</h5>
@@ -381,6 +378,125 @@
 <p>除了重复检测，Token 预算和轮数上限也能触发同样的收尾。它们默认都不限制，CI 或者微信这类无人值守的场景，可以用 <code>-Dpaicli.react.token.budget</code> 和 <code>-Dpaicli.react.hard.max.iterations</code> 显式打开。</p>
 <img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-from-scratch-20260925101157-400e883a.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:55%;">
 <h4 id="7-跑起来看看"><a class="markdownIt-Anchor" href="#7-跑起来看看"></a> 7. 跑起来看看</h4>
+<p>PaiCLI 需要 Java 17 以上和 Maven，外加至少一个模型的 API Key。我们首选 DeepSeek，默认模型是 DeepSeek V4.1 Flash（模型 ID <code>deepseek-flash</code>），1M 上下文，支持思考模式、工具调用和图片输入。</p>
+<blockquote>
+<p>模型迭代很快，后续 PaiCLI 的默认模型可能还会继续升级，大家自己记得升级。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp .env.example .env    # 填入 DEEPSEEK_API_KEY</span><br><span class="line">mvn clean <span class="keyword">package</span>       # 默认跳过测试</span><br><span class="line">java -jar target/paicli-<span class="number">1.0</span>-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<p>启动后默认使用 DeepSeek，没配 DeepSeek 的 Key 时，会按顺序找 GLM、混元、Kimi 等其他已配置的模型，运行中也可以用 <code>/model</code> 切换。</p>
+<img lazyload alt="image" data-src="http://typora-image-management.oss-cn-hangzhou.aliyuncs.com/img_260809/image-20261018105835650.png" style="zoom:50%;">
+</blockquote>
+<p>先试试第 1 节的例子，让它读一个文件再改一行。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">读取 demo/Hello.java，把输出改成 Hello PaiCLI</span><br></pre></td></tr></table></figure>
+<h3 id="plan-和-dag"><a class="markdownIt-Anchor" href="#plan-和-dag"></a> Plan 和 DAG</h3>
+<blockquote>
+<p>给 Agent CLI 加上 Plan-and-Execute，让 Agent 先规划后执行，支持 DAG。</p>
+</blockquote>
+<p>第 1 期的 ReAct 已经能干活了，读文件、改代码、跑命令，一步接一步。</p>
+<p>可任务一长，比如“读 pom.xml、看看源码结构、再写一份升级方案”，问题就来了。我们在 Agent 动手之前不知道它打算怎么做，互不相干的几步也没法同时跑。中途哪一步错了，只能等它自己发现。</p>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-p2-plan-execute-20260924182030-166934ea.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:50%;">
+<p>这一期我们给 PaiCLI 加上 <code>Plan-and-Execute</code>。<strong>模型先出一份带依赖关系的任务清单，我们确认之后，PaiCLI 按依赖分批执行这些任务，互不依赖的任务还可以并行。</strong></p>
+<blockquote>
+<p>这是二期重构后的教程版本，一期未重构之前的翻到后面，会更简单，更容易懂。二期做了很多加固和升级。</p>
+</blockquote>
+<h4 id="1-先规划再执行"><a class="markdownIt-Anchor" href="#1-先规划再执行"></a> 1. 先规划再执行</h4>
+<p>Plan-and-Execute 把一次任务交给两个角色。<strong>规划器</strong>（<code>Planner</code>）负责出计划，它<u>调用模型时不给任何工具</u>，只要求模型输出一份 JSON 格式的计划。<strong>执行器</strong>（<code>PlanExecuteAgent</code>）拿着这份计划，按依赖关系一批一批地跑任务。</p>
+<ul>
+<li>正常情况下规划器只调用一次模型；用户审阅时补充要求，或者任务失败后需要重新规划，规划器会再调用模型。</li>
+</ul>
+<blockquote>
+<p>“Plan 模式”在不同产品里做法不一样。Pi 是一款开源的终端编程 Agent，它的 Plan 模式只做<u>只读调研</u>，通过 <code>setActiveTools</code> 把 edit 和 write 两个写文件工具拿掉，bash 也只放行只读命令。PaiCLI 的做法不同，只有规划器调用模型时不带工具，执行器执行每个任务时，读写文件、执行命令这些工具都照常可用。两种做法的对比可以阅读《<a class="link" target="_blank" rel="noopener" href="https://javabetter.cn/ai/video/is-plan-mode-dead.html">Plan模式死了吗？<i class="fas fa-external-link-alt"></i></a>》</p>
+</blockquote>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-p2-plan-execute-20260926174050.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:60%;">
+<p>每个任务内部，跑的还是第 1 期 ReAct。模型决定调用什么工具，工具结果交回模型，直到模型不再调用工具，这个任务就算完成。</p>
+<p>在 Agent 开始动手之前，我们能看到完整的计划，可以确认、补充要求或者直接取消。读 pom.xml 和列出 src 目录这种没有先后关系的任务，可以同时跑。每个任务拿到的上下文也更干净，只有总目标、任务描述和直接依赖的结果。</p>
+<blockquote>
+<p>两种模式放在一起比一下。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>ReAct</th>
+<th>Plan-and-Execute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型调用次数</td>
+<td>由 Action 轮数决定</td>
+<td>多一次规划，每个任务至少一次</td>
+</tr>
+<tr>
+<td>耗时</td>
+<td>取决于 Action 轮数</td>
+<td>多一次规划等待，独立任务并行时可能更快</td>
+</tr>
+<tr>
+<td>执行前能否看到步骤</td>
+<td>不能</td>
+<td>能，还能补充要求后修改计划</td>
+</tr>
+<tr>
+<td>适合的任务</td>
+<td>简单任务、边看边决定的探索</td>
+<td>步骤多、依赖明确、想先看清流程的任务</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-计划长什么样-dag"><a class="markdownIt-Anchor" href="#2-计划长什么样-dag"></a> 2. 计划长什么样 <code>DAG</code></h4>
+<p>一个任务就是一个节点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/paicli/plan/Task.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Task</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String id;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String description;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> TaskType type;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> TaskStatus status;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> String result;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> String error;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; dependencies;  <span class="comment">// 依赖的其他任务ID</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; dependents;    <span class="comment">// 依赖此任务的其他任务ID</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>任务类型</strong>有 5 种，<code>FILE_READ</code>、<code>FILE_WRITE</code>、<code>COMMAND</code>、<code>ANALYSIS</code>、<code>VERIFICATION</code>。执行任务时，任务类型会填进发给模型的提示词里，提醒模型这一步是读任务、写任务还是分析任务。类型不限制模型能用哪些工具。</p>
+<p><code>dependencies</code> 记录这个任务依赖哪些任务，用来判断它能不能开始执行；<code>dependents</code> 记录哪些任务依赖它，这个任务失败时，顺着 <code>dependents</code> 就能找出所有受影响的任务。下文把依赖某个任务的任务叫作它的“下游”。</p>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/paicoding/7ec21fcc8f1031ffef6704fd6c9d8586.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:50%;">
+<p><strong>任务状态</strong>有 5 种。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PENDING → RUNNING → COMPLETED / FAILED</span><br><span class="line">PENDING → SKIPPED（依赖的任务失败，或者重新规划次数达到上限，见第 7 节）</span><br></pre></td></tr></table></figure>
+<p>能不能开始执行，只看一个条件，所有依赖是否都已经完成。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/paicli/plan/Task.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isExecutable</span><span class="params">(Map&lt;String, Task&gt; allTasks)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (status != TaskStatus.PENDING) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (String depId : dependencies) &#123;</span><br><span class="line">        <span class="type">Task</span> <span class="variable">dep</span> <span class="operator">=</span> allTasks.get(depId);</span><br><span class="line">        <span class="keyword">if</span> (dep == <span class="literal">null</span> || dep.getStatus() != TaskStatus.COMPLETED) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依赖失败或者被跳过，下游会等不到 <code>COMPLETED</code>，所以失败处理必须主动把下游标成 <code>SKIPPED</code>，不然会一直停在 <code>PENDING</code>。</p>
+<p><u>并行执行时有两类线程</u>。<strong>调度线程</strong>是运行执行器主循环的那个线程，任务的状态和结果都由它写，任务开始前标记为 <code>RUNNING</code>，收回结果后标记为完成或失败。<strong>工作线程</strong>是线程池里真正执行任务的线程，它们只读取依赖任务的结果。调度线程写完再把任务提交给线程池，工作线程执行完，调度线程通过 <code>Future.get()</code> 取回结果。</p>
+<ul>
+<li>Java 保证提交之前的写入对工作线程可见，工作线程的写入在 <code>Future.get()</code> 返回后对调度线程可见，所以不会读到旧值，字段上的 <code>volatile</code> 算多一层保险。</li>
+</ul>
+<h5 id="拓扑排序和环检测"><a class="markdownIt-Anchor" href="#拓扑排序和环检测"></a> 拓扑排序和环检测</h5>
+<p>多个任务组成一个执行计划（<code>ExecutionPlan</code>），任务按插入顺序存在 <code>LinkedHashMap</code> 里，<u>另外维护一份拓扑排序后的顺序</u>。拓扑排序是把有依赖关系的任务排成一个序列，保证每个任务都排在它依赖的所有任务后面。</p>
+<p>PaiCLI 的拓扑排序用 DFS（深度优先搜索）后序遍历实现。“后序”的意思是，先递归处理完一个任务的所有依赖，再把这个任务本身加进结果，所以得到的顺序天然就是依赖在前。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/paicli/plan/ExecutionPlan.java</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">topologicalSort</span><span class="params">(Task task, Set&lt;String&gt; visited, Set&lt;String&gt; visiting)</span> &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> task.getId();</span><br><span class="line">    <span class="keyword">if</span> (visiting.contains(id)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;  <span class="comment">// 有环</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (visited.contains(id)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    visiting.add(id);</span><br><span class="line">    <span class="keyword">for</span> (String depId : task.getDependencies()) &#123;</span><br><span class="line">        <span class="type">Task</span> <span class="variable">dep</span> <span class="operator">=</span> tasks.get(depId);</span><br><span class="line">        <span class="keyword">if</span> (dep != <span class="literal">null</span> &amp;&amp; !topologicalSort(dep, visited, visiting)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    visiting.remove(id);</span><br><span class="line">    visited.add(id);</span><br><span class="line">    executionOrder.add(id);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>visiting</code> 是当前递归栈上的节点，递归中又碰到它，说明依赖绕回来了，比如 A 依赖 B，B 依赖 C，C 又依赖 A。<code>visited</code> 是已经处理完的节点，避免重复遍历。</p>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-p2-plan-execute-20260924182251-1c5c3b96.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:50%;">
+<p>排出来的顺序不直接决定谁先跑。调度靠每一轮重新筛可执行的任务，拓扑顺序只负责给同一轮的任务排先后，另外决定计划展示、跳过标记和失败汇总里的列出顺序。</p>
+<p>计划本身也有状态，<code>CREATED</code>、<code>RUNNING</code>、<code>COMPLETED</code>、<code>FAILED</code>、<code>CANCELLED</code>，用户按 ESC 中断执行时标成 <code>CANCELLED</code>。</p>
+<h4 id="3-凭什么信任模型给的计划"><a class="markdownIt-Anchor" href="#3-凭什么信任模型给的计划"></a> 3. 凭什么信任模型给的计划</h4>
+<p>计划是模型写的。规划器先把要求讲清楚，再对模型交回来的东西严格验收。</p>
+<p>先看规划请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/paicli/plan/Planner.java</span></span><br><span class="line"><span class="keyword">public</span> ExecutionPlan <span class="title function_">createPlan</span><span class="params">(String goal)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    out.println(<span class="string">&quot;📋 正在规划任务: &quot;</span> + goal + <span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> requestPlan(goal, <span class="string">&quot;请为以下任务制定执行计划：\n&quot;</span> + goal);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> ExecutionPlan <span class="title function_">requestPlan</span><span class="params">(String goal, String planningRequest)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    List&lt;LlmClient.Message&gt; messages = Arrays.asList(</span><br><span class="line">            LlmClient.Message.system(promptAssembler.assemble(PromptMode.PLANNER, PromptContext.builder()</span><br><span class="line">                    .projectMemoryContext(buildProjectMemoryContext())</span><br><span class="line">                    .build())),</span><br><span class="line">            LlmClient.Message.user(planningRequest));</span><br><span class="line">    LlmClient.<span class="type">ChatResponse</span> <span class="variable">response</span> <span class="operator">=</span> llmClient.chat(messages, <span class="literal">null</span>, streamRenderer);</span><br><span class="line">    <span class="keyword">return</span> parsePlan(goal, response.content());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>规划请求只有两条消息。<strong>system 消息</strong>是拼装好的<u>规划提示词</u>，<strong>user 消息</strong>是“请为以下任务制定执行计划”加上用户的目标。</p>
+<p><code>chat</code> 的第二个参数传 <code>null</code>，表示规划请求不带任何工具。终端上流式显示模型的思考过程，JSON 正文不直接输出。</p>
+<h5 id="1-规划提示词"><a class="markdownIt-Anchor" href="#1-规划提示词"></a> 1) 规划提示词</h5>
+<p>提示词放在 <code>prompts/modes/planner.md</code>，拼装时带上 <a class="link" target="_blank" rel="noopener" href="http://PAI.md">PAI.md<i class="fas fa-external-link-alt"></i></a>。<a class="link" target="_blank" rel="noopener" href="http://PAI.md">PAI.md<i class="fas fa-external-link-alt"></i></a> 是放在项目根目录下的项目规则文件，写着团队希望 Agent 遵守的约定，第 3 期细讲。提示词里给了 JSON 格式的示例、5 种任务类型，结尾强调“只输出 JSON，不要有其他内容”。其中和拆分粒度有关的规则如下（节选，编号和原文件一致）。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5. 简单任务允许只生成 1-3 个任务，不要为了凑步数引入无关步骤。</span><br><span class="line">6. 复杂任务拆分为 5-10 个子任务。</span><br><span class="line">7. 不要为了“保存中间结果”额外创建 FILE_WRITE / FILE_READ，除非用户明确要求落盘。</span><br><span class="line">8. 如果一个任务一步就能完成，就保持最短计划。</span><br><span class="line">9. 没有依赖关系的任务会并行执行。会写同一个文件的任务不能同时执行，必须让后一个依赖前一个。</span><br></pre></td></tr></table></figure>
+<h5 id="2-一步就能完成的目标也交给模型规划"><a class="markdownIt-Anchor" href="#2-一步就能完成的目标也交给模型规划"></a> 2) 一步就能完成的目标也交给模型规划</h5>
+<p><code>/plan 列出当前目录的文件</code> 这条输入，一步就能完成，规划器向模型发一次规划请求。上面第 5 条和第 8 条规则规定了这种情况怎么处理，一步能完成就保持最短计划，所以模型交回来的计划只有一个任务。</p>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-p2-plan-execute-20261001073304.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:50%;">
+<blockquote>
+<p>在调用模型之前用 <code>规则</code> 判断“这个任务很简单，不用规划”，能省掉这一次规划请求。<strong>但规则只能检查输入里有没有某些词、字数有多少，判断不了一条输入实际要做哪几件事</strong>。下面两条输入都很短，也都不含“然后”、“最后”这类表示多个步骤的词，按规则都会被当成一步完成的任务。</p>
+<ol>
+<li>“删除 src 下所有文件”会删掉一整个目录下的文件。按规则直接生成单任务计划，审阅时用户看到的只有这一行原文，计划里没有原文之外的任何信息，也就起不到审阅的作用。</li>
+<li>“执行 mvn test，修复失败的测试”要先运行测试、再改代码，是两个有先后关系的步骤。按规则它只会变成一个任务，计划里看不出这层依赖。</li>
+</ol>
+</blockquote>
+<p>所以 PaiCLI 定了一条原则，<strong>根据用户原话做的判断，只用来收紧 Agent 的能力</strong>，比如用户说了“不要联网”就收起联网工具；不用来替用户跳过步骤。<u>规划要不要拆、拆成几个任务，一律交给模型判断</u>，再由紧接着的“严格校验”这一小节讲的规则把关。</p>
+<p>代价是每条输入多一次规划请求。规划请求不带工具，模型只输出一段计划 JSON，比执行任务时的请求轻得多。如果觉得一条简单输入也要规划太麻烦，按 Shift+Tab 切回 auto 模式即可。auto 模式是 PaiCLI 启动时的默认模式，这个模式下的普通输入直接交给 ReAct 执行，不经过规划器。</p>
+<h5 id="3-严格校验"><a class="markdownIt-Anchor" href="#3-严格校验"></a> 3) 严格校验</h5>
+<p>模型交回来的计划，任何一项不合格都直接失败。下面的代码从 <code>Planner.parsePlan</code> 里摘出几段关键判断，省略了变量声明。</p>
+<ul>
+<li><code>parsePlan</code> 会创建任务、建立依赖，检查任务 ID、依赖是否合法，并调用拓扑排序来计算执行顺序、检查循环依赖。不合法就抛出异常。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">cleaned</span> <span class="operator">=</span> planJson.replaceAll(<span class="string">&quot;```json\\s*&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">        .replaceAll(<span class="string">&quot;```\\s*&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line">        .trim();</span><br><span class="line">JsonNode root;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    root = mapper.readTree(cleaned);   <span class="comment">// JSON 后面跟说明文字、键重复都算不合法</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;计划不是合法的 JSON：&quot;</span> + e.getOriginalMessage(), e);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第一遍：登记所有 id，重复即失败</span></span><br><span class="line"><span class="keyword">if</span> (idMapping.putIfAbsent(originalId, <span class="string">&quot;task_&quot;</span> + taskIndex++) != <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;计划中存在重复任务 id&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 第二遍：建立依赖，引用未声明的 id 即失败</span></span><br><span class="line"><span class="keyword">if</span> (!depNode.isTextual() || !idMapping.containsKey(depNode.asText())) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;计划依赖必须引用已声明的任务 id&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 最后：拓扑排序失败说明有环</span></span><br><span class="line"><span class="keyword">if</span> (!plan.computeExecutionOrder()) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IOException</span>(<span class="string">&quot;计划中存在循环依赖&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>解析需要两次遍历</strong>。因为模型可能先写 task_2，再写 task_1，而 task_2 依赖 task_1。第一遍只登记 id，第二遍再连依赖，这样一个任务引用了排在它后面才声明的 id，也不会被误判成“引用了不存在的任务”。不管模型给的 id 叫什么，最后都按数组顺序重新编号成 <code>task_1</code> 到 <code>task_N</code>。</p>
+<img lazyload alt="image" data-src="https://cdn.paicoding.com/stutymore/build-agent-p2-plan-execute-20260924182549-5438f8da.png?x-oss-process=image/resize,w_1400/format,webp" style="zoom:45%;">
+<p>解析失败不自动重试，不退回 ReAct，直接返回“❌ 执行失败”和具体原因。</p>
+<h4 id="4-任务按什么顺序跑哪些能并行"><a class="markdownIt-Anchor" href="#4-任务按什么顺序跑哪些能并行"></a> 4. 任务按什么顺序跑，哪些能并行</h4>
 
                     
                 </div>
@@ -468,7 +584,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#react-%E5%92%8C-tool-call"><span class="nav-text"> ReAct 和 tool call</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%AC%AC%E4%B8%80%E6%89%B9%E5%B7%A5%E5%85%B7%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="nav-text"> 5. 第一批工具怎么设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-edit_file"><span class="nav-text"> 1) 为什么要有 edit_file</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E6%8A%84%E9%94%99%E4%BA%86%E7%89%87%E6%AE%B5%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-text"> 2) 模型抄错了片段怎么办</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-execute_command-%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="nav-text"> 3) execute_command 的边界</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%BE%AA%E7%8E%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%81%9C"><span class="nav-text"> 6. 循环什么时候停</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%85%88%E6%8F%90%E9%86%92"><span class="nav-text"> 1) 先提醒</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%85%9C%E5%BA%95%E6%94%B6%E5%B0%BE"><span class="nav-text"> 2) 兜底收尾</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9C%8B%E7%9C%8B"><span class="nav-text"> 7. 跑起来看看</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#react-%E5%92%8C-tool-call"><span class="nav-text"> ReAct 和 tool call</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%AC%AC%E4%B8%80%E6%89%B9%E5%B7%A5%E5%85%B7%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="nav-text"> 5. 第一批工具怎么设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-edit_file"><span class="nav-text"> 1) 为什么要有 edit_file</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E6%8A%84%E9%94%99%E4%BA%86%E7%89%87%E6%AE%B5%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-text"> 2) 模型抄错了片段怎么办</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-execute_command-%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="nav-text"> 3) execute_command 的边界</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%BE%AA%E7%8E%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%81%9C"><span class="nav-text"> 6. 循环什么时候停</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%85%88%E6%8F%90%E9%86%92"><span class="nav-text"> 1) 先提醒</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%85%9C%E5%BA%95%E6%94%B6%E5%B0%BE"><span class="nav-text"> 2) 兜底收尾</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9C%8B%E7%9C%8B"><span class="nav-text"> 7. 跑起来看看</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plan-%E5%92%8C-dag"><span class="nav-text"> Plan 和 DAG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%88%E8%A7%84%E5%88%92%E5%86%8D%E6%89%A7%E8%A1%8C"><span class="nav-text"> 1. 先规划再执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AE%A1%E5%88%92%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7-dag"><span class="nav-text"> 2. 计划长什么样 DAG</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%E5%92%8C%E7%8E%AF%E6%A3%80%E6%B5%8B"><span class="nav-text"> 拓扑排序和环检测</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%87%AD%E4%BB%80%E4%B9%88%E4%BF%A1%E4%BB%BB%E6%A8%A1%E5%9E%8B%E7%BB%99%E7%9A%84%E8%AE%A1%E5%88%92"><span class="nav-text"> 3. 凭什么信任模型给的计划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%A7%84%E5%88%92%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-text"> 1) 规划提示词</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%B8%80%E6%AD%A5%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E7%9A%84%E7%9B%AE%E6%A0%87%E4%B9%9F%E4%BA%A4%E7%BB%99%E6%A8%A1%E5%9E%8B%E8%A7%84%E5%88%92"><span class="nav-text"> 2) 一步就能完成的目标也交给模型规划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E4%B8%A5%E6%A0%BC%E6%A0%A1%E9%AA%8C"><span class="nav-text"> 3) 严格校验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BB%BB%E5%8A%A1%E6%8C%89%E4%BB%80%E4%B9%88%E9%A1%BA%E5%BA%8F%E8%B7%91%E5%93%AA%E4%BA%9B%E8%83%BD%E5%B9%B6%E8%A1%8C"><span class="nav-text"> 4. 任务按什么顺序跑，哪些能并行</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -635,7 +751,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#react-%E5%92%8C-tool-call"><span class="nav-text"> ReAct 和 tool call</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%AC%AC%E4%B8%80%E6%89%B9%E5%B7%A5%E5%85%B7%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="nav-text"> 5. 第一批工具怎么设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-edit_file"><span class="nav-text"> 1) 为什么要有 edit_file</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E6%8A%84%E9%94%99%E4%BA%86%E7%89%87%E6%AE%B5%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-text"> 2) 模型抄错了片段怎么办</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-execute_command-%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="nav-text"> 3) execute_command 的边界</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%BE%AA%E7%8E%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%81%9C"><span class="nav-text"> 6. 循环什么时候停</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%85%88%E6%8F%90%E9%86%92"><span class="nav-text"> 1) 先提醒</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%85%9C%E5%BA%95%E6%94%B6%E5%B0%BE"><span class="nav-text"> 2) 兜底收尾</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9C%8B%E7%9C%8B"><span class="nav-text"> 7. 跑起来看看</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#react-%E5%92%8C-tool-call"><span class="nav-text"> ReAct 和 tool call</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%AC%AC%E4%B8%80%E6%89%B9%E5%B7%A5%E5%85%B7%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1"><span class="nav-text"> 5. 第一批工具怎么设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-edit_file"><span class="nav-text"> 1) 为什么要有 edit_file</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%A8%A1%E5%9E%8B%E6%8A%84%E9%94%99%E4%BA%86%E7%89%87%E6%AE%B5%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-text"> 2) 模型抄错了片段怎么办</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-execute_command-%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="nav-text"> 3) execute_command 的边界</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%BE%AA%E7%8E%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%81%9C"><span class="nav-text"> 6. 循环什么时候停</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%85%88%E6%8F%90%E9%86%92"><span class="nav-text"> 1) 先提醒</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E5%85%9C%E5%BA%95%E6%94%B6%E5%B0%BE"><span class="nav-text"> 2) 兜底收尾</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9C%8B%E7%9C%8B"><span class="nav-text"> 7. 跑起来看看</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plan-%E5%92%8C-dag"><span class="nav-text"> Plan 和 DAG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%85%88%E8%A7%84%E5%88%92%E5%86%8D%E6%89%A7%E8%A1%8C"><span class="nav-text"> 1. 先规划再执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AE%A1%E5%88%92%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7-dag"><span class="nav-text"> 2. 计划长什么样 DAG</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%E5%92%8C%E7%8E%AF%E6%A3%80%E6%B5%8B"><span class="nav-text"> 拓扑排序和环检测</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%87%AD%E4%BB%80%E4%B9%88%E4%BF%A1%E4%BB%BB%E6%A8%A1%E5%9E%8B%E7%BB%99%E7%9A%84%E8%AE%A1%E5%88%92"><span class="nav-text"> 3. 凭什么信任模型给的计划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E8%A7%84%E5%88%92%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-text"> 1) 规划提示词</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E4%B8%80%E6%AD%A5%E5%B0%B1%E8%83%BD%E5%AE%8C%E6%88%90%E7%9A%84%E7%9B%AE%E6%A0%87%E4%B9%9F%E4%BA%A4%E7%BB%99%E6%A8%A1%E5%9E%8B%E8%A7%84%E5%88%92"><span class="nav-text"> 2) 一步就能完成的目标也交给模型规划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E4%B8%A5%E6%A0%BC%E6%A0%A1%E9%AA%8C"><span class="nav-text"> 3) 严格校验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BB%BB%E5%8A%A1%E6%8C%89%E4%BB%80%E4%B9%88%E9%A1%BA%E5%BA%8F%E8%B7%91%E5%93%AA%E4%BA%9B%E8%83%BD%E5%B9%B6%E8%A1%8C"><span class="nav-text"> 4. 任务按什么顺序跑，哪些能并行</span></a></li></ol></li></ol>
     </div>
 </div>
 
